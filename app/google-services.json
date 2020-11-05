@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "445314550925",
+    "firebase_url": "https://crossreview-a29c8.firebaseio.com",
+    "project_id": "crossreview-a29c8",
+    "storage_bucket": "crossreview-a29c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445314550925:android:916a3f22f238106544e6c4",
+        "android_client_info": {
+          "package_name": "com.crossreview"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445314550925-msuiu9009khn6rclvt8jur4ivole8opa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFwwLKK9-PYpaxkUf3Gu6whWOrihH_bm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445314550925-msuiu9009khn6rclvt8jur4ivole8opa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

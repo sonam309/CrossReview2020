@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/view_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp20"
+        android:padding="@dimen/dp10"
+        android:text="@string/employement_details"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_16"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp5"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingTop="@dimen/dp20"
+        android:paddingRight="@dimen/dp20">
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/DOJ_company"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+        <RelativeLayout
+            android:id="@+id/date_of_joining_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_white_bg">
+
+            <ImageView
+                android:id="@+id/ic_doj"
+                android:layout_width="@dimen/dp25"
+                android:layout_height="@dimen/dp25"
+                android:layout_centerVertical="false"
+                android:layout_margin="@dimen/dp10"
+                android:src="@drawable/ic_calendar"
+                app:tint="@color/input_text_color" />
+
+            <TextView
+                android:id="@+id/txt_joining_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/ic_doj"
+                android:hint="@string/date"
+                android:padding="@dimen/dp10"
+                android:textColor="@color/black"
+                android:textColorHint="@color/input_text_color"
+                android:textSize="@dimen/text_size_16" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp5"
+        android:visibility="visible"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingTop="@dimen/dp20"
+        android:paddingRight="@dimen/dp20">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/DOR_company"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+        <RelativeLayout
+            android:id="@+id/date_of_relieving_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_white_bg">
+
+            <ImageView
+                android:id="@+id/ic_dor"
+                android:layout_width="@dimen/dp25"
+                android:layout_height="@dimen/dp25"
+                android:layout_centerVertical="false"
+                android:layout_margin="@dimen/dp10"
+                android:src="@drawable/ic_calendar"
+                app:tint="@color/input_text_color" />
+
+            <TextView
+                android:id="@+id/txt_relieving_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/ic_dor"
+                android:hint="@string/date"
+                android:padding="@dimen/dp10"
+                android:textColor="@color/black"
+                android:textColorHint="@color/input_text_color"
+                android:textSize="@dimen/text_size_16" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp5"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingTop="@dimen/dp20"
+        android:visibility="visible"
+        android:paddingRight="@dimen/dp20">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+
+            android:text="@string/designation"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+
+        <EditText
+            android:id="@+id/txt_designation_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_white_bg"
+            android:hint="@string/select_designation"
+            android:imeOptions="actionNext"
+            android:padding="@dimen/dp8"
+            android:singleLine="true"
+            android:textColorHint="@color/input_text_color"
+            android:textSize="@dimen/text_size_16"
+            android:visibility="visible" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp5"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp20"
+        android:visibility="visible"
+        android:paddingTop="@dimen/dp20"
+        android:paddingRight="@dimen/dp20">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/job_role"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+
+        <EditText
+            android:id="@+id/txt_job_role_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_white_bg"
+            android:hint="@string/select_job_role"
+            android:imeOptions="actionNext"
+            android:padding="@dimen/dp10"
+            android:singleLine="true"
+            android:textColorHint="@color/input_text_color"
+            android:textSize="@dimen/text_size_16"
+            android:visibility="visible" />
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/txt_org_deatil_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp8"
+        android:layout_marginTop="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp8"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingRight="@dimen/dp20"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="-10dp"
+            android:padding="@dimen/dp10"
+            android:text="@string/org_detail"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="@dimen/dp15"
+            android:layout_height="@dimen/dp15"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp20"
+            android:src="@drawable/ic_down_arrow" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/rl_org_deatil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp5"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dp20"
+            android:paddingRight="@dimen/dp20"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:text="@string/orgnization"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <AutoCompleteTextView
+                android:id="@+id/txt_orgName_Autocomplete"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/square_white_bg"
+                android:hint="@string/orgName"
+                android:imeOptions="actionNext"
+                android:padding="@dimen/dp8"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16"
+                android:visibility="visible" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/autotextcomplte"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp5"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dp20"
+            android:paddingTop="@dimen/dp20"
+            android:paddingRight="@dimen/dp20"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:text="@string/reason_of_leaving"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+
+            <EditText
+                android:id="@+id/txt_reason_of_leaving_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/square_white_bg"
+                android:hint="@string/reasonOfLeaving"
+                android:imeOptions="actionNext"
+                android:padding="@dimen/dp8"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp5"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dp20"
+            android:paddingTop="@dimen/dp20"
+            android:paddingRight="@dimen/dp20">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:text="@string/Remuneration"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/txt_remuneration_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:layout_weight="1"
+                    android:background="@drawable/square_white_bg"
+                    android:padding="@dimen/dp5">
+
+                    <Spinner
+                        android:id="@+id/ctc_in_lac_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dp15"
+                        android:layout_height="@dimen/dp15"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp20"
+                        android:src="@drawable/ic_down_arrow"
+                        android:visibility="gone"
+                        app:tint="@color/input_text_color" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_weight="1"
+                    android:background="@drawable/square_white_bg"
+                    android:padding="@dimen/dp5">
+
+                    <Spinner
+                        android:id="@+id/ctc_in_thous_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dp15"
+                        android:layout_height="@dimen/dp15"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp20"
+                        android:src="@drawable/ic_down_arrow"
+                        android:visibility="gone"
+                        app:tint="@color/input_text_color" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/txt_reporting_person_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp8"
+        android:layout_marginTop="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp8"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingRight="@dimen/dp20">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="-10dp"
+            android:padding="@dimen/dp10"
+            android:text="@string/reporting_person"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="@dimen/dp15"
+            android:layout_height="@dimen/dp15"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp20"
+            android:src="@drawable/ic_down_arrow" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/repoting_person_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp5"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dp20"
+            android:paddingRight="@dimen/dp20">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:text="@string/Name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+
+            <EditText
+                android:id="@+id/txt_reporting_person_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/square_white_bg"
+                android:hint="@string/enter_name"
+                android:imeOptions="actionNext"
+                android:maxLength="20"
+                android:padding="@dimen/dp8"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp5"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dp20"
+            android:paddingTop="@dimen/dp20"
+            android:paddingRight="@dimen/dp20">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:text="@string/Designation"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+
+            <EditText
+
+                android:id="@+id/txt_reporting_person_designataion_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/square_white_bg"
+                android:hint="@string/enter_designation"
+                android:imeOptions="actionDone"
+                android:maxLength="50"
+                android:padding="@dimen/dp8"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/txt_upload_doc_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp8"
+        android:layout_marginTop="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp8"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingRight="@dimen/dp20">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="-10dp"
+            android:padding="@dimen/dp10"
+            android:text="@string/profileimg"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="@dimen/dp15"
+            android:layout_height="@dimen/dp15"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp20"
+            android:src="@drawable/ic_down_arrow" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/txt_upload_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp5"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingRight="@dimen/dp20"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/txt_upload_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/uploadPhoto"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/uploadBtn"
+                android:layout_width="@dimen/dp100"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/dp5"
+                android:background="@color/grey"
+                android:gravity="center"
+                android:padding="@dimen/dp8"
+                android:text="@string/Chosefile"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_14" />
+
+            <TextView
+                android:id="@+id/upload_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:padding="@dimen/dp10"
+                android:text="@string/upload"
+                android:textColor="@color/appcolor"
+                android:textSize="@dimen/text_size_14" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/upload_doc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

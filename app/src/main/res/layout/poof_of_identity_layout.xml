@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bgcolor"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:id="@+id/txt_aadhar_num_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp5"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingRight="@dimen/dp20">
+
+        <TextView
+            android:id="@+id/txt_aadhar_num_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/Aadhar_num"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+        <EditText
+            android:id="@+id/txt_aadhar_num_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_white_bg"
+            android:hint="@string/aadhar_num"
+            android:imeOptions="actionNext"
+            android:maxLength="20"
+            android:padding="@dimen/dp8"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/txt_Dl_num_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp5"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingRight="@dimen/dp20">
+
+        <TextView
+            android:id="@+id/txt_Dl_num_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/Dl_num"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+        <EditText
+            android:id="@+id/txt_Dl_num_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_white_bg"
+            android:hint="@string/dl_num"
+            android:imeOptions="actionNext"
+            android:maxLength="20"
+            android:padding="@dimen/dp8"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/txt_voter_id_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp5"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingRight="@dimen/dp20">
+
+        <TextView
+            android:id="@+id/txt_voter_id_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/Voter_id"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+        <EditText
+            android:id="@+id/txt_voter_id_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_white_bg"
+            android:hint="@string/voter_id"
+            android:imeOptions="actionNext"
+            android:maxLength="20"
+            android:padding="@dimen/dp8"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:id="@+id/txt_passport_num_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp5"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingRight="@dimen/dp20">
+
+        <TextView
+            android:id="@+id/txt_passport_num_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/Passport_num"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+        <EditText
+            android:id="@+id/txt_passport_num_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_white_bg"
+            android:hint="@string/passport_num"
+            android:imeOptions="actionNext"
+            android:maxLength="20"
+            android:padding="@dimen/dp8"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/txt_name_of_local_F_R_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp5"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingRight="@dimen/dp20">
+
+        <TextView
+            android:id="@+id/txt_name_of_local_F_R_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/Name_of_local_F_R"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+        <EditText
+            android:id="@+id/txt_name_of_local_F_R_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_white_bg"
+            android:hint="@string/name_of_local_F_R"
+            android:imeOptions="actionNext"
+            android:maxLength="20"
+            android:padding="@dimen/dp8"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/txt_address_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp5"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingRight="@dimen/dp20">
+
+        <TextView
+            android:id="@+id/txt_address_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/ADDRESS"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+        <EditText
+            android:id="@+id/txt_address_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_white_bg"
+            android:hint="@string/address"
+            android:imeOptions="actionNext"
+            android:maxLength="20"
+            android:padding="@dimen/dp8"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+    </LinearLayout>
+
+</LinearLayout>

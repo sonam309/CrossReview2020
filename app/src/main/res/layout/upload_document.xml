@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/dp10">
+
+    <ImageView
+        android:id="@+id/doc_file"
+        android:layout_width="@dimen/dp50"
+        android:layout_height="@dimen/dp70"
+        android:padding="@dimen/dp10"
+        android:visibility="gone"
+        android:src="@drawable/ic_doc" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp5"
+        android:id="@+id/doc_name"
+        android:text="Resume.doc"
+        android:textColor="@color/headingcolor"
+        android:textSize="@dimen/text_size_12"
+        android:visibility="gone" />
+
+</LinearLayout>

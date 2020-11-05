@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#487BA3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    
+    
+    
+    <color name="appcolor">#4e7b9e</color>
+    <color name="text_color_black">#3c3c3c</color>
+    <color name="input_text_color">#7d7d7d</color>
+    <color name="splash_top">#63B5C7</color>
+    <color name="splash_bottom">#487BA3</color>
+    <color name="bgcolor">#fafafa</color>
+    <color name="bgcolordark">#E6E4E4</color>
+    <color name="grey">#EAEAEA</color>
+    <color name="btn_color">#5fa9be</color>
+    <color name="headingcolor">#004773</color>
+    <color name="view_bg">#AFAEAE</color>
+    <color name="blue">#085b9b</color>
+    <color name="text_grey">#dbdbdb</color>
+    <color name="transparentcolor">@android:color/transparent</color>
+
+</resources>

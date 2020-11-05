@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top"
+    android:layout_margin="@dimen/dp12"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/email_login_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/appcolor"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp5">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp5"
+            android:layout_marginRight="50dp"
+            android:text="Select option"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp1"
+        android:layout_marginRight="@dimen/dp1"
+        android:background="@color/white"
+        android:drawableLeft="@android:drawable/ic_menu_gallery"
+        android:drawablePadding="@dimen/dp10"
+        android:drawableTint="@color/appcolor"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp5"
+        android:text="File Manager"
+        android:textColor="@color/appcolor"
+        tools:targetApi="m" />
+
+
+    <TextView
+        android:id="@+id/camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp1"
+        android:layout_marginRight="@dimen/dp1"
+        android:layout_marginBottom="@dimen/dp1"
+        android:background="@color/white"
+        android:drawableLeft="@android:drawable/ic_menu_camera"
+        android:drawablePadding="@dimen/dp10"
+        android:drawableTint="@color/appcolor"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp5"
+        android:text="Camera"
+        android:textColor="@color/appcolor"
+        tools:targetApi="m" />
+
+
+</LinearLayout>

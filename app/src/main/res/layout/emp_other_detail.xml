@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/txt_doj_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp5"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingRight="@dimen/dp20">
+
+        <TextView
+            android:id="@+id/txt_doj_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/DOJ"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:id="@+id/tv_txt_doj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_white_bg"
+            android:hint="@string/doj"
+            android:maxLength="50"
+            android:padding="@dimen/dp8"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/txt_interview_date_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp5"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingRight="@dimen/dp20">
+
+        <TextView
+            android:id="@+id/txt_interview_date_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/DOI"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:id="@+id/tv_txt_interview_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_white_bg"
+            android:hint="@string/doi"
+            android:imeOptions="actionNext"
+            android:maxLength="50"
+            android:padding="@dimen/dp8"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/txt_employee_id_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp5"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingRight="@dimen/dp20">
+
+        <TextView
+            android:id="@+id/txt_employee_id_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/emp_id"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+        <EditText
+            android:id="@+id/txt_employee_id_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_white_bg"
+            android:hint="@string/Emp_id"
+            android:imeOptions="actionNext"
+            android:maxLength="20"
+            android:padding="@dimen/dp8"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/txt_upload_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp5"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingRight="@dimen/dp20">
+
+        <TextView
+            android:id="@+id/txt_upload_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/profileimg"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/uploadBtn"
+                android:layout_width="@dimen/dp100"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/dp5"
+                android:background="@color/grey"
+                android:gravity="center"
+                android:padding="@dimen/dp8"
+                android:text="@string/Chosefile"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_14"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/upload_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:padding="@dimen/dp5"
+                android:text="@string/upload"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_18"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/dp10">
+
+            <ImageView
+                android:id="@+id/profile_iv"
+                android:layout_width="@dimen/dp50"
+                android:padding="@dimen/dp5"
+                android:layout_height="@dimen/dp50"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_profile" />
+
+            <TextView
+                android:id="@+id/document_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_iv"
+                android:layout_centerHorizontal="true"
+                android:padding="@dimen/dp5"
+                android:visibility="gone"
+                android:text="Resume.doc"
+                android:textColor="@color/headingcolor"
+                android:textSize="@dimen/text_size_12" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

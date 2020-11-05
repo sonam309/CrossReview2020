@@ -1,0 +1,20 @@
+{
+  "Version": "1.0",
+  "IdentityManager": {
+    "Default": {}
+  },
+"CredentialsProvider": {
+  "CognitoIdentity": {
+    "Default": {
+      "PoolId": "us-east-2:cab02231-7181-426d-baba-c1c2e67cd1bd",
+      "Region": "us-east-2"
+    }
+  }
+},
+  "S3TransferUtility": {
+    "Default": {
+      "Bucket": "crox-files",
+      "Region": "us-east-2"
+    }
+  }
+}
