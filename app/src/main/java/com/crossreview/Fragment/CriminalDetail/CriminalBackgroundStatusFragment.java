@@ -3,10 +3,12 @@ package com.crossreview.Fragment.CriminalDetail;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,37 +32,44 @@ import com.google.gson.JsonObject;
 
 public class CriminalBackgroundStatusFragment extends Fragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener, Observer<ClsSaveEmployeeDetailModel> {
 
-    private View mview;
     private Context mctx;
     private RelativeLayout employer_Detail_rl, employment_Detail_rl, education_detail_rl;
     private RadioGroup criminal_bg_Rg;
     private RadioButton radioButton;
-    private String policeVarification;
+    private String policeVarification="no";
     private Boolean criminal_status = false;
     private CardView next_btn;
     private EmployeeDetailsViewModel employeeDetailsViewModel;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        viewModelSetup();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (mview == null) {
+
             mctx = getActivity();
             // Inflate the layout for this fragment
-            mview = inflater.inflate(R.layout.fragment_criminal_background_status, container, false);
-        }
-        return mview;
+        return inflater.inflate(R.layout.fragment_criminal_background_status, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        bindView(view);
+        viewSetup();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        bindView();
-        viewModelSetup();
-        viewSetup();
     }
 
-    private void bindView() {
+    private void bindView(View mview) {
 
         employer_Detail_rl = mview.findViewById(R.id.employer_Detail_rl);
         employment_Detail_rl = mview.findViewById(R.id.employment_Detail_rl);
@@ -72,6 +81,9 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
     }
 
     private void viewModelSetup() {
+
+        employeeDetailsViewModel = new ViewModelProvider(this).get(EmployeeDetailsViewModel.class);
+        employeeDetailsViewModel.EmployeeDetails.observe(this, this);
 
     }
 
@@ -120,41 +132,43 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
+    if (radioGroup.getId()==R.id.criminal_bg_Rg) {
+            int radioId = criminal_bg_Rg.getCheckedRadioButtonId();
+            radioButton = radioGroup.findViewById(radioId);
 
-        int radioId = criminal_bg_Rg.getCheckedRadioButtonId();
-        radioButton = mview.findViewById(radioId);
+            policeVarification = radioButton.getText().toString();
 
-        policeVarification = radioButton.getText().toString();
+            if (policeVarification.equalsIgnoreCase("no")) {
 
-        if (policeVarification.equalsIgnoreCase("no")) {
+                criminal_status = false;
+            } else {
 
-            criminal_status = false;
-        } else {
+                criminal_status = true;
+            }
 
-            criminal_status = true;
-        }
-
+}
     }
 
-    @Override
-    public void onChanged(ClsSaveEmployeeDetailModel clsSaveEmployeeDetailModel) {
-
-    }
 
     public void savepolicevarification() {
 
         JsonObject object = new JsonObject();
         object.addProperty(Constant.EmployeePoliceVarification, criminal_status);
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.add(Constant.data, object);
+//        JsonObject jsonObject = new JsonObject();
+//        jsonObject.add(Constant.data, object);
 
         JsonObject data = new JsonObject();
-        data.add(Constant.data, jsonObject);
-        if (employeeDetailsViewModel != null) {
+        data.add(Constant.data, object);
 
-            employeeDetailsViewModel.saveEmployeeDetail(data);
-        }
+
+        employeeDetailsViewModel.saveEmployeeDetail(data);
+
+
+    }
+
+    @Override
+    public void onChanged(ClsSaveEmployeeDetailModel clsSaveEmployeeDetailModel) {
 
         if (criminal_status) {
 
@@ -165,6 +179,7 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
 
             ((MainActivity) getActivity()).replaceFragment(new PreviewFragment(), true, KeyClass.FRAGMENT_PREVIEW,
                     KeyClass.FRAGMENT_PREVIEW);
+
 
         }
 

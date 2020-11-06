@@ -30,6 +30,7 @@ import com.crossreview.Utilites.KeyClass;
 import com.crossreview.Utilites.Utility;
 import com.crossreview.ViewModel.EmployeeDetailsViewModel;
 import com.crossreview.ViewModel.PoliceVarificataionsViewModel;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 
@@ -52,6 +53,13 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
 
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        viewModelSetup();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (mview == null) {
@@ -59,6 +67,7 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             // Inflate the layout for this fragment
             mview = inflater.inflate(R.layout.fragment_criminal_detail_complete, container, false);
         }
+
 
         return mview;
     }
@@ -68,7 +77,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
         super.onActivityCreated(savedInstanceState);
 
         bindView();
-        viewModelSetup();
         viewSetup();
     }
 
@@ -130,7 +138,7 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
     private void viewModelSetup() {
 
         policeVarificataionsViewModel = new ViewModelProvider(this).get(PoliceVarificataionsViewModel.class);
-        policeVarificataionsViewModel.policevarificataion.observe(getViewLifecycleOwner(), this);
+        policeVarificataionsViewModel.policevarificataion.observe(this, this);
 
     }
 
@@ -240,10 +248,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_mothers_name_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_mothers_name_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
         if (txt_birth_place_et.getText().toString().isEmpty()) {
 
@@ -251,10 +255,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_birth_place_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_birth_place_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
 
         if (txt_permanent_address_et.getText().toString().isEmpty()) {
@@ -263,10 +263,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_permanent_address_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_permanent_address_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
 
         if (txt_city_et.getText().toString().isEmpty()) {
@@ -275,22 +271,13 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_city_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_city_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
-
         if (txt_post_office_et.getText().toString().isEmpty()) {
 
             Toast.makeText(mctx, "Please fill Post Office", Toast.LENGTH_LONG).show();
             txt_post_office_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_post_office_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
         if (txt_police_station_et.getText().toString().isEmpty()) {
 
@@ -298,10 +285,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_police_station_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_police_station_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
         if (txt_district_et.getText().toString().isEmpty()) {
 
@@ -309,10 +292,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_district_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_district_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
         if (txt_state_et.getText().toString().isEmpty()) {
 
@@ -320,10 +299,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_state_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_state_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
         if (txt_pincode_et.getText().toString().isEmpty()) {
 
@@ -331,10 +306,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_pincode_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_pincode_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
         if (txt_Local_address_et.getText().toString().isEmpty()) {
 
@@ -342,10 +313,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_Local_address_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_Local_address_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
         if (txt_local_city_et.getText().toString().isEmpty()) {
 
@@ -353,10 +320,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_local_city_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_local_city_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
         if (txt_local_post_office_et.getText().toString().isEmpty()) {
 
@@ -364,10 +327,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_local_post_office_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_local_post_office_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
         if (txt_local_police_station_et.getText().toString().isEmpty()) {
 
@@ -375,10 +334,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_local_police_station_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_local_police_station_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
         if (txt_local_district_et.getText().toString().isEmpty()) {
 
@@ -386,10 +341,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_local_district_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_local_district_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
         if (txt_local_state_et.getText().toString().isEmpty()) {
 
@@ -397,10 +348,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_local_state_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_local_state_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
         if (txt_local_pincode_et.getText().toString().isEmpty()) {
 
@@ -408,10 +355,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_local_pincode_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_local_pincode_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
         if (txt_aadhar_num_et.getText().toString().isEmpty()) {
 
@@ -419,10 +362,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_aadhar_num_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_aadhar_num_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
         if (txt_height_et.getText().toString().isEmpty()) {
 
@@ -430,10 +369,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_height_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_height_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
         if (txt_weight_et.getText().toString().isEmpty()) {
 
@@ -441,10 +376,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_weight_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_weight_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
         if (txt_Complexion_et.getText().toString().isEmpty()) {
 
@@ -452,10 +383,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_Complexion_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_Complexion_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
         if (txt_identification_mark_et.getText().toString().isEmpty()) {
 
@@ -463,66 +390,103 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_identification_mark_et.requestFocus();
             Utility.showKeyboard(getActivity());
             return;
-        } else {
-
-            txt_identification_mark_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
         }
 
+        Utility.hideKeyboard(getActivity());
 
-        JsonObject permanemt= new JsonObject();
-        permanemt.addProperty(Constant.PermanentAddress,txt_permanent_address_et.getText().toString());
-        permanemt.addProperty(Constant.City,txt_city_et.getText().toString());
-        permanemt.addProperty(Constant.PostOffice,txt_post_office_et.getText().toString());
-        permanemt.addProperty(Constant.PoliceStation,txt_police_station_et.getText().toString());
-        permanemt.addProperty(Constant.District,txt_district_et.getText().toString());
-        permanemt.addProperty(Constant.State,txt_state_et.getText().toString());
-        permanemt.addProperty(Constant.Zipcode,txt_pincode_et.getText().toString());
+        //json Array for add relative info
+        JsonArray relative = new JsonArray();
 
+       // for (int i=0;i<2;i++) {
+            //for add relatiev infi items
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty(Constant.Relative_name, txt_name_of_local_F_R_et.getText().toString());
+            jsonObject.addProperty(Constant.Relative_address, txt_address_et.getText().toString());
+            jsonObject.addProperty(Constant.Relative_contact, 0);
 
-        JsonObject local= new JsonObject();
-        local.addProperty(Constant.LocalAddress,txt_Local_address_et.getText().toString());
-        local.addProperty(Constant.City,txt_local_city_et.getText().toString());
-        local.addProperty(Constant.PostOffice,txt_local_post_office_et.getText().toString());
-        local.addProperty(Constant.PoliceStation,txt_local_police_station_et.getText().toString());
-        local.addProperty(Constant.District,txt_local_district_et.getText().toString());
-        local.addProperty(Constant.State,txt_local_state_et.getText().toString());
-        local.addProperty(Constant.Zipcode,txt_local_pincode_et.getText().toString());
+            //add relative object in json array
+            relative.add(jsonObject);
+      //  }
 
 
-        JsonObject jsonObject= new JsonObject();
-        jsonObject.addProperty(Constant.PermanentAddress,permanemt.toString());
-        jsonObject.addProperty(Constant.LocalAddress,local.toString());
-
-        JsonObject address= new JsonObject();
-        address.add(Constant.address,jsonObject);
 
 
-        JsonObject details= new JsonObject();
-        details.addProperty(Constant.MothersName,txt_mothers_name_et.getText().toString());
-        details.addProperty(Constant.PlaceOfBirth,txt_birth_place_et.getText().toString());
-        details.addProperty(Constant.LanguageSpoken,txt_language_et.getText().toString());
-        details.addProperty(Constant.DrivingliecenceNum,txt_Dl_num_et.getText().toString());
-        details.addProperty(Constant.VotarId,txt_voter_id_et.getText().toString());
-        details.addProperty(Constant.PassportNum,txt_passport_num_et.getText().toString());
-        details.addProperty(Constant.Height,txt_height_et.getText().toString());
-        details.addProperty(Constant.Weight,txt_weight_et.getText().toString());
-        details.addProperty(Constant.Complexion,txt_Complexion_et.getText().toString());
-        details.addProperty(Constant.IdentificationMark,txt_identification_mark_et.getText().toString());
-        details.addProperty(Constant.address,address.toString());
+        //json object to add perament address details
+        JsonObject permanemt = new JsonObject();
+        permanemt.addProperty(Constant.Address_type, Constant.permanenet);
+        permanemt.addProperty(Constant.PermanentAddress, txt_permanent_address_et.getText().toString());
+        permanemt.addProperty(Constant.City, txt_city_et.getText().toString());
+        permanemt.addProperty(Constant.PostOffice, txt_post_office_et.getText().toString());
+        permanemt.addProperty(Constant.PoliceStation, txt_police_station_et.getText().toString());
+        permanemt.addProperty(Constant.District, txt_district_et.getText().toString());
+        permanemt.addProperty(Constant.State, txt_state_et.getText().toString());
+        permanemt.addProperty(Constant.Zipcode, txt_pincode_et.getText().toString());
 
-        JsonObject data= new JsonObject();
-        data.add(Constant.data,details);
+
+        //json object to add local address details
+        JsonObject local = new JsonObject();
+        local.addProperty(Constant.Address_type, Constant.local);
+        local.addProperty(Constant.LocalAddress, txt_Local_address_et.getText().toString());
+        local.addProperty(Constant.City, txt_local_city_et.getText().toString());
+        local.addProperty(Constant.PostOffice, txt_local_post_office_et.getText().toString());
+        local.addProperty(Constant.PoliceStation, txt_local_police_station_et.getText().toString());
+        local.addProperty(Constant.District, txt_local_district_et.getText().toString());
+        local.addProperty(Constant.State, txt_local_state_et.getText().toString());
+        local.addProperty(Constant.Zipcode, txt_local_pincode_et.getText().toString());
+
+
+
+        //json object to add combine address in one json object whic is address
+        JsonObject address = new JsonObject();
+        address.add(Constant.permanent_address, permanemt);
+        address.add(Constant.local_address, local);
+
+        //json array to add documents details
+        JsonArray document = new JsonArray();
+//        for (int i=0;i<2;i++) {
+//            //json object for adding componets in a json object for adding data in document json array
+////            JsonObject object = new JsonObject();
+//////            object.addProperty(Constant.Document_Name, "Document name");
+//////            object.addProperty(Constant.Document_Type, "Document type");
+//////            object.addProperty(Constant.Document_URL, "Document url");
+////
+////
+////            document.add(object);
+//        }
+//
+
+        //json object to add all info of data in data json object
+        JsonObject details = new JsonObject();
+        details.addProperty(Constant.MothersName, txt_mothers_name_et.getText().toString());
+        details.addProperty(Constant.PlaceOfBirth, txt_birth_place_et.getText().toString());
+        details.addProperty(Constant.LanguageSpoken, txt_language_et.getText().toString());
+        details.addProperty(Constant.Height, txt_height_et.getText().toString());
+        details.addProperty(Constant.Weight, txt_weight_et.getText().toString());
+        details.addProperty(Constant.Complexion, txt_Complexion_et.getText().toString());
+        details.addProperty(Constant.IdentificationMark, txt_identification_mark_et.getText().toString());
+        details.addProperty(Constant.AadharNumber, txt_aadhar_num_et.getText().toString());
+        details.addProperty(Constant.DrivingliecenceNum, txt_Dl_num_et.getText().toString());
+        details.addProperty(Constant.VotarId, txt_voter_id_et.getText().toString());
+        details.addProperty(Constant.PassportNum, txt_passport_num_et.getText().toString());
+        details.add(Constant.UploadDocument, document);
+        details.add(Constant.address, address);
+        details.add(Constant.relatives, relative);
+
+
+        //data json object to bind all data in single json array for sending data in api
+        JsonObject data = new JsonObject();
+        data.add(Constant.data, details);
 
         policeVarificataionsViewModel.saveCriminalBgDetails(data);
 
-        ((MainActivity) getActivity()).replaceFragment(new PreviewFragment(), true, KeyClass.FRAGMENT_PREVIEW,
-                KeyClass.FRAGMENT_PREVIEW);
 
     }
 
     @Override
     public void onChanged(PoliceVarificataionDetailsModel policeVarificataionDetailsModel) {
+
+        ((MainActivity) getActivity()).replaceFragment(new PreviewFragment(), true, KeyClass.FRAGMENT_PREVIEW,
+                KeyClass.FRAGMENT_PREVIEW);
 
     }
 }

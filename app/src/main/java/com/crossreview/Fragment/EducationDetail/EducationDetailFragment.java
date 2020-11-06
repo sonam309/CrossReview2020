@@ -59,7 +59,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 
-public class EducationDetailFragment extends BasicClass implements View.OnClickListener, awsUploadCallback, View.OnTouchListener, TextView.OnEditorActionListener,Observer<ClsSaveEmployeeDetailModel>{
+public class EducationDetailFragment extends BasicClass implements View.OnClickListener, awsUploadCallback, View.OnTouchListener, TextView.OnEditorActionListener, Observer<ClsSaveEmployeeDetailModel> {
 
     private View mview;
     private Context mctx;
@@ -77,21 +77,35 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
     private ArrayAdapter<InstitutionNameModel.data> institutearrayAdapter;
     private String instituteName;
     private EmployeeDetailsViewModel employeeDetailsViewModel;
+    private Boolean to_varify = true;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        viewModelSetup();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (mview == null) {
-            mctx = getActivity();
+
             // Inflate the layout for this fragment
             mview = inflater.inflate(R.layout.fragment_education_detail, container, false);
 
-            bindView();
-            viewModelSetup();
-            viewSetup();
 
         }
         return mview;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        bindView();
+        viewSetup();
+
     }
 
     @Override
@@ -118,9 +132,8 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
     private void viewModelSetup() {
 
         employeeDetailsViewModel = new ViewModelProvider(this).get(EmployeeDetailsViewModel.class);
-        employeeDetailsViewModel.EmployeeDetails.observe(getViewLifecycleOwner(), this);
+        employeeDetailsViewModel.EmployeeDetails.observe(this, this);
 
-        addDynamicEducataionLayour();
 
     }
 
@@ -134,6 +147,9 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
 
         mainll.setOnTouchListener(this);
+
+        addDynamicEducataionLayour();
+
 
 
     }
@@ -202,7 +218,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
     public void addDynamicEducataionLayour() {
 
-        LayoutInflater inflater = (LayoutInflater) mctx.getApplicationContext().getSystemService(
+        LayoutInflater inflater = (LayoutInflater) getActivity().getApplicationContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.education_detail_layout, null);
 
@@ -277,14 +293,12 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         modelSetup(txt_university_et);
 
 
-
-
     }
 
     public void modelSetup(AutoCompleteTextView autoCompleteTextView) {
 
         institutionNameViewModel = new ViewModelProvider(this).get(InstitutionNameViewModel.class);
-        institutionNameViewModel.instituteName.observe(getViewLifecycleOwner(), new Observer<InstitutionNameModel>() {
+        institutionNameViewModel.instituteName.observe(this, new Observer<InstitutionNameModel>() {
             @Override
             public void onChanged(InstitutionNameModel institutionNameModel) {
 
@@ -359,7 +373,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
     public void uploadDocument() {
 
-        LayoutInflater inflater = (LayoutInflater) mctx.getApplicationContext().getSystemService(
+        LayoutInflater inflater = (LayoutInflater) getActivity().getApplicationContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.upload_document, null);
 
@@ -384,7 +398,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
     public void addEducationTileView() {
 
-        LayoutInflater layoutInflater = (LayoutInflater) mctx.getApplicationContext().getSystemService(
+        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getApplicationContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
         View addEdu = layoutInflater.inflate(R.layout.add_tile, null);
 
@@ -532,7 +546,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
                 if (path_of_pic.contains("pdf")) {
 
-                    new DownloadPdfAndShowInImageView(getActivity(), "document", doc_file).execute(path_of_pic,"document");
+                    new DownloadPdfAndShowInImageView(getActivity(), "document", doc_file).execute(path_of_pic, "document");
 
                 }
 //               Utility.uploadImageAwsToServer(pathOfPic,this);
@@ -553,11 +567,10 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
             if (pathOfPic.contains("pdf")) {
 
 
-                new DownloadPdfAndShowInImageView(getActivity(), "document", doc_file).execute(pathOfPic,"document");
+                new DownloadPdfAndShowInImageView(getActivity(), "document", doc_file).execute(pathOfPic, "document");
             }
             try {
                 doc_file.setImageURI(Uri.parse(pathOfPic));
-
 
 
             } catch (Exception ex) {
@@ -596,99 +609,105 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
     }
 
 
-    public void setSaveEducataionDetails(){
+    public void setSaveEducataionDetails() {
 
-        JsonArray jsonArray= new JsonArray();
+        JsonArray jsonArray = new JsonArray();
 
         for (int i = 0; i < education_dynamic_view.getChildCount(); i++) {
 
             View view1 = education_dynamic_view.getChildAt(i);
 
 
-            EditText txt_education_et=view1.findViewById(R.id.txt_education_et);
-            EditText txt_course_et=view1.findViewById(R.id.txt_course_et);
-            EditText txt_specialization_et=view1.findViewById(R.id.txt_specialization_et);
-            TextView txt_university_tv=view1.findViewById(R.id.txt_university_tv);
-            RadioGroup course_type_rg=view1.findViewById(R.id.course_type_rg);
-            EditText txt_passout_year_et=view1.findViewById(R.id.txt_passout_year_et);
-            EditText txt_grade_et=view1.findViewById(R.id.txt_grade_et);
+            EditText txt_education_et = view1.findViewById(R.id.txt_education_et);
+            EditText txt_course_et = view1.findViewById(R.id.txt_course_et);
+            EditText txt_specialization_et = view1.findViewById(R.id.txt_specialization_et);
+            TextView txt_university_tv = view1.findViewById(R.id.txt_university_tv);
+            RadioGroup course_type_rg = view1.findViewById(R.id.course_type_rg);
+            EditText txt_passout_year_et = view1.findViewById(R.id.txt_passout_year_et);
+            EditText txt_grade_et = view1.findViewById(R.id.txt_grade_et);
 
-            String instituteName=txt_university_tv.getText().toString();
-            String courseType=course_type_rg.toString();
+            String instituteName = txt_university_tv.getText().toString();
+            String courseType = course_type_rg.toString();
 
 
             String fileName = "";
-            ArrayList<String > docFile= new ArrayList<String>();
+            ArrayList<String> docFile = new ArrayList<String>();
+            JsonArray document = new JsonArray();
 
-
-            for (int j=0;j<upload_doc_ll.getChildCount();j++){
+            for (int j = 0; j < upload_doc_ll.getChildCount(); j++) {
 
                 fileName = doc_name.getText().toString();
                 docFile.add(fileName);
 
+                JsonObject object = new JsonObject();
+                object.addProperty(Constant.Document_Type, "Image");
+                object.addProperty(Constant.Document_Name, fileName);
+                object.addProperty(Constant.Document_URL, docFile.toString());
+
+                document.add(object);
 
             }
 
-            JSONArray document= new JSONArray(docFile);
 
-            if(txt_education_et.getText().toString().isEmpty()){
+            if (txt_education_et.getText().toString().isEmpty()) {
 
                 Toast.makeText(mctx, "Please fill Education Type", Toast.LENGTH_SHORT).show();
                 txt_education_et.requestFocus();
                 Utility.showKeyboard(getActivity());
                 return;
-            }else {
+            } else {
 
                 txt_education_et.clearFocus();
                 Utility.hideKeyboard(view1);
 
             }
-            if(txt_course_et.getText().toString().isEmpty()){
+            if (txt_course_et.getText().toString().isEmpty()) {
 
                 Toast.makeText(mctx, "Please fill course", Toast.LENGTH_SHORT).show();
                 txt_course_et.requestFocus();
                 Utility.showKeyboard(getActivity());
                 return;
-            }else {
+            } else {
 
                 txt_course_et.clearFocus();
                 Utility.hideKeyboard(view1);
 
             }
-            if (txt_specialization_et.getText().toString().isEmpty()){
+            if (txt_specialization_et.getText().toString().isEmpty()) {
 
                 Toast.makeText(mctx, "Please fill specialization", Toast.LENGTH_SHORT).show();
                 txt_specialization_et.requestFocus();
                 Utility.showKeyboard(getActivity());
                 return;
-            }else {
+            } else {
 
                 txt_specialization_et.clearFocus();
                 Utility.hideKeyboard(view1);
 
-            }if(txt_university_tv.getText().toString().isEmpty()){
+            }
+            if (txt_university_tv.getText().toString().isEmpty()) {
 
                 Toast.makeText(mctx, "please select Institution", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if(txt_passout_year_et.getText().toString().isEmpty()){
+            if (txt_passout_year_et.getText().toString().isEmpty()) {
 
                 Toast.makeText(mctx, "Please fill Passout year", Toast.LENGTH_SHORT).show();
                 txt_passout_year_et.requestFocus();
                 Utility.showKeyboard(getActivity());
                 return;
-            }else {
+            } else {
 
                 txt_passout_year_et.clearFocus();
                 Utility.hideKeyboard(view1);
             }
-            if(txt_grade_et.getText().toString().isEmpty()){
+            if (txt_grade_et.getText().toString().isEmpty()) {
 
                 Toast.makeText(mctx, "Please fill  grade", Toast.LENGTH_SHORT).show();
                 txt_grade_et.requestFocus();
                 Utility.showKeyboard(getActivity());
                 return;
-            }else {
+            } else {
 
                 txt_grade_et.clearFocus();
                 Utility.hideKeyboard(view1);
@@ -703,7 +722,9 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
             jsonObject.addProperty(Constant.CourseType, courseType);
             jsonObject.addProperty(Constant.PassOutYear, txt_passout_year_et.getText().toString());
             jsonObject.addProperty(Constant.Grade, txt_grade_et.getText().toString());
-            jsonObject.addProperty(Constant.UploadDocument, document.toString());
+            jsonObject.add(Constant.UploadDocument, document);
+            jsonObject.addProperty(Constant.to_varify, to_varify);
+
 
             jsonArray.add(jsonObject);
         }
@@ -716,15 +737,15 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
         employeeDetailsViewModel.saveEmployeeDetail(data);
 
-        ((MainActivity) getActivity()).replaceFragment(new CriminalBackgroundStatusFragment(), true, KeyClass.FRAGMENT_CRIMINAL_STATUS,
-                KeyClass.FRAGMENT_CRIMINAL_STATUS);
 
-        }
-
+    }
 
 
     @Override
     public void onChanged(ClsSaveEmployeeDetailModel clsSaveEmployeeDetailModel) {
+
+        ((MainActivity) getActivity()).replaceFragment(new CriminalBackgroundStatusFragment(), true, KeyClass.FRAGMENT_CRIMINAL_STATUS,
+                KeyClass.FRAGMENT_CRIMINAL_STATUS);
 
     }
 

@@ -32,7 +32,7 @@ public class EmployerDetailsRecyclerAdapter extends RecyclerView.Adapter<Employe
     @Override
     public void onBindViewHolder(@NonNull EmployerDetailsRecyclerViewHolder holder, int position) {
 
-//        holder.company_complete_address.setText(previewInfoModelList.get(position).getData());
+        holder.company_complete_address.setText(previewInfoModelList.get(position).getData().getEmployer().getOrganizationName()+previewInfoModelList.get(position).getData().getEmployer().getOrganizationName());
 
     }
 

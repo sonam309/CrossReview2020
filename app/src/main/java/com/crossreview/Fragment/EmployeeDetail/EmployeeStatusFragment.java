@@ -54,6 +54,9 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
 
 
         }
+
+        viewModelSetup();
+
     }
 
     @Override
@@ -73,7 +76,6 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
 
 
         bindview();
-        viewModelSetup();
         viewSetup();
     }
 
@@ -91,7 +93,7 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
     private void viewModelSetup() {
 
         employeeDetailsViewModel = new ViewModelProvider(this).get(EmployeeDetailsViewModel.class);
-        employeeDetailsViewModel.EmployeeDetails.observe(getViewLifecycleOwner(), this);
+        employeeDetailsViewModel.EmployeeDetails.observe(this, this);
 
     }
 
@@ -183,13 +185,21 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
         JsonObject object= new JsonObject();
         object.addProperty(Constant.EmployeeExperience, empStatus);
 
-        JsonObject jsonObject= new JsonObject();
-        jsonObject.add(Constant.data,object);
+//        JsonObject jsonObject= new JsonObject();
+//        jsonObject.add(Constant.data,object);
 
-//        JsonObject data= new JsonObject();
-//        data.add(Constant.data,jsonObject);
+        JsonObject data= new JsonObject();
+        data.add(Constant.data,object);
 
-        employeeDetailsViewModel.saveEmployeeDetail(object);
+        employeeDetailsViewModel.saveEmployeeDetail(data);
+
+
+
+
+    }
+
+    @Override
+    public void onChanged(ClsSaveEmployeeDetailModel clsSaveEmployeeDetailModel) {
 
         if(empStatus) {
 
@@ -201,11 +211,6 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
                     KeyClass.FRAGMENT_EDUCATION_STATUS);
         }
 
-
-    }
-
-    @Override
-    public void onChanged(ClsSaveEmployeeDetailModel clsSaveEmployeeDetailModel) {
 
     }
 }

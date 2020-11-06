@@ -1,5 +1,7 @@
 package com.crossreview.ViewModel;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -48,6 +50,8 @@ public class EmployeeDetailsViewModel extends ViewModel {
 
                 @Override
                 public void onFailure(Call<ClsSaveEmployeeDetailModel> call, Throwable t) {
+
+                    Log.e("kkkkkkkkkkkkkkkkkk",t.getMessage());
 
                 }
             });

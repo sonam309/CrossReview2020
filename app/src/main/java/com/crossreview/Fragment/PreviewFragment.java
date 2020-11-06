@@ -1,6 +1,7 @@
 package com.crossreview.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,8 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.crossreview.Activity.MainActivity;
 import com.crossreview.Fragment.Authentication.LoginFragment;
 import com.crossreview.Model.PreviewInfoModel;
@@ -34,7 +37,16 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
     private CardView makePayment_btn;
     private PreviewInfoViewModel previewInfoViewModel;
     private RecyclerView employedetaill_recyclerview;
+    private TextView txt_height_tv,txt_weight_tv;
+    private ImageView profile_image;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        viewModelSetup();
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +73,6 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        viewModelSetup();
         previewInfoViewModel.PreviewDetail();
 
 
@@ -73,6 +84,8 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
         makePayment_btn = mview.findViewById(R.id.makePayment_btn);
 
         employedetaill_recyclerview=mview.findViewById(R.id.employedetaill_recyclerview);
+
+        profile_image=mview.findViewById(R.id.profile_image);
 
         txt_emp_name=mview.findViewById(R.id.txt_emp_name);
         txt_emp_contact=mview.findViewById(R.id.txt_emp_contact);
@@ -89,12 +102,15 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
         company_hr_email=mview.findViewById(R.id.company_hr_email);
         company_hr_contact=mview.findViewById(R.id.company_hr_contact);
 
+        //police varifications
+        txt_height_tv=mview.findViewById(R.id.txt_height_tv);
+        txt_weight_tv=mview.findViewById(R.id.txt_weight_tv);
     }
 
     private void viewModelSetup() {
 
         previewInfoViewModel=new ViewModelProvider(this).get(PreviewInfoViewModel.class);
-        previewInfoViewModel.previewInfo.observe(getViewLifecycleOwner(),this);
+        previewInfoViewModel.previewInfo.observe(this,this);
 
     }
 
@@ -137,6 +153,7 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
             txt_emp_gender.setText(previewInfoModel.getData().getEmployeeGender().toString());
             txt_emp_gender.setText(previewInfoModel.getData().getEmployeeGender().toString());
             txt_emp_address.setText(previewInfoModel.getData().getEmployeeAddress().toString());
+//            Glide.with(mctx).load(KeyClass.BASE_URL.substring(0,KeyClass.BASE_URL.length()-1)+profile_image).into(imageView);
 
             //employer details
             txt_company_name.setText(previewInfoModel.getData().getEmployer().getOrganizationName());
@@ -147,6 +164,10 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
             company_hr_contact.setText(previewInfoModel.getData().getEmployer().getEmployerContact());
 
 
+
+            //police varifications
+
+//            txt_weight_tv.
 
 
 

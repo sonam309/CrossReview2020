@@ -40,6 +40,13 @@ public class EducationStatusFragment extends Fragment implements View.OnClickLis
     private Boolean edu_status=true;
     private EmployeeDetailsViewModel employeeDetailsViewModel;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        viewModelSetup();
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +63,6 @@ public class EducationStatusFragment extends Fragment implements View.OnClickLis
         super.onActivityCreated(savedInstanceState);
 
         bindView();
-        viewModelSetup();
         viewSetup();
 
     }
@@ -78,7 +84,7 @@ public class EducationStatusFragment extends Fragment implements View.OnClickLis
     private void viewModelSetup() {
 
         employeeDetailsViewModel = new ViewModelProvider(this).get(EmployeeDetailsViewModel.class);
-        employeeDetailsViewModel.EmployeeDetails.observe(getViewLifecycleOwner(), this);
+        employeeDetailsViewModel.EmployeeDetails.observe(this, this);
 
     }
 
@@ -145,13 +151,19 @@ public class EducationStatusFragment extends Fragment implements View.OnClickLis
         JsonObject object= new JsonObject();
         object.addProperty(Constant.EmployeeeducationVarification, edu_status);
 
-        JsonObject jsonObject= new JsonObject();
-        jsonObject.add(Constant.data,object);
+//        JsonObject jsonObject= new JsonObject();
+//        jsonObject.add(Constant.data,object);
 
         JsonObject data= new JsonObject();
-        data.add(Constant.data,jsonObject);
+        data.add(Constant.data,object);
 
         employeeDetailsViewModel.saveEmployeeDetail(data);
+
+
+    }
+
+    @Override
+    public void onChanged(ClsSaveEmployeeDetailModel clsSaveEmployeeDetailModel) {
 
         if(edu_status) {
 
@@ -162,10 +174,6 @@ public class EducationStatusFragment extends Fragment implements View.OnClickLis
             ((MainActivity) getActivity()).replaceFragment(new CriminalBackgroundStatusFragment(), true, KeyClass.FRAGMENT_CRIMINAL_STATUS,
                     KeyClass.FRAGMENT_CRIMINAL_STATUS);
         }
-    }
-
-    @Override
-    public void onChanged(ClsSaveEmployeeDetailModel clsSaveEmployeeDetailModel) {
 
     }
 }

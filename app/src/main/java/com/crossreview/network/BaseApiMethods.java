@@ -25,17 +25,17 @@ public interface BaseApiMethods {
     Call<ClsEmployerResponseModel>employerData(@Body JsonObject object);
 
     @PUT("save-employee")
-    Call<ClsSaveEmployeeDetailModel> employeeDetail(@Header("Authorization") String bearerToken, @Body JsonObject object);
+    Call<ClsSaveEmployeeDetailModel> employeeDetail(@Header("auth_token") String bearerToken, @Body JsonObject object);
 
     @GET("get-all-university/{input}")
     Call<InstitutionNameModel>institution(@Path(value = "input",encoded = true)String input);
 
 
     @PUT("create-police-verification")
-    Call<PoliceVarificataionDetailsModel>policeVarificataions(@Header("Authorization")String bearerToken, @Body JsonObject object);
+    Call<PoliceVarificataionDetailsModel>policeVarificataions(@Header("auth_token")String bearerToken, @Body JsonObject object);
 
     @GET("get-userbyid")
-    Call<PreviewInfoModel>previewInfo(@Header("Authorization")String bearerToke);
+    Call<PreviewInfoModel>previewInfo(@Header("auth_token")String bearerToke);
 
 
 }

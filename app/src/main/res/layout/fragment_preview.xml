@@ -301,7 +301,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp10"
-                    tools:listitem="@layout/employer_deatils_recycler_item"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
@@ -333,7 +332,6 @@
                     android:id="@+id/education_details_recyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/education_details_recycler_item"
                     android:layout_marginTop="@dimen/dp10"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 

@@ -306,6 +306,7 @@
                 android:hint="@string/select_sepecilization"
                 android:imeOptions="actionNext"
                 android:padding="@dimen/dp8"
+                android:inputType="number"
                 android:singleLine="true"
                 android:textColorHint="@color/input_text_color"
                 android:textSize="@dimen/text_size_16"

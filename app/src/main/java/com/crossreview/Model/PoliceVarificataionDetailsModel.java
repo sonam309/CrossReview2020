@@ -60,6 +60,9 @@ public class PoliceVarificataionDetailsModel extends ClsResultStateResponseModel
         @SerializedName("address")
         @Expose
         private Address address;
+        @SerializedName("relatives")
+        @Expose
+        private List<Relative> relatives = null;
 
 
         public String getMotherName() {
@@ -164,6 +167,51 @@ public class PoliceVarificataionDetailsModel extends ClsResultStateResponseModel
 
         public void setAddress(Address address) {
             this.address = address;
+        }
+
+        public List<Relative> getRelatives() {
+            return relatives;
+        }
+
+        public void setRelatives(List<Relative> relatives) {
+            this.relatives = relatives;
+        }
+    }
+
+    public class Relative {
+
+        @SerializedName("relative_name")
+        @Expose
+        private String relativeName;
+        @SerializedName("relative_address")
+        @Expose
+        private String relativeAddress;
+        @SerializedName("relative_contact")
+        @Expose
+        private Integer relativeContact;
+
+        public String getRelativeName() {
+            return relativeName;
+        }
+
+        public void setRelativeName(String relativeName) {
+            this.relativeName = relativeName;
+        }
+
+        public String getRelativeAddress() {
+            return relativeAddress;
+        }
+
+        public void setRelativeAddress(String relativeAddress) {
+            this.relativeAddress = relativeAddress;
+        }
+
+        public Integer getRelativeContact() {
+            return relativeContact;
+        }
+
+        public void setRelativeContact(Integer relativeContact) {
+            this.relativeContact = relativeContact;
         }
     }
 
@@ -353,6 +401,7 @@ public class PoliceVarificataionDetailsModel extends ClsResultStateResponseModel
         @SerializedName("pin_code")
         @Expose
         private Integer pinCode;
+
 
 
         public String getAddressType() {

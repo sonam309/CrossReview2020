@@ -1,5 +1,8 @@
 package com.crossreview.ViewModel;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -43,7 +46,7 @@ public class EmployerDataViewModel extends ViewModel {
 
                         EmployerData.postValue(model);
 
-                        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.TOKEN,model.getData().getAccessToken());
+                       // PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.TOKEN,model.getData().getAccessToken());
                     }
 
                 }
@@ -51,7 +54,7 @@ public class EmployerDataViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<ClsEmployerResponseModel> call, Throwable t) {
-
+                Log.e("okokokokok",t.getMessage());
             }
         });
 

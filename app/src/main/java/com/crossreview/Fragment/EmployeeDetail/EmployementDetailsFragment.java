@@ -1,6 +1,7 @@
 package com.crossreview.Fragment.EmployeeDetail;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -73,15 +74,15 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
     private ImageView iv_delete, doc_file;
     private Date dates;
     private Spinner ctc_in_lac_spinner, ctc_in_thous_spinner;
-    private Boolean selectdate = false;
+    private Boolean selectdate = false, to_varify = true;
     private EmployeeDetailsViewModel employeeDetailsViewModel;
     private ClsSaveEmployeeDetailModel saveEmployeeDetailModel;
     private CompanyNameModel companyNameModel;
     private CompanyNameViewModel companyNameViewModel;
     private EditText txt_job_role_et, txt_designation_et, txt_reporting_person_et, txt_reporting_person_designataion_et, txt_reason_of_leaving_et;
-    ;
     private Handler handler = new Handler();
     private ArrayAdapter<CompanyNameModel.Data> companyNameModelArrayAdapter;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -91,6 +92,9 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
             data = getArguments().getString(KeyClass.Data);
         }
+
+        viewModelSetup();
+
     }
 
 
@@ -103,7 +107,6 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
             mview = inflater.inflate(R.layout.fragment_employement_details, container, false);
 
             bindView();
-            viewModelSetup();
             viewSetup();
         }
         return mview;
@@ -112,7 +115,6 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
 
 
     }
@@ -134,7 +136,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
     private void viewModelSetup() {
 
         employeeDetailsViewModel = new ViewModelProvider(this).get(EmployeeDetailsViewModel.class);
-        employeeDetailsViewModel.EmployeeDetails.observe(getViewLifecycleOwner(), this);
+        employeeDetailsViewModel.EmployeeDetails.observe(this, this);
 
 
         saveEmployeeDetailModel = new ClsSaveEmployeeDetailModel();
@@ -142,6 +144,12 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
     }
 
     private void viewSetup() {
+
+        progressDialog = new ProgressDialog(mctx);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setProgress(0);
 
 
         txt_add_employement_rl.setOnClickListener(this);
@@ -272,8 +280,6 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
         View view = inflater.inflate(R.layout.employement_detail_layout, null);
 
 
-
-
         txt_org_deatil_rl = view.findViewById(R.id.txt_org_deatil_rl);
         txt_reporting_person_rl = view.findViewById(R.id.txt_reporting_person_rl);
         txt_upload_doc_rl = view.findViewById(R.id.txt_upload_doc_rl);
@@ -299,7 +305,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
         ctc_in_lac_spinner = view.findViewById(R.id.ctc_in_lac_spinner);
         ctc_in_thous_spinner = view.findViewById(R.id.ctc_in_thous_spinner);
-         AutoCompleteTextView txt_orgName_Autocomplete = view.findViewById(R.id.txt_orgName_Autocomplete);
+        AutoCompleteTextView txt_orgName_Autocomplete = view.findViewById(R.id.txt_orgName_Autocomplete);
         viewOnclick();
         setSpinnerAdapter();
         final CompanyNameModel[] model = new CompanyNameModel[1];
@@ -332,10 +338,10 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
         addEmploymentDetailView.addView(view);
 
         companyNameViewModel = new ViewModelProvider(this).get(CompanyNameViewModel.class);
-        companyNameViewModel.companyName.observe(getViewLifecycleOwner(), new Observer<CompanyNameModel>() {
+        companyNameViewModel.companyName.observe(this, new Observer<CompanyNameModel>() {
             @Override
             public void onChanged(CompanyNameModel companyNameModel) {
-               companyNameModelArrayAdapter = new ArrayAdapter<>(MainActivity.context, R.layout.autocomplte_textview_layout, companyNameModel.getData());
+                companyNameModelArrayAdapter = new ArrayAdapter<>(MainActivity.context, R.layout.autocomplte_textview_layout, companyNameModel.getData());
                 txt_orgName_Autocomplete.setAdapter(companyNameModelArrayAdapter);
                 txt_orgName_Autocomplete.showDropDown();
 //                txt_orgName_Autocomplete.setText(OrgName);
@@ -519,6 +525,9 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
     @Override
     public void onChanged(ClsSaveEmployeeDetailModel clsSaveEmployeeDetailModel) {
 
+        ((MainActivity) getActivity()).replaceFragment(new EducationStatusFragment(), true, KeyClass.FRAGMENT_EDUCATION_DETAIL,
+                KeyClass.FRAGMENT_EDUCATION_DETAIL);
+
 
     }
 
@@ -673,17 +682,18 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
     }
 
 
-
     public void setTimer(final AutoCompleteTextView autoCompleteTextView) {
         handler.removeMessages(0);
         if (autoCompleteTextView.getText().toString().length() > 0) {
             handler = new Handler();
             handler.postDelayed(new Runnable() {
+
                 @Override
                 public void run() {
                     ((MainActivity) getActivity()).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+
                             autoCompleteTextView.dismissDropDown();
 
 
@@ -691,7 +701,10 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                     });
 
                     companyNameViewModel.ComNamefun(autoCompleteTextView.getText().toString());
+
+
                 }
+
 
             }, 1000);
         }
@@ -708,7 +721,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
                 if (path_of_pic.contains("pdf")) {
 
-                    new DownloadPdfAndShowInImageView(getActivity(), "document", doc_file).execute(path_of_pic,"document");
+                    new DownloadPdfAndShowInImageView(getActivity(), "document", doc_file).execute(path_of_pic, "document");
 
                 }
 //               Utility.uploadImageAwsToServer(pathOfPic,this);
@@ -729,7 +742,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
             if (pathOfPic.contains("pdf")) {
 
 
-                new DownloadPdfAndShowInImageView(getActivity(), "document", doc_file).execute(pathOfPic,"document");
+                new DownloadPdfAndShowInImageView(getActivity(), "document", doc_file).execute(pathOfPic, "document");
             } else {
 
 //            try {f hyvnn inh  h
@@ -807,18 +820,21 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
             String lac = ctcLac.getSelectedItem().toString();
             String thou = ctcthos.getSelectedItem().toString();
             String fileName = "";
-            ArrayList<String > docFile= new ArrayList<String>();
+            ArrayList<String> docFile = new ArrayList<String>();
+            JsonArray document = new JsonArray();
+            for (int i = 0; i < upload_doc.getChildCount(); i++) {
 
+                fileName = doc_name.getText().toString();
+                docFile.add(fileName);
 
-            for (int i=0;i<upload_doc.getChildCount();i++){
+                JsonObject object = new JsonObject();
+                object.addProperty(Constant.Document_Type, "Image");
+                object.addProperty(Constant.Document_Name, fileName);
+                object.addProperty(Constant.Document_URL, docFile.toString());
 
-                 fileName = doc_name.getText().toString();
-                 docFile.add(fileName);
-
+                document.add(object);
 
             }
-
-            JSONArray document= new JSONArray(docFile);
 
 
             if (doj.getText().toString().isEmpty()) {
@@ -924,8 +940,8 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
             jsonObject.addProperty(Constant.Employer_ctc_thous, thou);
             jsonObject.addProperty(Constant.Employer_Reporting_Persona_name, reportingPersonName.getText().toString());
             jsonObject.addProperty(Constant.Employer_Reporting_person_designantion, reportingPersonDesignation.getText().toString());
-            jsonObject.addProperty(Constant.Employer_upload_Document, document.toString());
-
+            jsonObject.addProperty(Constant.to_varify, to_varify);
+            jsonObject.add(Constant.UploadDocument, document);
             jsonArray.add(jsonObject);
         }
 
@@ -937,8 +953,6 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
         employeeDetailsViewModel.saveEmployeeDetail(data);
 
-        ((MainActivity) getActivity()).replaceFragment(new EducationStatusFragment(), true, KeyClass.FRAGMENT_EDUCATION_DETAIL,
-                KeyClass.FRAGMENT_EDUCATION_DETAIL);
 
     }
 

@@ -1,5 +1,6 @@
 package com.crossreview.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -54,6 +55,7 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
     private Handler handler = new Handler();
     private EmployerDataViewModel saveEmployerDataViewModel;
     private String empName, empEmail, empContact, empOrgName, empDesignation, orgNameId,token;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -64,6 +66,8 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
             heading = getArguments().getString(KeyClass.Heading);
 
         }
+        viewModelSetup();
+
     }
 
     @Override
@@ -82,7 +86,6 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
         super.onActivityCreated(savedInstanceState);
 
         bindView();
-        viewModelSetup();
         viewSetup();
 
     }
@@ -111,14 +114,20 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
     private void viewModelSetup() {
 
         companyNameViewModel = new ViewModelProvider(this).get(CompanyNameViewModel.class);
-        companyNameViewModel.companyName.observe(getViewLifecycleOwner(), this);
+        companyNameViewModel.companyName.observe(this, this);
         saveEmployerDataViewModel = new ViewModelProvider(this).get(EmployerDataViewModel.class);
-        saveEmployerDataViewModel.EmployerData.observe(getViewLifecycleOwner(), employerResponseModelObserver);
+        saveEmployerDataViewModel.EmployerData.observe(this, employerResponseModelObserver);
 
 
     }
 
     private void viewSetup() {
+
+        progressDialog = new ProgressDialog(mctx);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setProgress(0);
 
 
 
@@ -196,6 +205,8 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
     @Override
     public void onChanged(CompanyNameModel companyNameModel) {
 
+
+
         companyNameModelArrayAdapter = new ArrayAdapter<>(MainActivity.context, R.layout.support_simple_spinner_dropdown_item, companyNameModel.getData());
         txt_orgName_Autocomplete.setAdapter(companyNameModelArrayAdapter);
         txt_orgName_Autocomplete.showDropDown();
@@ -213,7 +224,8 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
             token=clsEmployerResponseModel.getData().getAccessToken();
             PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.TOKEN,token);
 
-
+            ((MainActivity) getActivity()).replaceFragment(new EmployeeDetailsFragment(), false, KeyClass.FRAGMENT_EMPLOYEE_DETAIL,
+                    KeyClass.FRAGMENT_EMPLOYEE_DETAIL);
         }
     };
 
@@ -320,8 +332,7 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
         saveEmployerDataViewModel.saveEmpData(empName, empEmail, empContact, orgNameId, empDesignation);
 
 
-        ((MainActivity) getActivity()).replaceFragment(new EmployeeDetailsFragment(), false, KeyClass.FRAGMENT_EMPLOYEE_DETAIL,
-                KeyClass.FRAGMENT_EMPLOYEE_DETAIL);
+
 
 
     }

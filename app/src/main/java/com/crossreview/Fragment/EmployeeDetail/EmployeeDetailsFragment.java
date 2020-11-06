@@ -77,6 +77,8 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
             data = getArguments().getString(KeyClass.Data);
         }
+
+        viewModelsetup();
     }
 
 
@@ -98,7 +100,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         super.onActivityCreated(savedInstanceState);
 
         bindView();
-        viewModelsetup();
+
         viewSetup();
     }
 
@@ -204,7 +206,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     private void viewModelsetup() {
 
         employeeDetailsViewModel = new ViewModelProvider(this).get(EmployeeDetailsViewModel.class);
-        employeeDetailsViewModel.EmployeeDetails.observe(getViewLifecycleOwner(), this);
+        employeeDetailsViewModel.EmployeeDetails.observe(this, this);
 
     }
 
@@ -341,6 +343,9 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
     @Override
     public void onChanged(ClsSaveEmployeeDetailModel clsSaveEmployeeDetailModel) {
+
+        ((MainActivity) getActivity()).replaceFragment(new EmployeeStatusFragment(), true, KeyClass.FRAGMENT_EMPLOYEE_STATUS,
+                KeyClass.FRAGMENT_EMPLOYEE_STATUS);
 
     }
 
@@ -497,6 +502,8 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         jsonObject.addProperty(EmployeeProfilePic, profileUrl);
 
 
+
+
         JsonObject data = new JsonObject();
         data.add(Constant.data, jsonObject);
 
@@ -506,8 +513,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         employeeDetailsViewModel.saveEmployeeDetail(data);
 
 
-        ((MainActivity) getActivity()).replaceFragment(new EmployeeStatusFragment(), true, KeyClass.FRAGMENT_EMPLOYEE_STATUS,
-                KeyClass.FRAGMENT_EMPLOYEE_STATUS);
+
 
 
     }
@@ -519,7 +525,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
             case R.id.txt_employee_id_et:
 
-                onClick(next_btn);
+//                onClick(next_btn);
 
                 break;
 
