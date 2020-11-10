@@ -88,6 +88,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/dp40"
             android:layout_marginTop="@dimen/dp20"
+            android:inputType="textEmailAddress"
             android:layout_marginRight="@dimen/dp40"
             android:layout_marginBottom="@dimen/dp40"
             android:background="@drawable/square_white_bg"

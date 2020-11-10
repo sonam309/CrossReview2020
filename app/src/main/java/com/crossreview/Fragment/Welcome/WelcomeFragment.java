@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.crossreview.Activity.MainActivity;
+import com.crossreview.Fragment.Authentication.LoginFragment;
+import com.crossreview.Fragment.CheckOutFragment;
 import com.crossreview.Fragment.CriminalDetail.CriminalBackgroundStatusFragment;
 import com.crossreview.Fragment.CriminalDetail.CriminalDetailCompleteFragment;
 import com.crossreview.Fragment.EducationDetail.EducationDetailFragment;
@@ -75,7 +77,7 @@ public class WelcomeFragment extends Fragment implements View.OnClickListener
 
             case R.id.varify_now_btn:
 
-                ((MainActivity)getActivity()).replaceFragment(new CriminalBackgroundStatusFragment(),false, KeyClass.FRAGMENT_EMPLOYER_INFORMATION,
+                ((MainActivity)getActivity()).replaceFragment(new CheckOutFragment(),false, KeyClass.FRAGMENT_EMPLOYER_INFORMATION,
                         KeyClass.FRAGMENT_EMPLOYER_INFORMATION);
 
                 break;

@@ -34,40 +34,40 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         private String employeeBasicId;
         @SerializedName("Employee_Id")
         @Expose
-        private Object employeeId;
+        private String employeeId;
         @SerializedName("Employee_Name")
         @Expose
-        private Object employeeName;
+        private String employeeName;
         @SerializedName("Employee_Gender")
         @Expose
-        private Object employeeGender;
+        private String employeeGender;
         @SerializedName("Employee_Address")
         @Expose
-        private Object employeeAddress;
+        private String employeeAddress;
         @SerializedName("Employee_City")
         @Expose
-        private Object employeeCity;
+        private String employeeCity;
         @SerializedName("Employee_State")
         @Expose
-        private Object employeeState;
+        private String employeeState;
         @SerializedName("Employee_Pin_Code")
         @Expose
-        private Object employeePinCode;
+        private String employeePinCode;
         @SerializedName("Employe_Profile_Pic")
         @Expose
         private String employeProfilePic;
         @SerializedName("Employee_DOB")
         @Expose
-        private Object employeeDOB;
+        private String employeeDOB;
         @SerializedName("Employee_Father_Name")
         @Expose
-        private Object employeeFatherName;
+        private String employeeFatherName;
         @SerializedName("Current_Work_Location")
         @Expose
-        private Object currentWorkLocation;
+        private String currentWorkLocation;
         @SerializedName("Current_Designation_Detail")
         @Expose
-        private Object currentDesignationDetail;
+        private String currentDesignationDetail;
         @SerializedName("Police_verification")
         @Expose
         private Boolean policeVerification;
@@ -76,25 +76,25 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         private Boolean educationVerification;
         @SerializedName("requested_by")
         @Expose
-        private Object requestedBy;
+        private String requestedBy;
         @SerializedName("requested_to")
         @Expose
-        private Object requestedTo;
+        private String requestedTo;
         @SerializedName("Experience")
         @Expose
         private Boolean experience;
         @SerializedName("varyfied_by_Employer_Id")
         @Expose
-        private Object varyfiedByEmployerId;
+        private String varyfiedByEmployerId;
         @SerializedName("varyfied_by_Employer_Email")
         @Expose
-        private Object varyfiedByEmployerEmail;
+        private String varyfiedByEmployerEmail;
         @SerializedName("DOJ")
         @Expose
-        private Object dOJ;
+        private String dOJ;
         @SerializedName("DOI")
         @Expose
-        private Object dOI;
+        private String dOI;
         @SerializedName("status")
         @Expose
         private String status;
@@ -123,8 +123,9 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         @Expose
         private Employer employer;
 
+
         public String getEmployerId() {
-            return employerId;
+            return employerId==null?"":employerId;
         }
 
         public void setEmployerId(String employerId) {
@@ -132,7 +133,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         }
 
         public String getEmployerEmail() {
-            return employerEmail;
+            return employerEmail==null?"":employerEmail;
         }
 
         public void setEmployerEmail(String employerEmail) {
@@ -140,111 +141,111 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         }
 
         public String getEmployeeBasicId() {
-            return employeeBasicId;
+            return employeeBasicId==null?"":employeeBasicId;
         }
 
         public void setEmployeeBasicId(String employeeBasicId) {
             this.employeeBasicId = employeeBasicId;
         }
 
-        public Object getEmployeeId() {
-            return employeeId;
+        public String getEmployeeId() {
+            return employeeId==null?"":employeeId;
         }
 
-        public void setEmployeeId(Object employeeId) {
+        public void setEmployeeId(String employeeId) {
             this.employeeId = employeeId;
         }
 
-        public Object getEmployeeName() {
+        public String getEmployeeName() {
             return employeeName==null?"":employeeName;
         }
 
-        public void setEmployeeName(Object employeeName) {
+        public void setEmployeeName(String employeeName) {
             this.employeeName = employeeName;
         }
 
-        public Object getEmployeeGender() {
-            return employeeGender;
+        public String getEmployeeGender() {
+            return employeeGender==null?"":employeeGender;
         }
 
-        public void setEmployeeGender(Object employeeGender) {
+        public void setEmployeeGender(String employeeGender) {
             this.employeeGender = employeeGender;
         }
 
-        public Object getEmployeeAddress() {
-            return employeeAddress;
+        public String getEmployeeAddress() {
+            return employeeAddress==null?"":employeeAddress;
         }
 
-        public void setEmployeeAddress(Object employeeAddress) {
+        public void setEmployeeAddress(String employeeAddress) {
             this.employeeAddress = employeeAddress;
         }
 
-        public Object getEmployeeCity() {
-            return employeeCity;
+        public String getEmployeeCity() {
+            return employeeCity==null?"":employeeCity;
         }
 
-        public void setEmployeeCity(Object employeeCity) {
+        public void setEmployeeCity(String employeeCity) {
             this.employeeCity = employeeCity;
         }
 
-        public Object getEmployeeState() {
-            return employeeState;
+        public String getEmployeeState() {
+            return employeeState==null?"":employeeState;
         }
 
-        public void setEmployeeState(Object employeeState) {
+        public void setEmployeeState(String employeeState) {
             this.employeeState = employeeState;
         }
 
-        public Object getEmployeePinCode() {
-            return employeePinCode;
+        public String getEmployeePinCode() {
+            return employeePinCode==null?"":employeePinCode;
         }
 
-        public void setEmployeePinCode(Object employeePinCode) {
+        public void setEmployeePinCode(String employeePinCode) {
             this.employeePinCode = employeePinCode;
         }
 
         public String getEmployeProfilePic() {
-            return employeProfilePic;
+            return employeProfilePic==null?"":employeProfilePic;
         }
 
         public void setEmployeProfilePic(String employeProfilePic) {
             this.employeProfilePic = employeProfilePic;
         }
 
-        public Object getEmployeeDOB() {
-            return employeeDOB;
+        public String getEmployeeDOB() {
+            return employeeDOB==null?"":employeeDOB;
         }
 
-        public void setEmployeeDOB(Object employeeDOB) {
+        public void setEmployeeDOB(String employeeDOB) {
             this.employeeDOB = employeeDOB;
         }
 
-        public Object getEmployeeFatherName() {
-            return employeeFatherName;
+        public String getEmployeeFatherName() {
+            return employeeFatherName==null?"":employeeFatherName;
         }
 
-        public void setEmployeeFatherName(Object employeeFatherName) {
+        public void setEmployeeFatherName(String employeeFatherName) {
             this.employeeFatherName = employeeFatherName;
         }
 
-        public Object getCurrentWorkLocation() {
-            return currentWorkLocation;
+        public String getCurrentWorkLocation() {
+            return currentWorkLocation==null?"":currentWorkLocation;
         }
 
-        public void setCurrentWorkLocation(Object currentWorkLocation) {
+        public void setCurrentWorkLocation(String currentWorkLocation) {
             this.currentWorkLocation = currentWorkLocation;
         }
 
-        public Object getCurrentDesignationDetail() {
-            return currentDesignationDetail;
+        public String getCurrentDesignationDetail() {
+            return currentDesignationDetail==null?"":currentDesignationDetail;
         }
 
-        public void setCurrentDesignationDetail(Object currentDesignationDetail) {
+        public void setCurrentDesignationDetail(String currentDesignationDetail) {
             this.currentDesignationDetail = currentDesignationDetail;
         }
 
         public Boolean getPoliceVerification() {
-            return policeVerification;
+            return policeVerification==null;
         }
 
         public void setPoliceVerification(Boolean policeVerification) {
@@ -259,19 +260,19 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
             this.educationVerification = educationVerification;
         }
 
-        public Object getRequestedBy() {
-            return requestedBy;
+        public String getRequestedBy() {
+            return requestedBy==null?"":requestedBy;
         }
 
-        public void setRequestedBy(Object requestedBy) {
+        public void setRequestedBy(String requestedBy) {
             this.requestedBy = requestedBy;
         }
 
-        public Object getRequestedTo() {
-            return requestedTo;
+        public String getRequestedTo() {
+            return requestedTo==null?"":requestedTo;
         }
 
-        public void setRequestedTo(Object requestedTo) {
+        public void setRequestedTo(String requestedTo) {
             this.requestedTo = requestedTo;
         }
 
@@ -283,40 +284,40 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
             this.experience = experience;
         }
 
-        public Object getVaryfiedByEmployerId() {
-            return varyfiedByEmployerId;
+        public String getVaryfiedByEmployerId() {
+            return varyfiedByEmployerId==null?"":varyfiedByEmployerId;
         }
 
-        public void setVaryfiedByEmployerId(Object varyfiedByEmployerId) {
+        public void setVaryfiedByEmployerId(String varyfiedByEmployerId) {
             this.varyfiedByEmployerId = varyfiedByEmployerId;
         }
 
-        public Object getVaryfiedByEmployerEmail() {
-            return varyfiedByEmployerEmail;
+        public String getVaryfiedByEmployerEmail() {
+            return varyfiedByEmployerEmail==null?"":varyfiedByEmployerEmail;
         }
 
-        public void setVaryfiedByEmployerEmail(Object varyfiedByEmployerEmail) {
+        public void setVaryfiedByEmployerEmail(String varyfiedByEmployerEmail) {
             this.varyfiedByEmployerEmail = varyfiedByEmployerEmail;
         }
 
-        public Object getdOJ() {
-            return dOJ;
+        public String getdOJ() {
+            return dOJ==null?"":dOJ;
         }
 
-        public void setdOJ(Object dOJ) {
+        public void setdOJ(String dOJ) {
             this.dOJ = dOJ;
         }
 
-        public Object getdOI() {
-            return dOI;
+        public String getdOI() {
+            return dOI==null?"":dOI;
         }
 
-        public void setdOI(Object dOI) {
+        public void setdOI(String dOI) {
             this.dOI = dOI;
         }
 
         public String getStatus() {
-            return status;
+            return status==null?"":status;
         }
 
         public void setStatus(String status) {
@@ -324,7 +325,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         }
 
         public String getCreatedAt() {
-            return createdAt;
+            return createdAt==null?"":createdAt;
         }
 
         public void setCreatedAt(String createdAt) {
@@ -372,7 +373,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         }
 
         public String getAuthToken() {
-            return authToken;
+            return authToken==null?"":authToken;
         }
 
         public void setAuthToken(String authToken) {
@@ -416,7 +417,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         }
 
         public String getEmployeeBasicId() {
-            return employeeBasicId;
+            return employeeBasicId==null?"":employeeBasicId;
         }
 
         public void setEmployeeBasicId(String employeeBasicId) {
@@ -424,7 +425,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         }
 
         public String getRelativeName() {
-            return relativeName;
+            return relativeName==null?"":relativeName;
         }
 
         public void setRelativeName(String relativeName) {
@@ -432,7 +433,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         }
 
         public String getRelativeAddress() {
-            return relativeAddress;
+            return relativeAddress==null?"":relativeAddress;
         }
 
         public void setRelativeAddress(String relativeAddress) {
@@ -440,7 +441,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         }
 
         public String getRelativeContact() {
-            return relativeContact;
+            return relativeContact==null?"":relativeContact;
         }
 
         public void setRelativeContact(String relativeContact) {
@@ -469,7 +470,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         private String organizationAddress;
 
         public String getEmployerName() {
-            return employerName;
+            return employerName==null?"":employerName;
         }
 
         public void setEmployerName(String employerName) {
@@ -477,7 +478,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         }
 
         public String getEmployerEmail() {
-            return employerEmail;
+            return employerEmail==null?"":employerEmail;
         }
 
         public void setEmployerEmail(String employerEmail) {
@@ -485,7 +486,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         }
 
         public String getEmployerContact() {
-            return employerContact;
+            return employerContact==null?"":employerContact;
         }
 
         public void setEmployerContact(String employerContact) {
@@ -493,7 +494,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         }
 
         public String getOrganizationName() {
-            return organizationName;
+            return organizationName==null?"":organizationName;
         }
 
         public void setOrganizationName(String organizationName) {
@@ -501,7 +502,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         }
 
         public String getOrganizationAddress() {
-            return organizationAddress;
+            return organizationAddress==null?"":organizationAddress;
         }
 
         public void setOrganizationAddress(String organizationAddress) {
@@ -524,7 +525,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         private String addressType;
         @SerializedName("address")
         @Expose
-        private Object address;
+        private String address;
         @SerializedName("village")
         @Expose
         private String village;
@@ -554,7 +555,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         }
 
         public String getEmployeeBasicId() {
-            return employeeBasicId;
+            return employeeBasicId==null?"":employeeBasicId;
         }
 
         public void setEmployeeBasicId(String employeeBasicId) {
@@ -562,7 +563,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         }
 
         public String getAddressType() {
-            return addressType;
+            return addressType==null?"":addressType;
         }
 
         public void setAddressType(String addressType) {
@@ -570,15 +571,15 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         }
 
         public Object getAddress() {
-            return address;
+            return address==null?"":address;
         }
 
-        public void setAddress(Object address) {
+        public void setAddress(String address) {
             this.address = address;
         }
 
         public String getVillage() {
-            return village;
+            return village==null?"":village;
         }
 
         public void setVillage(String village) {
@@ -586,7 +587,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         }
 
         public String getPostOffice() {
-            return postOffice;
+            return postOffice==null?"":postOffice;
         }
 
         public void setPostOffice(String postOffice) {
@@ -594,7 +595,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         }
 
         public String getPoliceStation() {
-            return policeStation;
+            return policeStation==null?"":policeStation;
         }
 
         public void setPoliceStation(String policeStation) {
@@ -662,19 +663,19 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         private String status;
         @SerializedName("requested_by")
         @Expose
-        private Object requestedBy;
+        private String requestedBy;
         @SerializedName("requested_to")
         @Expose
-        private Object requestedTo;
+        private String requestedTo;
         @SerializedName("verifier_name")
         @Expose
-        private Object verifierName;
+        private String verifierName;
         @SerializedName("verifier_email")
         @Expose
-        private Object verifierEmail;
+        private String verifierEmail;
         @SerializedName("verifier_designation")
         @Expose
-        private Object verifierDesignation;
+        private String verifierDesignation;
         @SerializedName("adharCard_number")
         @Expose
         private String adharCardNumber;
@@ -772,43 +773,43 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
             this.status = status;
         }
 
-        public Object getRequestedBy() {
+        public String getRequestedBy() {
             return requestedBy;
         }
 
-        public void setRequestedBy(Object requestedBy) {
+        public void setRequestedBy(String requestedBy) {
             this.requestedBy = requestedBy;
         }
 
-        public Object getRequestedTo() {
+        public String getRequestedTo() {
             return requestedTo;
         }
 
-        public void setRequestedTo(Object requestedTo) {
+        public void setRequestedTo(String requestedTo) {
             this.requestedTo = requestedTo;
         }
 
-        public Object getVerifierName() {
+        public String getVerifierName() {
             return verifierName;
         }
 
-        public void setVerifierName(Object verifierName) {
+        public void setVerifierName(String verifierName) {
             this.verifierName = verifierName;
         }
 
-        public Object getVerifierEmail() {
+        public String getVerifierEmail() {
             return verifierEmail;
         }
 
-        public void setVerifierEmail(Object verifierEmail) {
+        public void setVerifierEmail(String verifierEmail) {
             this.verifierEmail = verifierEmail;
         }
 
-        public Object getVerifierDesignation() {
+        public String getVerifierDesignation() {
             return verifierDesignation;
         }
 
-        public void setVerifierDesignation(Object verifierDesignation) {
+        public void setVerifierDesignation(String verifierDesignation) {
             this.verifierDesignation = verifierDesignation;
         }
 
@@ -883,7 +884,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         private String reportingPersonDesignation;
         @SerializedName("performance_review")
         @Expose
-        private Object performanceReview;
+        private String performanceReview;
         @SerializedName("rehire_elegibility")
         @Expose
         private Boolean rehireElegibility;
@@ -907,13 +908,13 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         private Boolean toVerify;
         @SerializedName("verifier_name")
         @Expose
-        private Object verifierName;
+        private String verifierName;
         @SerializedName("verifier_email")
         @Expose
-        private Object verifierEmail;
+        private String verifierEmail;
         @SerializedName("verifier_designation")
         @Expose
-        private Object verifierDesignation;
+        private String verifierDesignation;
         @SerializedName("Documents")
         @Expose
         private List<Document_> documents = null;
@@ -982,11 +983,11 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
             this.reportingPersonDesignation = reportingPersonDesignation;
         }
 
-        public Object getPerformanceReview() {
+        public String getPerformanceReview() {
             return performanceReview;
         }
 
-        public void setPerformanceReview(Object performanceReview) {
+        public void setPerformanceReview(String performanceReview) {
             this.performanceReview = performanceReview;
         }
 
@@ -1046,27 +1047,27 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
             this.toVerify = toVerify;
         }
 
-        public Object getVerifierName() {
+        public String getVerifierName() {
             return verifierName;
         }
 
-        public void setVerifierName(Object verifierName) {
+        public void setVerifierName(String verifierName) {
             this.verifierName = verifierName;
         }
 
-        public Object getVerifierEmail() {
+        public String getVerifierEmail() {
             return verifierEmail;
         }
 
-        public void setVerifierEmail(Object verifierEmail) {
+        public void setVerifierEmail(String verifierEmail) {
             this.verifierEmail = verifierEmail;
         }
 
-        public Object getVerifierDesignation() {
+        public String getVerifierDesignation() {
             return verifierDesignation;
         }
 
-        public void setVerifierDesignation(Object verifierDesignation) {
+        public void setVerifierDesignation(String verifierDesignation) {
             this.verifierDesignation = verifierDesignation;
         }
 
@@ -1100,7 +1101,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         private String documentName;
         @SerializedName("Document_Key")
         @Expose
-        private Object documentKey;
+        private String documentKey;
         @SerializedName("Document_URL")
         @Expose
         private String documentURL;
@@ -1150,7 +1151,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
             return documentKey;
         }
 
-        public void setDocumentKey(Object documentKey) {
+        public void setDocumentKey(String documentKey) {
             this.documentKey = documentKey;
         }
 
@@ -1194,19 +1195,19 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         private Integer passOutYear;
         @SerializedName("marks")
         @Expose
-        private Object marks;
+        private String marks;
         @SerializedName("specialization")
         @Expose
         private String specialization;
         @SerializedName("verifier_name")
         @Expose
-        private Object verifierName;
+        private String verifierName;
         @SerializedName("verifier_email")
         @Expose
-        private Object verifierEmail;
+        private String verifierEmail;
         @SerializedName("verifier_designation")
         @Expose
-        private Object verifierDesignation;
+        private String verifierDesignation;
         @SerializedName("Documents")
         @Expose
         private List<Document> documents = null;
@@ -1279,7 +1280,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
             return marks;
         }
 
-        public void setMarks(Object marks) {
+        public void setMarks(String marks) {
             this.marks = marks;
         }
 
@@ -1295,7 +1296,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
             return verifierName;
         }
 
-        public void setVerifierName(Object verifierName) {
+        public void setVerifierName(String verifierName) {
             this.verifierName = verifierName;
         }
 
@@ -1303,7 +1304,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
             return verifierEmail;
         }
 
-        public void setVerifierEmail(Object verifierEmail) {
+        public void setVerifierEmail(String verifierEmail) {
             this.verifierEmail = verifierEmail;
         }
 
@@ -1311,7 +1312,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
             return verifierDesignation;
         }
 
-        public void setVerifierDesignation(Object verifierDesignation) {
+        public void setVerifierDesignation(String verifierDesignation) {
             this.verifierDesignation = verifierDesignation;
         }
 
@@ -1345,7 +1346,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
         private String documentName;
         @SerializedName("Document_Key")
         @Expose
-        private Object documentKey;
+        private String documentKey;
         @SerializedName("Document_URL")
         @Expose
         private String documentURL;
@@ -1395,7 +1396,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
             return documentKey;
         }
 
-        public void setDocumentKey(Object documentKey) {
+        public void setDocumentKey(String documentKey) {
             this.documentKey = documentKey;
         }
 
