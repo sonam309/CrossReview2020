@@ -112,7 +112,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Obs
 
                         txt_email_et.clearFocus();
                         Utility.hideKeyboard(view);
-                        getOtpViewModel.getOtpfun(txt_email_et.getText().toString(),mctx);
+                        getOtpViewModel.getOtpfun(txt_email_et.getText().toString(), mctx);
                     }
                 } else {
 
