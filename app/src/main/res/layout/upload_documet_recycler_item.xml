@@ -10,7 +10,7 @@
         android:layout_height="@dimen/dp70"
         android:padding="@dimen/dp10"
         android:src="@drawable/ic_doc"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/doc_name"
@@ -20,6 +20,6 @@
         android:text="Resume.doc"
         android:textColor="@color/headingcolor"
         android:textSize="@dimen/text_size_12"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
 </LinearLayout>

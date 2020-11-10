@@ -39,6 +39,7 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.internal.Constants;
+import com.bumptech.glide.Glide;
 import com.crossreview.Activity.MainActivity;
 import com.crossreview.BuildConfig;
 import com.crossreview.Interface.awsUploadCallback;
@@ -398,6 +399,11 @@ public class Utility {
         }
         return null;
     }
+
+
+//    public static void loadImage(ImageView imageView, Context context, String profilePic) {
+//        Glide.with(context).load(KeyClass.BASE_URL.substring(0,KeyClass.BASE_URL.length()-1)+profilePic).into(imageView);
+//    }
 
 
 }

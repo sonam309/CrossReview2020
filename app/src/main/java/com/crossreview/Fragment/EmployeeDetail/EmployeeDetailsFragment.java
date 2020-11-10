@@ -39,6 +39,7 @@ import com.crossreview.Utilites.KeyClass;
 import com.crossreview.Utilites.PrefrenceShared;
 import com.crossreview.Utilites.Utility;
 import com.crossreview.ViewModel.EmployeeDetailsViewModel;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.security.Key;
@@ -487,6 +488,8 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         }
 
 
+        JsonArray experience = new JsonArray();
+
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty(Constant.EmployeeName, name);
         jsonObject.addProperty(Constant.EmployeeFathersName, fathers_name);
@@ -501,11 +504,13 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         jsonObject.addProperty(Constant.EmployeeId, emp_id);
         jsonObject.addProperty(EmployeeProfilePic, profileUrl);
 
+        experience.add(jsonObject);
 
+        JsonObject object = new JsonObject();
+        object.add(Constant.experience, experience);
 
-
-        JsonObject data = new JsonObject();
-        data.add(Constant.data, jsonObject);
+        JsonObject data= new JsonObject();
+        data.add(Constant.data,object);
 
 
         PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.Data, data.toString());

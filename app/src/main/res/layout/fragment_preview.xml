@@ -359,12 +359,18 @@
                     android:layout_height="@dimen/dp1"
                     android:background="@color/view_bg" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/addres_recyclerview"
+                    android:layout_marginTop="@dimen/dp10"/>
+
+
             </LinearLayout>
 
-            <include
-                android:id="@+id/police_varification_expand_ll"
-                layout="@layout/police_verification_detail_expand_layout"
-                android:visibility="visible" />
+
+
+
 
 
             <LinearLayout

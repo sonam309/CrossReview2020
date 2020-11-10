@@ -1,5 +1,7 @@
 package com.crossreview.ViewModel;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -45,7 +47,7 @@ public class PoliceVarificataionsViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<PoliceVarificataionDetailsModel> call, Throwable t) {
-
+                Log.e("pppppppppp",t.getMessage());
             }
         });
 

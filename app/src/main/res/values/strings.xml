@@ -190,4 +190,5 @@
     <string name="profileimg">Upload Profile Picture*</string>
     <string name="educataion">Select educataion Type</string>
     <string name="preview">Preview</string>
+    <string name="year">Year</string>
 </resources>

@@ -2,6 +2,7 @@ package com.crossreview.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -20,6 +22,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.crossreview.Activity.MainActivity;
+import com.crossreview.Adapters.EducationDetailsRecyclerAdapter;
+import com.crossreview.Adapters.EmployerDetailsRecyclerAdapter;
+import com.crossreview.Adapters.PoliceVarificationRecyclerAdapter;
 import com.crossreview.Fragment.Authentication.LoginFragment;
 import com.crossreview.Model.PreviewInfoModel;
 import com.crossreview.R;
@@ -27,18 +32,24 @@ import com.crossreview.Utilites.KeyClass;
 import com.crossreview.ViewModel.EmployeeDetailsViewModel;
 import com.crossreview.ViewModel.PreviewInfoViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class PreviewFragment extends Fragment implements View.OnClickListener, Observer<PreviewInfoModel> {
 
     private View mview;
     private Context mctx;
-    private TextView txt_back_btn,txt_emp_name,txt_emp_contact,txt_emp_email,txt_emp_dob,txt_emp_gender,txt_emp_address;
-    private TextView txt_company_name,txt_company_address,txt_company_state,company_hr_name,company_hr_email,company_hr_contact;
+    private TextView txt_back_btn, txt_emp_name, txt_emp_contact, txt_emp_email, txt_emp_dob, txt_emp_gender, txt_emp_address;
+    private TextView txt_company_name, txt_company_address, txt_company_state, company_hr_name, company_hr_email, company_hr_contact;
     private CardView makePayment_btn;
     private PreviewInfoViewModel previewInfoViewModel;
-    private RecyclerView employedetaill_recyclerview;
-    private TextView txt_height_tv,txt_weight_tv;
+    private RecyclerView employedetaill_recyclerview, education_details_recyclerview,addres_recyclerview;
     private ImageView profile_image;
+    private EmployerDetailsRecyclerAdapter employerDetailsRecyclerAdapter;
+    private List<PreviewInfoModel> previewInfoModelList;
+    private EducationDetailsRecyclerAdapter educationDetailsRecyclerAdapter;
+    private PoliceVarificationRecyclerAdapter policeVarificationRecyclerAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,41 +94,54 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
         txt_back_btn = mview.findViewById(R.id.txt_back_btn);
         makePayment_btn = mview.findViewById(R.id.makePayment_btn);
 
-        employedetaill_recyclerview=mview.findViewById(R.id.employedetaill_recyclerview);
+        employedetaill_recyclerview = mview.findViewById(R.id.employedetaill_recyclerview);
+        education_details_recyclerview = mview.findViewById(R.id.education_details_recyclerview);
+        addres_recyclerview = mview.findViewById(R.id.addres_recyclerview);
 
-        profile_image=mview.findViewById(R.id.profile_image);
+        profile_image = mview.findViewById(R.id.profile_image);
 
-        txt_emp_name=mview.findViewById(R.id.txt_emp_name);
-        txt_emp_contact=mview.findViewById(R.id.txt_emp_contact);
-        txt_emp_email=mview.findViewById(R.id.txt_emp_email);
-        txt_emp_dob=mview.findViewById(R.id.txt_emp_dob);
-        txt_emp_gender=mview.findViewById(R.id.txt_emp_gender);
-        txt_emp_address=mview.findViewById(R.id.txt_emp_address);
+        txt_emp_name = mview.findViewById(R.id.txt_emp_name);
+        txt_emp_contact = mview.findViewById(R.id.txt_emp_contact);
+        txt_emp_email = mview.findViewById(R.id.txt_emp_email);
+        txt_emp_dob = mview.findViewById(R.id.txt_emp_dob);
+        txt_emp_gender = mview.findViewById(R.id.txt_emp_gender);
+        txt_emp_address = mview.findViewById(R.id.txt_emp_address);
 
 
-        txt_company_name=mview.findViewById(R.id.txt_company_name);
-        txt_company_address=mview.findViewById(R.id.txt_company_address);
-        txt_company_state=mview.findViewById(R.id.txt_company_state);
-        company_hr_name=mview.findViewById(R.id.company_hr_name);
-        company_hr_email=mview.findViewById(R.id.company_hr_email);
-        company_hr_contact=mview.findViewById(R.id.company_hr_contact);
+        txt_company_name = mview.findViewById(R.id.txt_company_name);
+        txt_company_address = mview.findViewById(R.id.txt_company_address);
+        txt_company_state = mview.findViewById(R.id.txt_company_state);
+        company_hr_name = mview.findViewById(R.id.company_hr_name);
+        company_hr_email = mview.findViewById(R.id.company_hr_email);
+        company_hr_contact = mview.findViewById(R.id.company_hr_contact);
 
-        //police varifications
-        txt_height_tv=mview.findViewById(R.id.txt_height_tv);
-        txt_weight_tv=mview.findViewById(R.id.txt_weight_tv);
+
     }
 
     private void viewModelSetup() {
 
-        previewInfoViewModel=new ViewModelProvider(this).get(PreviewInfoViewModel.class);
-        previewInfoViewModel.previewInfo.observe(this,this);
+        previewInfoViewModel = new ViewModelProvider(this).get(PreviewInfoViewModel.class);
+        previewInfoViewModel.previewInfo.observe(this, this);
 
     }
 
     private void viewSetup() {
+        previewInfoModelList = new ArrayList<>();
 
+        employerDetailsRecyclerAdapter = new EmployerDetailsRecyclerAdapter(mctx, previewInfoModelList);
+        educationDetailsRecyclerAdapter = new EducationDetailsRecyclerAdapter(mctx, previewInfoModelList);
+        policeVarificationRecyclerAdapter= new PoliceVarificationRecyclerAdapter(previewInfoModelList,mctx);
         txt_back_btn.setOnClickListener(this);
         makePayment_btn.setOnClickListener(this);
+
+        employedetaill_recyclerview.setLayoutManager(new LinearLayoutManager(mctx));
+        education_details_recyclerview.setLayoutManager(new LinearLayoutManager(mctx));
+        addres_recyclerview.setLayoutManager(new LinearLayoutManager(mctx));
+
+        employedetaill_recyclerview.setAdapter(employerDetailsRecyclerAdapter);
+        education_details_recyclerview.setAdapter(educationDetailsRecyclerAdapter);
+        addres_recyclerview.setAdapter(policeVarificationRecyclerAdapter);
+
 
     }
 
@@ -145,15 +169,15 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
     @Override
     public void onChanged(PreviewInfoModel previewInfoModel) {
 
-        if(previewInfoModel.getData()!=null){
+        if (previewInfoModel!=null&&previewInfoModel.getData() != null) {
 
             //employee details
             txt_emp_name.setText(previewInfoModel.getData().getEmployeeName().toString());
             txt_emp_dob.setText(previewInfoModel.getData().getEmployeeDOB().toString());
             txt_emp_gender.setText(previewInfoModel.getData().getEmployeeGender().toString());
-            txt_emp_gender.setText(previewInfoModel.getData().getEmployeeGender().toString());
             txt_emp_address.setText(previewInfoModel.getData().getEmployeeAddress().toString());
-//            Glide.with(mctx).load(KeyClass.BASE_URL.substring(0,KeyClass.BASE_URL.length()-1)+profile_image).into(imageView);
+            Glide.with(getContext()).load(Uri.parse(previewInfoModel.getData().getEmployeProfilePic())).into(profile_image);
+
 
             //employer details
             txt_company_name.setText(previewInfoModel.getData().getEmployer().getOrganizationName());
@@ -165,9 +189,7 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
 
 
 
-            //police varifications
 
-//            txt_weight_tv.
 
 
 

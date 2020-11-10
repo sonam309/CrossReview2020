@@ -9,13 +9,13 @@ public class PoliceVarificataionDetailsModel extends ClsResultStateResponseModel
 
     @SerializedName("data")
     @Expose
-    private Data data;
+    private String data;
 
-    public Data getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(String data) {
         this.data = data;
     }
 
@@ -401,7 +401,6 @@ public class PoliceVarificataionDetailsModel extends ClsResultStateResponseModel
         @SerializedName("pin_code")
         @Expose
         private Integer pinCode;
-
 
 
         public String getAddressType() {

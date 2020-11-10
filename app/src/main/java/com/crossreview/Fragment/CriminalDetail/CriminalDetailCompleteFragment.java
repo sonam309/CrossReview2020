@@ -485,8 +485,9 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
     @Override
     public void onChanged(PoliceVarificataionDetailsModel policeVarificataionDetailsModel) {
 
-        ((MainActivity) getActivity()).replaceFragment(new PreviewFragment(), true, KeyClass.FRAGMENT_PREVIEW,
-                KeyClass.FRAGMENT_PREVIEW);
+
+            ((MainActivity) getActivity()).replaceFragment(new PreviewFragment(), true, KeyClass.FRAGMENT_PREVIEW,
+                    KeyClass.FRAGMENT_PREVIEW);
 
     }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.crossreview.Model.PreviewInfoModel;
@@ -21,6 +22,12 @@ public class EmployerDetailsRecyclerAdapter extends RecyclerView.Adapter<Employe
     private List<PreviewInfoModel> previewInfoModelList;
 
 
+    public EmployerDetailsRecyclerAdapter(Context context, List<PreviewInfoModel> previewInfoModelList) {
+        this.context = context;
+        this.previewInfoModelList = previewInfoModelList;
+
+    }
+
     @NonNull
     @Override
     public EmployerDetailsRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -32,9 +39,25 @@ public class EmployerDetailsRecyclerAdapter extends RecyclerView.Adapter<Employe
     @Override
     public void onBindViewHolder(@NonNull EmployerDetailsRecyclerViewHolder holder, int position) {
 
-        holder.company_complete_address.setText(previewInfoModelList.get(position).getData().getEmployer().getOrganizationName()+previewInfoModelList.get(position).getData().getEmployer().getOrganizationName());
+
+        if (previewInfoModelList != null) {
+            holder.company_complete_address.setText(previewInfoModelList.get(position).getData().getExperiences().get(position).getOrganizationId());
+            holder.txt_designation.setText(previewInfoModelList.get(position).getData().getExperiences().get(position).getEmployeeDesignation());
+            holder.txt_work_duration.setText(previewInfoModelList.get(position).getData().getExperiences().get(position).getdOJ() + "-" +
+                    previewInfoModelList.get(position).getData().getExperiences().get(position).getdOR());
+            holder.txt_salary.setText(previewInfoModelList.get(position).getData().getExperiences().get(position).getLastCTCLac() + " " +
+                    previewInfoModelList.get(position).getData().getExperiences().get(position).getLastCTCThousand());
+            holder.txt_reporting_person_name.setText(previewInfoModelList.get(position).getData().getExperiences().get(position).getReportingPersonName());
+            holder.txt_reporting_person_designataion.setText(previewInfoModelList.get(position).getData().getExperiences().get(position).getReportingPersonDesignation());
+
+            holder.documentRecycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true));
+            holder.documentRecycler.setAdapter(new ExperienceDocumetRecyclerAdapter(previewInfoModelList, context));
+
+
+        }
 
     }
+
 
     @Override
     public int getItemCount() {
@@ -44,6 +67,8 @@ public class EmployerDetailsRecyclerAdapter extends RecyclerView.Adapter<Employe
     public class EmployerDetailsRecyclerViewHolder extends RecyclerView.ViewHolder {
 
         TextView company_complete_address, txt_designation, txt_work_duration, txt_salary, txt_reporting_person_name, txt_reporting_person_designataion;
+        RecyclerView documentRecycler;
+
 
         public EmployerDetailsRecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -53,12 +78,16 @@ public class EmployerDetailsRecyclerAdapter extends RecyclerView.Adapter<Employe
 
         private void bindView() {
 
+
             company_complete_address = itemView.findViewById(R.id.company_complete_address);
             txt_designation = itemView.findViewById(R.id.txt_designation);
             txt_work_duration = itemView.findViewById(R.id.txt_work_duration);
             txt_salary = itemView.findViewById(R.id.txt_salary);
             txt_reporting_person_name = itemView.findViewById(R.id.txt_reporting_person_name);
             txt_reporting_person_designataion = itemView.findViewById(R.id.txt_reporting_person_designataion);
+            documentRecycler = itemView.findViewById(R.id.documentRecycler);
+
+
         }
     }
 
