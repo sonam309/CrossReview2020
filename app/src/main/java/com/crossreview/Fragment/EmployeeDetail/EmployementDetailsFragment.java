@@ -45,6 +45,7 @@ import com.crossreview.Utilites.Constant;
 import com.crossreview.Utilites.DownloadPdfAndShowInImageView;
 import com.crossreview.Utilites.FilePath;
 import com.crossreview.Utilites.KeyClass;
+import com.crossreview.Utilites.PrefrenceShared;
 import com.crossreview.Utilites.Utility;
 import com.crossreview.ViewModel.CompanyNameViewModel;
 import com.crossreview.ViewModel.EmployeeDetailsViewModel;
@@ -928,6 +929,8 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                 return;
             }
 
+            String childCount= String.valueOf(j);
+            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmpChildCount,childCount);
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty(Constant.Employer_D_O_Joining, doj.getText().toString());

@@ -178,10 +178,10 @@
     <string name="otp">please enter OTP sent on your email</string>
     <string name="checkout">Checkout</string>
     <string name="paynow">Pay now</string>
-    <string name="avaliable_point">Avaliable Points 500</string>
+    <string name="avaliable_point">Avaliable Points</string>
     <string name="employment_bg_check">Employment Background Check</string>
-    <string name="employment_edu_check">Employment Education Check</string>
-    <string name="employment_criminal_bg_check">Employment Criminal Background Check</string>
+    <string name="employment_edu_check">Education Background Check</string>
+    <string name="employment_criminal_bg_check">Criminal Background Check</string>
     <string name="total_points_paid">Total Points to be Paid</string>
     <string name="hi">Hi,</string>
     <string name="vistweb">Kindly, Visit WebSite to Add Money</string>
@@ -191,4 +191,8 @@
     <string name="educataion">Select educataion Type</string>
     <string name="preview">Preview</string>
     <string name="year">Year</string>
+    <string name="thanku">Thank You</string>
+    <string name="great">Great!</string>
+    <string name="paymentConfirm">Your payment has been confirmed.</string>
+    <string name="checkemail">Check your email for details.</string>
 </resources>

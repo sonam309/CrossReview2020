@@ -9,9 +9,13 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import com.crossreview.Fragment.CheckOutFragment;
+import com.crossreview.Fragment.PreviewFragment;
 import com.crossreview.Fragment.Welcome.WelcomeFragment;
 import com.crossreview.R;
 import com.crossreview.Utilites.KeyClass;
+
+import java.security.Key;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        context=this;
+        context = this;
 
         bindView();
         viewSetup();
@@ -39,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        replaceFragment(new WelcomeFragment(),false, KeyClass.FRAGMENT_WELCOME,KeyClass.FRAGMENT_WELCOME);
+        replaceFragment(new WelcomeFragment(), false, KeyClass.FRAGMENT_WELCOME, KeyClass.FRAGMENT_WELCOME);
 
 
     }
@@ -58,4 +62,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public void onBackPressed() {
+
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.mcontainer);
+        if (fragment instanceof CheckOutFragment) {
+            ((CheckOutFragment) fragment).onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
 }

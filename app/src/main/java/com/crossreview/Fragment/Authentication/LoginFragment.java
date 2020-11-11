@@ -22,6 +22,7 @@ import com.crossreview.Model.GetOtpResponseModel;
 import com.crossreview.Model.LoginResponseModel;
 import com.crossreview.R;
 import com.crossreview.Utilites.KeyClass;
+import com.crossreview.Utilites.PrefrenceShared;
 import com.crossreview.Utilites.Utility;
 import com.crossreview.ViewModel.GetOtpViewModel;
 import com.crossreview.ViewModel.LoginViewModel;
@@ -130,7 +131,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Obs
                         txt_email_varification_otp_et.clearFocus();
                         Utility.hideKeyboard(view);
 
-                        loginViewModel.login(txt_email_et.getText().toString(), otp);
+                        loginViewModel.login(txt_email_et.getText().toString(), otp, mctx);
 
                     }
 
@@ -174,6 +175,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Obs
             txt_edit_email_rl.setVisibility(View.VISIBLE);
             txt_email_varification_otp_et.setVisibility(View.VISIBLE);
             txt_edit_email.setText(txt_email_et.getText().toString());
+
         }
     }
 
@@ -181,6 +183,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Obs
         @Override
         public void onChanged(LoginResponseModel loginResponseModel) {
 
+            if (loginResponseModel != null && loginResponseModel.getData() != null) {
+                String authToken = loginResponseModel.getData().getToken();
+                if (authToken != null) {
+                    PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.AUTH_TOKEN, authToken);
+                }
+            }
 
             ((MainActivity) getActivity()).replaceFragment(new CheckOutFragment(), true, KeyClass.FRAGMENT_CHECKOUT,
                     KeyClass.FRAGMENT_CHECKOUT);

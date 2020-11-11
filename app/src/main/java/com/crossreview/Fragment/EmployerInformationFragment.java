@@ -224,8 +224,11 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
             token=clsEmployerResponseModel.getData().getAccessToken();
             PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.TOKEN,token);
 
-            ((MainActivity) getActivity()).replaceFragment(new EmployeeDetailsFragment(), false, KeyClass.FRAGMENT_EMPLOYEE_DETAIL,
-                    KeyClass.FRAGMENT_EMPLOYEE_DETAIL);
+
+
+                ((MainActivity) getActivity()).replaceFragment(new EmployeeDetailsFragment(), false, KeyClass.FRAGMENT_EMPLOYEE_DETAIL,
+                        KeyClass.FRAGMENT_EMPLOYEE_DETAIL);
+
         }
     };
 

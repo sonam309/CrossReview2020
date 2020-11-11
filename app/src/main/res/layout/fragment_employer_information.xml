@@ -165,7 +165,6 @@
                 android:background="@drawable/square_white_bg"
                 android:hint="@string/orgName"
                 android:imeOptions="actionNext"
-                android:maxLength="20"
                 android:padding="@dimen/dp8"
                 android:singleLine="true"
                 android:textColor="@color/black"

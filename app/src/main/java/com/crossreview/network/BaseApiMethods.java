@@ -5,6 +5,7 @@ import com.crossreview.Model.ClsSaveEmployeeDetailModel;
 import com.crossreview.Model.CompanyNameModel;
 import com.crossreview.Model.GetOtpRequestModel;
 import com.crossreview.Model.GetOtpResponseModel;
+import com.crossreview.Model.GetSelfDetailsModel;
 import com.crossreview.Model.InstitutionNameModel;
 import com.crossreview.Model.LoginRequestModel;
 import com.crossreview.Model.LoginResponseModel;
@@ -39,12 +40,18 @@ public interface BaseApiMethods {
     Call<PoliceVarificataionDetailsModel> policeVarificataions(@Header("auth_token") String bearerToken, @Body JsonObject object);
 
     @GET("get-userbyid")
-    Call<PreviewInfoModel> previewInfo(@Header("auth_token") String bearerToke);
+    Call<PreviewInfoModel> previewInfo(@Header("auth_token") String bearerToken);
 
     @POST("get-otp")
     Call<GetOtpResponseModel>getOtp(@Body GetOtpRequestModel getOtpRequestModel);
 
     @POST("login")
     Call<LoginResponseModel>logIn(@Body LoginRequestModel loginRequestModel);
+
+    @GET("employer-get-self-details")
+    Call<GetSelfDetailsModel>selfDetails(@Header("auth_token")String bearerToken);
+
+//    @PUT("make-payment")
+//    Call<>makePayment(@Header("Authorization") String bearerToke, @Header("auth_token") String bearerToken,@Body  )
 
 }

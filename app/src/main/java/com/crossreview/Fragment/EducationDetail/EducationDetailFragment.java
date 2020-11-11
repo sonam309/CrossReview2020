@@ -48,6 +48,7 @@ import com.crossreview.Utilites.Constant;
 import com.crossreview.Utilites.DownloadPdfAndShowInImageView;
 import com.crossreview.Utilites.FilePath;
 import com.crossreview.Utilites.KeyClass;
+import com.crossreview.Utilites.PrefrenceShared;
 import com.crossreview.Utilites.Utility;
 import com.crossreview.ViewModel.CompanyNameViewModel;
 import com.crossreview.ViewModel.EmployeeDetailsViewModel;
@@ -57,6 +58,7 @@ import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 
+import java.security.Key;
 import java.util.ArrayList;
 
 public class EducationDetailFragment extends BasicClass implements View.OnClickListener, awsUploadCallback, View.OnTouchListener, TextView.OnEditorActionListener, Observer<ClsSaveEmployeeDetailModel> {
@@ -713,6 +715,9 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
                 Utility.hideKeyboard(view1);
             }
 
+            String getChildCount= String.valueOf(i);
+
+            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EduChildCount,getChildCount);
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty(Constant.Education_type, txt_education_et.getText().toString());
@@ -728,6 +733,8 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
             jsonArray.add(jsonObject);
         }
+
+
 
         JsonObject experience = new JsonObject();
         experience.add(Constant.education, jsonArray);

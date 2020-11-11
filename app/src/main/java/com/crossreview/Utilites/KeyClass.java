@@ -27,6 +27,12 @@ public final class KeyClass {
     public static final String IMAGE = "image";
     public static final String TOKEN = "acess token";
     public static final String Data = "Data";
+    public static final String AUTH_TOKEN="Auth token";
+    public static final String EmpChildCount="Child count";
+    public static final String EduChildCount="Child count";
+    public static final String Email="Email";
+
+
 
 
 

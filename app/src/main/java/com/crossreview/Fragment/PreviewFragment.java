@@ -29,6 +29,7 @@ import com.crossreview.Fragment.Authentication.LoginFragment;
 import com.crossreview.Model.PreviewInfoModel;
 import com.crossreview.R;
 import com.crossreview.Utilites.KeyClass;
+import com.crossreview.Utilites.PrefrenceShared;
 import com.crossreview.ViewModel.EmployeeDetailsViewModel;
 import com.crossreview.ViewModel.PreviewInfoViewModel;
 
@@ -44,7 +45,7 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
     private TextView txt_company_name, txt_company_address, txt_company_state, company_hr_name, company_hr_email, company_hr_contact;
     private CardView makePayment_btn;
     private PreviewInfoViewModel previewInfoViewModel;
-    private RecyclerView employedetaill_recyclerview, education_details_recyclerview,addres_recyclerview;
+    private RecyclerView employedetaill_recyclerview, education_details_recyclerview, addres_recyclerview;
     private ImageView profile_image;
     private EmployerDetailsRecyclerAdapter employerDetailsRecyclerAdapter;
     private List<PreviewInfoModel> previewInfoModelList;
@@ -130,7 +131,7 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
 
         employerDetailsRecyclerAdapter = new EmployerDetailsRecyclerAdapter(mctx, previewInfoModelList);
         educationDetailsRecyclerAdapter = new EducationDetailsRecyclerAdapter(mctx, previewInfoModelList);
-        policeVarificationRecyclerAdapter= new PoliceVarificationRecyclerAdapter(previewInfoModelList,mctx);
+        policeVarificationRecyclerAdapter = new PoliceVarificationRecyclerAdapter(previewInfoModelList, mctx);
         txt_back_btn.setOnClickListener(this);
         makePayment_btn.setOnClickListener(this);
 
@@ -157,9 +158,19 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
                 break;
 
             case R.id.makePayment_btn:
+                String token = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.AUTH_TOKEN);
 
-                ((MainActivity) getActivity()).replaceFragment(new LoginFragment(), true, KeyClass.FRAGMENT_LOGIN,
-                        KeyClass.FRAGMENT_LOGIN);
+                if (token != null && token != "") {
+
+                    ((MainActivity) getActivity()).replaceFragment(new CheckOutFragment(), true, KeyClass.FRAGMENT_CHECKOUT,
+                            KeyClass.FRAGMENT_CHECKOUT);
+
+
+                } else {
+
+                    ((MainActivity) getActivity()).replaceFragment(new LoginFragment(), false, KeyClass.FRAGMENT_LOGIN,
+                            KeyClass.FRAGMENT_LOGIN);
+                }
 
                 break;
         }
@@ -169,7 +180,7 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
     @Override
     public void onChanged(PreviewInfoModel previewInfoModel) {
 
-        if (previewInfoModel!=null&&previewInfoModel.getData() != null) {
+        if (previewInfoModel != null && previewInfoModel.getData() != null) {
 
             //employee details
             txt_emp_name.setText(previewInfoModel.getData().getEmployeeName().toString());
@@ -188,13 +199,12 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
             company_hr_contact.setText(previewInfoModel.getData().getEmployer().getEmployerContact());
 
 
-
-
-
-
-
-
         }
 
     }
+
+//    public void onBackPressed() {
+//
+//
+//    }
 }

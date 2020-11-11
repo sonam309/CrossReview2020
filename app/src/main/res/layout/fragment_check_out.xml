@@ -29,17 +29,34 @@
         android:background="@drawable/square_white_bg"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txt_avaliable_points"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/grey"
             android:gravity="right"
+            android:background="@color/grey"
             android:padding="@dimen/dp14"
+            android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/avaliable_point"
             android:textColor="@color/appcolor"
             android:textSize="@dimen/text_size_16"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_avaliable_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/grey"
+            android:text="300"
+            android:layout_marginLeft="@dimen/dp5"
+            android:textColor="@color/appcolor"
+            android:textSize="@dimen/text_size_16"
+            android:textStyle="bold" />
+
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"

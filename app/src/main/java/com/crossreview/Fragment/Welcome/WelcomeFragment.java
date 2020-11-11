@@ -23,8 +23,10 @@ import com.crossreview.Fragment.EmployeeDetail.EmployeeStatusFragment;
 import com.crossreview.Fragment.EmployeeDetail.EmployementDetailsFragment;
 import com.crossreview.Fragment.EmployerInformationFragment;
 import com.crossreview.Fragment.PreviewFragment;
+import com.crossreview.Fragment.ThankYouFragment;
 import com.crossreview.R;
 import com.crossreview.Utilites.KeyClass;
+import com.crossreview.Utilites.PrefrenceShared;
 
 public class WelcomeFragment extends Fragment implements View.OnClickListener
 {
@@ -77,9 +79,18 @@ public class WelcomeFragment extends Fragment implements View.OnClickListener
 
             case R.id.varify_now_btn:
 
-                ((MainActivity)getActivity()).replaceFragment(new CheckOutFragment(),false, KeyClass.FRAGMENT_EMPLOYER_INFORMATION,
-                        KeyClass.FRAGMENT_EMPLOYER_INFORMATION);
+                String token= PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.TOKEN);
+                if(token!=null){
 
+                    ((MainActivity)getActivity()).replaceFragment(new EmployeeDetailsFragment(),false,KeyClass.FRAGMENT_EMPLOYEE_DETAIL,
+                            KeyClass.FRAGMENT_EMPLOYEE_DETAIL);
+
+                }else {
+
+                    ((MainActivity) getActivity()).replaceFragment(new EmployerInformationFragment(), false, KeyClass.FRAGMENT_EMPLOYER_INFORMATION,
+                            KeyClass.FRAGMENT_EMPLOYER_INFORMATION);
+
+                }
                 break;
         }
 
