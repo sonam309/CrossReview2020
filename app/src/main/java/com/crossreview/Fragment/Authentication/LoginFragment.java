@@ -9,9 +9,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +30,7 @@ import com.crossreview.ViewModel.GetOtpViewModel;
 import com.crossreview.ViewModel.LoginViewModel;
 
 
-public class LoginFragment extends Fragment implements View.OnClickListener, Observer<GetOtpResponseModel> {
+public class LoginFragment extends Fragment implements View.OnClickListener, Observer<GetOtpResponseModel>, View.OnTouchListener {
 
     private View mview;
     private Context mctx;
@@ -37,6 +39,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Obs
     private RelativeLayout txt_edit_email_rl;
     private GetOtpViewModel getOtpViewModel;
     private LoginViewModel loginViewModel;
+    private LinearLayout mainll;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,6 +77,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Obs
         txt_edit_email_rl = mview.findViewById(R.id.txt_edit_email_rl);
         txt_email_varification_otp_et = mview.findViewById(R.id.txt_email_varification_otp_et);
         txt_edit_email = mview.findViewById(R.id.txt_edit_email);
+        mainll = mview.findViewById(R.id.mainll);
 
     }
 
@@ -94,6 +98,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Obs
         txt_signup.setOnClickListener(this);
         txt_edit_email_rl.setOnClickListener(this);
 
+        mainll.setOnTouchListener(this);
 
     }
 
@@ -197,4 +202,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Obs
     };
 
 
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+
+        switch (view.getId()) {
+
+            case R.id.mainll:
+
+                Utility.hideKeyboard(view);
+
+                break;
+        }
+        return false;
+    }
 }

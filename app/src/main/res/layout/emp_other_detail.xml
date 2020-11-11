@@ -164,10 +164,10 @@
 
             <ImageView
                 android:id="@+id/profile_iv"
-                android:layout_width="@dimen/dp50"
-                android:padding="@dimen/dp5"
-                android:layout_height="@dimen/dp50"
+                android:layout_width="53dp"
+                android:layout_height="38dp"
                 android:layout_centerHorizontal="true"
+                android:padding="@dimen/dp5"
                 android:src="@drawable/ic_profile" />
 
             <TextView

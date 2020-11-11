@@ -570,7 +570,7 @@ public class PreviewInfoModel extends ClsResultStateResponseModel {
             this.addressType = addressType;
         }
 
-        public Object getAddress() {
+        public String getAddress() {
             return address==null?"":address;
         }
 

@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -34,7 +35,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 
-public class CriminalDetailCompleteFragment extends Fragment implements View.OnClickListener, Observer<PoliceVarificataionDetailsModel> {
+public class CriminalDetailCompleteFragment extends Fragment implements View.OnClickListener, Observer<PoliceVarificataionDetailsModel>, View.OnTouchListener {
 
     private View mview;
     private Context mctx;
@@ -50,6 +51,7 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
     private CardView next_btn;
     private ImageView uparrow_txtadd, downarrow_txtadd, downarrow_txtproof, uparrow_txtproof, downarrow_txtpersonal, uparrow_txtpersonal;
     private PoliceVarificataionsViewModel policeVarificataionsViewModel;
+    private LinearLayout mainll;
 
 
     @Override
@@ -88,6 +90,7 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
         txt_address_varification_rl = mview.findViewById(R.id.txt_address_varification_rl);
         txt_identity_proof_rl = mview.findViewById(R.id.txt_identity_proof_rl);
         txt_personal_details_rl = mview.findViewById(R.id.txt_personal_details_rl);
+        mainll = mview.findViewById(R.id.mainll);
 
         txt_mothers_name_et = mview.findViewById(R.id.txt_mothers_name_et);
         txt_birth_place_et = mview.findViewById(R.id.txt_birth_place_et);
@@ -151,6 +154,8 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
         txt_identity_proof_rl.setOnClickListener(this);
         txt_personal_details_rl.setOnClickListener(this);
         next_btn.setOnClickListener(this);
+        mainll.setOnTouchListener(this);
+
 
     }
 
@@ -397,18 +402,16 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
         //json Array for add relative info
         JsonArray relative = new JsonArray();
 
-       // for (int i=0;i<2;i++) {
-            //for add relatiev infi items
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty(Constant.Relative_name, txt_name_of_local_F_R_et.getText().toString());
-            jsonObject.addProperty(Constant.Relative_address, txt_address_et.getText().toString());
-            jsonObject.addProperty(Constant.Relative_contact, 0);
+        // for (int i=0;i<2;i++) {
+        //for add relatiev infi items
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(Constant.Relative_name, txt_name_of_local_F_R_et.getText().toString());
+        jsonObject.addProperty(Constant.Relative_address, txt_address_et.getText().toString());
+        jsonObject.addProperty(Constant.Relative_contact, 0);
 
-            //add relative object in json array
-            relative.add(jsonObject);
-      //  }
-
-
+        //add relative object in json array
+        relative.add(jsonObject);
+        //  }
 
 
         //json object to add perament address details
@@ -433,7 +436,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
         local.addProperty(Constant.District, txt_local_district_et.getText().toString());
         local.addProperty(Constant.State, txt_local_state_et.getText().toString());
         local.addProperty(Constant.Zipcode, txt_local_pincode_et.getText().toString());
-
 
 
         //json object to add combine address in one json object whic is address
@@ -486,8 +488,22 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
     public void onChanged(PoliceVarificataionDetailsModel policeVarificataionDetailsModel) {
 
 
-            ((MainActivity) getActivity()).replaceFragment(new PreviewFragment(), true, KeyClass.FRAGMENT_PREVIEW,
-                    KeyClass.FRAGMENT_PREVIEW);
+        ((MainActivity) getActivity()).replaceFragment(new PreviewFragment(), true, KeyClass.FRAGMENT_PREVIEW,
+                KeyClass.FRAGMENT_PREVIEW);
 
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+
+        switch (view.getId()) {
+
+            case R.id.mainll:
+
+                Utility.hideKeyboard(view);
+
+                break;
+        }
+        return false;
     }
 }

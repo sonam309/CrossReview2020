@@ -39,7 +39,7 @@ public interface BaseApiMethods {
     @PUT("create-police-verification")
     Call<PoliceVarificataionDetailsModel> policeVarificataions(@Header("auth_token") String bearerToken, @Body JsonObject object);
 
-    @GET("get-userbyid")
+        @GET("get-userbyid")
     Call<PreviewInfoModel> previewInfo(@Header("auth_token") String bearerToken);
 
     @POST("get-otp")

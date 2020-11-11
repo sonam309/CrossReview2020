@@ -19,10 +19,10 @@ import java.util.List;
 public class EducationDocumentRecyclerAdapter extends RecyclerView.Adapter<EducationDocumentRecyclerAdapter.EducationDocumentRecyclerViewHolder>{
 
 
-    private List<PreviewInfoModel> previewInfoModelList;
+    private List<PreviewInfoModel.Document> previewInfoModelList;
     private Context context;
 
-    public EducationDocumentRecyclerAdapter(List<PreviewInfoModel> previewInfoModelList, Context context) {
+    public EducationDocumentRecyclerAdapter(List<PreviewInfoModel.Document> previewInfoModelList, Context context) {
         this.previewInfoModelList = previewInfoModelList;
         this.context = context;
     }
@@ -39,10 +39,10 @@ public class EducationDocumentRecyclerAdapter extends RecyclerView.Adapter<Educa
     public void onBindViewHolder(@NonNull EducationDocumentRecyclerViewHolder holder, int position) {
 
         Glide.with(context)
-                .load(previewInfoModelList.get(position).getData().getEducation().get(position).getDocuments().get(position).getDocumentURL())
+                .load(previewInfoModelList.get(position).getDocumentURL())
                 .into(holder.doc_file);
 
-        holder.doc_name.setText(previewInfoModelList.get(position).getData().getExperiences().get(position).getDocuments().get(position).getDocumentName());
+        holder.doc_name.setText(previewInfoModelList.get(position).getDocumentName());
 
 
     }

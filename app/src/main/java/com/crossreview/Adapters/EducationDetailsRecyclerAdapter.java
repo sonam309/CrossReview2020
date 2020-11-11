@@ -18,9 +18,9 @@ import java.util.List;
 public class EducationDetailsRecyclerAdapter extends RecyclerView.Adapter<EducationDetailsRecyclerAdapter.EducationDetailsRecyclerViewHolder> {
 
     private Context context;
-    private List<PreviewInfoModel> previewInfoModelList;
+    private List<PreviewInfoModel.Education> previewInfoModelList;
 
-    public EducationDetailsRecyclerAdapter(Context context, List<PreviewInfoModel> previewInfoModelList) {
+    public EducationDetailsRecyclerAdapter(Context context, List<PreviewInfoModel.Education> previewInfoModelList) {
         this.context = context;
         this.previewInfoModelList = previewInfoModelList;
     }
@@ -38,15 +38,15 @@ public class EducationDetailsRecyclerAdapter extends RecyclerView.Adapter<Educat
 
         if (previewInfoModelList != null) {
 
-            holder.txt_institute_name.setText(previewInfoModelList.get(position).getData().getEducation().get(position).getUniversityName());
-            holder.txt_course.setText(previewInfoModelList.get(position).getData().getEducation().get(position).getCourse());
-            holder.txt_passout_year.setText(previewInfoModelList.get(position).getData().getEducation().get(position).getPassOutYear());
-            holder.txt_grade.setText(previewInfoModelList.get(position).getData().getEducation().get(position).getGradingSystem());
-            holder.txt_board.setText(previewInfoModelList.get(position).getData().getEducation().get(position).getEducationType());
+            holder.txt_institute_name.setText(previewInfoModelList.get(position).getUniversityName());
+            holder.txt_course.setText(previewInfoModelList.get(position).getCourse());
+            holder.txt_passout_year.setText(previewInfoModelList.get(position).getPassOutYear().toString());
+            holder.txt_grade.setText(previewInfoModelList.get(position).getGradingSystem());
+            holder.txt_board.setText(previewInfoModelList.get(position).getEducationType());
 
 
             holder.documentRecycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true));
-            holder.documentRecycler.setAdapter(new EducationDetailsRecyclerAdapter(context, previewInfoModelList));
+            holder.documentRecycler.setAdapter(new EducationDocumentRecyclerAdapter(previewInfoModelList.get(position).getDocuments(), context));
 
 
         }

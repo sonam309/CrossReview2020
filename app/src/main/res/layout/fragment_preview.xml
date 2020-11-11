@@ -360,10 +360,17 @@
                     android:background="@color/view_bg" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/addres_recyclerview"
+                    android:id="@+id/personalDetails_recyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp10" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/address_RecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp10"
+                     />
 
 
             </LinearLayout>

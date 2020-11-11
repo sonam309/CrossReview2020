@@ -18,10 +18,10 @@ import java.util.List;
 
 public class ExperienceDocumetRecyclerAdapter extends RecyclerView.Adapter<ExperienceDocumetRecyclerAdapter.DocumetRecyclerViewHolder> {
 
-    private List<PreviewInfoModel> previewInfoModelList;
+    private List<PreviewInfoModel.Document_> previewInfoModelList;
     private Context context;
 
-    public ExperienceDocumetRecyclerAdapter(List<PreviewInfoModel> previewInfoModelList, Context context) {
+    public ExperienceDocumetRecyclerAdapter(List<PreviewInfoModel.Document_> previewInfoModelList, Context context) {
         this.previewInfoModelList = previewInfoModelList;
         this.context = context;
     }
@@ -38,10 +38,10 @@ public class ExperienceDocumetRecyclerAdapter extends RecyclerView.Adapter<Exper
     public void onBindViewHolder(@NonNull DocumetRecyclerViewHolder holder, int position) {
 
         Glide.with(context)
-                .load(previewInfoModelList.get(position).getData().getExperiences().get(position).getDocuments().get(position).getDocumentURL())
+                .load(previewInfoModelList.get(position).getDocumentURL())
                 .into(holder.doc_file);
 
-        holder.doc_name.setText(previewInfoModelList.get(position).getData().getExperiences().get(position).getDocuments().get(position).getDocumentName());
+        holder.doc_name.setText(previewInfoModelList.get(position).getDocumentName());
 
     }
 
@@ -58,7 +58,7 @@ public class ExperienceDocumetRecyclerAdapter extends RecyclerView.Adapter<Exper
         public DocumetRecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            doc_file = itemView.findViewById(R.id.doc_name);
+            doc_file = itemView.findViewById(R.id.doc_file);
             doc_name = itemView.findViewById(R.id.doc_name);
 
         }

@@ -150,35 +150,6 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
         }
     }
 
-    public void converJson() {
-        if (PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.Data) != null) {
-
-            JSONObject object = new JSONObject();
-            try {
-
-                if (data != null) {
-                    object = new JSONObject(data);
-                    object.putOpt(Constant.EmployeeExperience, empStatus);
-
-                    EmployementDetailsFragment employementDetailsFragment = new EmployementDetailsFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString(KeyClass.Data, object.toString());
-                    employementDetailsFragment.setArguments(bundle);
-
-                    PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.Data, object.toString());
-
-
-
-                    ((MainActivity) getActivity()).replaceFragment(employementDetailsFragment, true, KeyClass.FRAGMENT_EMPLOYEMENT_DETAILS,
-                            KeyClass.FRAGMENT_EMPLOYEMENT_DETAILS);
-
-                }
-            } catch (JSONException e) {
-                //e.printStackTrace();
-            }
-
-        }
-    }
 
     public void saveEmplyeeExperiece(){
 

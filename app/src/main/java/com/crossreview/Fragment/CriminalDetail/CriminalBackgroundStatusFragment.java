@@ -11,8 +11,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -26,20 +28,22 @@ import com.crossreview.Model.ClsSaveEmployeeDetailModel;
 import com.crossreview.R;
 import com.crossreview.Utilites.Constant;
 import com.crossreview.Utilites.KeyClass;
+import com.crossreview.Utilites.Utility;
 import com.crossreview.ViewModel.EmployeeDetailsViewModel;
 import com.google.gson.JsonObject;
 
 
-public class CriminalBackgroundStatusFragment extends Fragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener, Observer<ClsSaveEmployeeDetailModel> {
+public class CriminalBackgroundStatusFragment extends Fragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener, Observer<ClsSaveEmployeeDetailModel>, View.OnTouchListener {
 
     private Context mctx;
     private RelativeLayout employer_Detail_rl, employment_Detail_rl, education_detail_rl;
     private RadioGroup criminal_bg_Rg;
     private RadioButton radioButton;
-    private String policeVarification="no";
+    private String policeVarification = "no";
     private Boolean criminal_status = false;
     private CardView next_btn;
     private EmployeeDetailsViewModel employeeDetailsViewModel;
+    private LinearLayout mainll;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,8 +55,8 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-            mctx = getActivity();
-            // Inflate the layout for this fragment
+        mctx = getActivity();
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_criminal_background_status, container, false);
     }
 
@@ -76,6 +80,7 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
         education_detail_rl = mview.findViewById(R.id.education_detail_rl);
         criminal_bg_Rg = mview.findViewById(R.id.criminal_bg_Rg);
         next_btn = mview.findViewById(R.id.next_btn);
+        mainll = mview.findViewById(R.id.mainll);
 
 
     }
@@ -94,6 +99,8 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
         education_detail_rl.setOnClickListener(this);
         next_btn.setOnClickListener(this);
         criminal_bg_Rg.setOnCheckedChangeListener(this);
+        mainll.setOnTouchListener(this);
+
 
     }
 
@@ -132,7 +139,7 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-    if (radioGroup.getId()==R.id.criminal_bg_Rg) {
+        if (radioGroup.getId() == R.id.criminal_bg_Rg) {
             int radioId = criminal_bg_Rg.getCheckedRadioButtonId();
             radioButton = radioGroup.findViewById(radioId);
 
@@ -146,7 +153,7 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
                 criminal_status = true;
             }
 
-}
+        }
     }
 
 
@@ -183,5 +190,19 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
 
         }
 
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+
+        switch (view.getId()) {
+
+            case R.id.mainll:
+
+                Utility.hideKeyboard(view);
+
+                break;
+        }
+        return false;
     }
 }

@@ -19,10 +19,10 @@ public class EmployerDetailsRecyclerAdapter extends RecyclerView.Adapter<Employe
 
 
     private Context context;
-    private List<PreviewInfoModel> previewInfoModelList;
+    private List<PreviewInfoModel.Experience> previewInfoModelList;
 
 
-    public EmployerDetailsRecyclerAdapter(Context context, List<PreviewInfoModel> previewInfoModelList) {
+    public EmployerDetailsRecyclerAdapter(Context context, List<PreviewInfoModel.Experience> previewInfoModelList) {
         this.context = context;
         this.previewInfoModelList = previewInfoModelList;
 
@@ -41,17 +41,17 @@ public class EmployerDetailsRecyclerAdapter extends RecyclerView.Adapter<Employe
 
 
         if (previewInfoModelList != null) {
-            holder.company_complete_address.setText(previewInfoModelList.get(position).getData().getExperiences().get(position).getOrganizationId());
-            holder.txt_designation.setText(previewInfoModelList.get(position).getData().getExperiences().get(position).getEmployeeDesignation());
-            holder.txt_work_duration.setText(previewInfoModelList.get(position).getData().getExperiences().get(position).getdOJ() + "-" +
-                    previewInfoModelList.get(position).getData().getExperiences().get(position).getdOR());
-            holder.txt_salary.setText(previewInfoModelList.get(position).getData().getExperiences().get(position).getLastCTCLac() + " " +
-                    previewInfoModelList.get(position).getData().getExperiences().get(position).getLastCTCThousand());
-            holder.txt_reporting_person_name.setText(previewInfoModelList.get(position).getData().getExperiences().get(position).getReportingPersonName());
-            holder.txt_reporting_person_designataion.setText(previewInfoModelList.get(position).getData().getExperiences().get(position).getReportingPersonDesignation());
+            holder.company_complete_address.setText(previewInfoModelList.get(position).getOrganizationId());
+            holder.txt_designation.setText(previewInfoModelList.get(position).getEmployeeDesignation());
+            holder.txt_work_duration.setText(previewInfoModelList.get(position).getdOJ() + "-" +
+                    previewInfoModelList.get(position).getdOR());
+            holder.txt_salary.setText(previewInfoModelList.get(position).getLastCTCLac() + " " +
+                    previewInfoModelList.get(position).getLastCTCThousand());
+            holder.txt_reporting_person_name.setText(previewInfoModelList.get(position).getReportingPersonName());
+            holder.txt_reporting_person_designataion.setText(previewInfoModelList.get(position).getReportingPersonDesignation());
 
             holder.documentRecycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true));
-            holder.documentRecycler.setAdapter(new ExperienceDocumetRecyclerAdapter(previewInfoModelList, context));
+            holder.documentRecycler.setAdapter(new ExperienceDocumetRecyclerAdapter(previewInfoModelList.get(position).getDocuments(), context));
 
 
         }

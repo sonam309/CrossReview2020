@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:focusable="true"
+    android:id="@+id/mainll"
+    android:focusableInTouchMode="true"
     android:layout_height="match_parent"
     android:background="@drawable/background_ic"
     tools:context=".Fragment.Authentication.LoginFragment">
@@ -53,9 +56,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp40"
             android:layout_marginTop="@dimen/dp40"
-            android:visibility="gone"
             android:layout_marginRight="@dimen/dp40"
-            android:background="@drawable/tranceparent_bg_square_corner">
+            android:background="@drawable/tranceparent_bg_square_corner"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/txt_edit_email"
@@ -88,11 +91,11 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/dp40"
             android:layout_marginTop="@dimen/dp20"
-            android:inputType="textEmailAddress"
             android:layout_marginRight="@dimen/dp40"
             android:layout_marginBottom="@dimen/dp40"
             android:background="@drawable/square_white_bg"
             android:hint="@string/enter_email"
+            android:inputType="textEmailAddress"
             android:padding="@dimen/dp10" />
 
         <EditText
@@ -100,14 +103,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="gone"
             android:layout_marginLeft="@dimen/dp40"
             android:layout_marginTop="@dimen/dp20"
             android:layout_marginRight="@dimen/dp40"
             android:layout_marginBottom="@dimen/dp40"
             android:background="@drawable/square_white_bg"
             android:hint="@string/otp"
-            android:padding="@dimen/dp10" />
+            android:inputType="number"
+            android:maxLength="6"
+            android:padding="@dimen/dp10"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/countinue_btn"

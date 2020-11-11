@@ -1,11 +1,17 @@
 package com.crossreview.Utilites;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.crossreview.Activity.MainActivity;
+import com.crossreview.Fragment.EmployeeDetail.EmployementDetailsFragment;
 import com.crossreview.R;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class junk {
 
@@ -53,6 +59,37 @@ public class junk {
 //
 //        designation_spinner.setAdapter(designationAdapter);
 //        job_role_spinner.setAdapter(jobRoleAdapter);
+//    }
+
+
+//    public void converJson() {
+//        if (PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.Data) != null) {
+//
+//            JSONObject object = new JSONObject();
+//            try {
+//
+//                if (data != null) {
+//                    object = new JSONObject(data);
+//                    object.putOpt(Constant.EmployeeExperience, empStatus);
+//
+//                    EmployementDetailsFragment employementDetailsFragment = new EmployementDetailsFragment();
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString(KeyClass.Data, object.toString());
+//                    employementDetailsFragment.setArguments(bundle);
+//
+//                    PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.Data, object.toString());
+//
+//
+//
+//                    ((MainActivity) getActivity()).replaceFragment(employementDetailsFragment, true, KeyClass.FRAGMENT_EMPLOYEMENT_DETAILS,
+//                            KeyClass.FRAGMENT_EMPLOYEMENT_DETAILS);
+//
+//                }
+//            } catch (JSONException e) {
+//                //e.printStackTrace();
+//            }
+//
+//        }
 //    }
 
 
