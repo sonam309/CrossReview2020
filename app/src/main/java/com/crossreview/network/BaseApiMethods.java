@@ -1,6 +1,7 @@
 package com.crossreview.network;
 
 import com.crossreview.Model.ClsEmployerResponseModel;
+import com.crossreview.Model.ClsResultStateResponseModel;
 import com.crossreview.Model.ClsSaveEmployeeDetailModel;
 import com.crossreview.Model.CompanyNameModel;
 import com.crossreview.Model.GetOtpRequestModel;
@@ -39,19 +40,19 @@ public interface BaseApiMethods {
     @PUT("create-police-verification")
     Call<PoliceVarificataionDetailsModel> policeVarificataions(@Header("auth_token") String bearerToken, @Body JsonObject object);
 
-        @GET("get-userbyid")
+    @GET("get-userbyid")
     Call<PreviewInfoModel> previewInfo(@Header("auth_token") String bearerToken);
 
     @POST("get-otp")
-    Call<GetOtpResponseModel>getOtp(@Body GetOtpRequestModel getOtpRequestModel);
+    Call<GetOtpResponseModel> getOtp(@Body GetOtpRequestModel getOtpRequestModel);
 
     @POST("login")
-    Call<LoginResponseModel>logIn(@Body LoginRequestModel loginRequestModel);
+    Call<LoginResponseModel> logIn(@Body LoginRequestModel loginRequestModel);
 
     @GET("employer-get-self-details")
-    Call<GetSelfDetailsModel>selfDetails(@Header("auth_token")String bearerToken);
+    Call<GetSelfDetailsModel> selfDetails(@Header("Authorization") String bearerToken);
 
-//    @PUT("make-payment")
-//    Call<>makePayment(@Header("Authorization") String bearerToke, @Header("auth_token") String bearerToken,@Body  )
+    @PUT("make-payment")
+    Call<ClsResultStateResponseModel> makePayment(@Header("Authorization") String bearerToke, @Header("auth_token") String bearerToken, @Body JsonObject jsonObject);
 
 }

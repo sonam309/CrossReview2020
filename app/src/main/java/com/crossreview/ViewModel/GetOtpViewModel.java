@@ -28,7 +28,7 @@ public class GetOtpViewModel extends ViewModel {
             public void onResponse(Call<GetOtpResponseModel> call, Response<GetOtpResponseModel> response) {
 
                 if(response.isSuccessful()){
-                    GetOtpResponseModel model= new GetOtpResponseModel();
+                    GetOtpResponseModel model= response.body();
 
                     if(response.body()!=null){
                         getOtp.postValue(model);

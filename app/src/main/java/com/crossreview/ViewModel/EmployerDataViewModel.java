@@ -1,5 +1,6 @@
 package com.crossreview.ViewModel;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -22,7 +23,7 @@ public class EmployerDataViewModel extends ViewModel {
 
     public MutableLiveData<ClsEmployerResponseModel>EmployerData= new MutableLiveData<>();
 
-    public void saveEmpData(String emprName, String emprEmail, String emprContct,String orgId,String emprDesignation){
+    public void saveEmpData(String emprName, String emprEmail, String emprContct, String orgId, String emprDesignation, Context context){
 
         JsonObject jsonObject= new JsonObject();
         jsonObject.addProperty("Employer_Email",emprEmail);
@@ -49,12 +50,16 @@ public class EmployerDataViewModel extends ViewModel {
                        // PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.TOKEN,model.getData().getAccessToken());
                     }
 
+                }else {
+
+                    Toast.makeText(context, "Email Id must be Unique", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ClsEmployerResponseModel> call, Throwable t) {
-                Log.e("okokokokok",t.getMessage());
+
+//                Toast.makeText(context, "Email Id must be Unique", Toast.LENGTH_SHORT).show();
             }
         });
 

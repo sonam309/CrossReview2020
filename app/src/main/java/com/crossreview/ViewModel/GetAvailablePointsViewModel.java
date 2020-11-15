@@ -23,17 +23,21 @@ public class GetAvailablePointsViewModel extends ViewModel {
 
     public MutableLiveData<GetSelfDetailsModel> getPoints= new MutableLiveData<>();
 
-    String token= PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.TOKEN);
+
+
+
 
     public void getAvailPoints(){
 
-        ApiClient.getBaseApiMethods().selfDetails(token).enqueue(new Callback<GetSelfDetailsModel>() {
+        String token= PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.AUTH_TOKEN);
+
+        ApiClient.getBaseApiMethods().selfDetails(KeyClass.BEARER_TOCKEN+token).enqueue(new Callback<GetSelfDetailsModel>() {
             @Override
             public void onResponse(Call<GetSelfDetailsModel> call, Response<GetSelfDetailsModel> response) {
 
                 if(response.isSuccessful()){
 
-                    GetSelfDetailsModel model= new GetSelfDetailsModel();
+                    GetSelfDetailsModel model=response.body();
                     if (response.body()!=null){
 
                         getPoints.postValue(model);
@@ -44,6 +48,8 @@ public class GetAvailablePointsViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<GetSelfDetailsModel> call, Throwable t) {
+
+                Log.e("kkkkkkkkkkkkkkkkkkkkkk",t.getMessage());
 
             }
         });

@@ -19,12 +19,19 @@ import android.widget.TextView;
 
 import com.crossreview.Activity.MainActivity;
 import com.crossreview.CustomView.AddPoints_popup;
+import com.crossreview.Model.ClsResultStateResponseModel;
 import com.crossreview.Model.GetSelfDetailsModel;
 import com.crossreview.R;
+import com.crossreview.Utilites.Constant;
 import com.crossreview.Utilites.KeyClass;
 import com.crossreview.Utilites.PrefrenceShared;
 import com.crossreview.ViewModel.GetAvailablePointsViewModel;
+import com.crossreview.ViewModel.MakePaymentViewModel;
 import com.crossreview.ViewModel.PreviewInfoViewModel;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class CheckOutFragment extends Fragment implements View.OnClickListener, Observer<GetSelfDetailsModel> {
@@ -37,6 +44,8 @@ public class CheckOutFragment extends Fragment implements View.OnClickListener, 
     private CardView pay_now_btn;
     private AddPoints_popup addPointsPopup = new AddPoints_popup(MainActivity.context, R.style.DialogDim);
     private GetAvailablePointsViewModel getAvailablePointsViewModel;
+    private String totalPoints, availPoints;
+    private MakePaymentViewModel makePaymentViewModel;
 
 
     @Override
@@ -68,13 +77,14 @@ public class CheckOutFragment extends Fragment implements View.OnClickListener, 
         bindView();
         viewSetup();
 
+        getAvailablePointsViewModel.getAvailPoints();
+
+
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-            getAvailablePointsViewModel.getAvailPoints();
 
 
 
@@ -101,6 +111,9 @@ public class CheckOutFragment extends Fragment implements View.OnClickListener, 
         getAvailablePointsViewModel = new ViewModelProvider(this).get(GetAvailablePointsViewModel.class);
         getAvailablePointsViewModel.getPoints.observe(this, this);
 
+        makePaymentViewModel = new ViewModelProvider(this).get(MakePaymentViewModel.class);
+        makePaymentViewModel.makePayment.observe(this, makepaymentObserver);
+
 
     }
 
@@ -109,25 +122,28 @@ public class CheckOutFragment extends Fragment implements View.OnClickListener, 
         txt_back_btn.setOnClickListener(this);
         pay_now_btn.setOnClickListener(this);
 
+
         String eduChildCount = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EduChildCount);
         String empChildCount = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmpChildCount);
 
         if (eduChildCount != null && empChildCount != null) {
-            String empPoints = String.valueOf(30 + (10 * Integer.parseInt(empChildCount)));
-            String eduPoints = String.valueOf(30 + (10 * Integer.parseInt(eduChildCount)));
-            String criPoints = String.valueOf(30);
+            int empPoints = (30 + (10 * (Integer.parseInt(empChildCount))));
+            int eduPoints = (30 + (10 * (Integer.parseInt(eduChildCount))));
+            int criPoints = 30;
 
             if (empChildCount != null) {
 
-                txt_employment_bg_check_points_tv.setText(empPoints);
+                txt_employment_bg_check_points_tv.setText(String.valueOf(empPoints));
             }
             if (eduChildCount != null) {
 
-                txt_employment_edu_check_points_tv.setText(eduPoints);
+                txt_employment_edu_check_points_tv.setText(String.valueOf(eduPoints));
             }
-            txt_employment_criminal_bg_check_points_tv.setText(criPoints);
+            txt_employment_criminal_bg_check_points_tv.setText(String.valueOf(criPoints));
 
-            String totalPoints = String.valueOf(empPoints + eduPoints + criPoints);
+            int total = empPoints + eduPoints + criPoints;
+
+            totalPoints = String.valueOf(total);
 
             txt_total_paid_points_tv.setText(totalPoints);
 
@@ -148,7 +164,7 @@ public class CheckOutFragment extends Fragment implements View.OnClickListener, 
 
             case R.id.pay_now_btn:
 
-                openDialog();
+                makePayments();
                 break;
         }
 
@@ -171,9 +187,49 @@ public class CheckOutFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onChanged(GetSelfDetailsModel getSelfDetailsModel) {
 
-        if(getSelfDetailsModel!=null){
+        if (getSelfDetailsModel != null) {
 
-            txt_avaliable_points.setText(getSelfDetailsModel.getData().getAmount());
+            availPoints = getSelfDetailsModel.getData().getAmount();
+            int amount=Integer.parseInt(availPoints);
+
+            txt_avaliable_points.setText(String.valueOf(amount));
         }
     }
+
+    private final Observer<ClsResultStateResponseModel> makepaymentObserver = new Observer<ClsResultStateResponseModel>() {
+        @Override
+        public void onChanged(ClsResultStateResponseModel clsResultStateResponseModel) {
+
+            ((MainActivity) getActivity()).replaceFragment(new ThankYouFragment(), false, KeyClass.FRAGMENT_THANK_YOU,
+                    KeyClass.FRAGMENT_THANK_YOU);
+
+        }
+    };
+
+    public void makePayments() {
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(Constant.Amount, totalPoints);
+
+        JsonObject data = new JsonObject();
+        data.add(Constant.data, jsonObject);
+
+        if (availPoints != null && totalPoints != null) {
+
+            int avilP = Integer.parseInt(availPoints);
+            int totalP = Integer.parseInt(totalPoints);
+
+
+            if (totalP <= avilP) {
+
+
+                makePaymentViewModel.makePayment(data, mctx);
+
+            }
+        }else {
+
+            openDialog();
+        }
+    }
+
 }

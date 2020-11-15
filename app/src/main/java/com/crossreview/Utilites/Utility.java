@@ -164,7 +164,7 @@ public class Utility {
             public void onStateChanged(int id, TransferState state) {
                 if (state.equals(TransferState.COMPLETED)) {
                     hideLoader();
-                    callback.afterAwsUpload(key);
+                    callback.afterAwsUpload((getS3Client(MainActivity.context).getUrl("crox-files",key)).toString());
                 } else if (state.equals(TransferState.FAILED)) {
                     hideLoader();
 //                    Util.showSnackbar(MainActivity.context,

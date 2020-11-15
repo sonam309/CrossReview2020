@@ -17,6 +17,7 @@ public class Constant {
     public static final String relatives="relatives";
     public static final String permanenet="permanent";
     public static final String local="local";
+    public static final String Amount="amount";
 
 
     //Employee details

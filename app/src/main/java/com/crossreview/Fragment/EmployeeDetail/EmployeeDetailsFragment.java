@@ -42,6 +42,10 @@ import com.crossreview.ViewModel.EmployeeDetailsViewModel;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.security.Key;
 import java.util.Calendar;
 import java.util.Date;
@@ -69,6 +73,14 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     private ImageView profile_iv;
     private Boolean selectdate = false, Dob = false;
     private ScrollView scrollview;
+
+    public EmployeeDetailsFragment() {
+
+    }
+
+    public static EmployeeDetailsFragment newInstance() {
+        return new EmployeeDetailsFragment();
+    }
 
 
     @Override
@@ -101,9 +113,12 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         super.onActivityCreated(savedInstanceState);
 
         bindView();
-
+//        onResultReceived();
         viewSetup();
+
+
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -162,6 +177,9 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
         }
     }
+
+
+
 
     private void bindView() {
 
@@ -509,16 +527,13 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         JsonObject object = new JsonObject();
         object.add(Constant.experience, experience);
 
-        JsonObject data= new JsonObject();
-        data.add(Constant.data,object);
+        JsonObject data = new JsonObject();
+        data.add(Constant.data, object);
 
 
         PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.Data, data.toString());
 
         employeeDetailsViewModel.saveEmployeeDetail(data);
-
-
-
 
 
     }

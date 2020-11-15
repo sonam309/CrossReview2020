@@ -38,6 +38,8 @@ import com.crossreview.ViewModel.CompanyNameViewModel;
 import com.crossreview.ViewModel.EmployerDataViewModel;
 import com.google.android.material.checkbox.MaterialCheckBox;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 
 
@@ -54,10 +56,20 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
     private ArrayAdapter<CompanyNameModel.Data> companyNameModelArrayAdapter;
     private Handler handler = new Handler();
     private EmployerDataViewModel saveEmployerDataViewModel;
-    private String empName, empEmail, empContact, empOrgName, empDesignation, orgNameId,token;
+    private String empName, empEmail, empContact, empOrgName, empDesignation, orgNameId, token;
     private ProgressDialog progressDialog;
 
 
+
+public EmployerInformationFragment(){
+
+
+}
+
+public static EmployerInformationFragment newInstance(){
+
+    return new EmployerInformationFragment();
+}
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,7 +142,6 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
         progressDialog.setProgress(0);
 
 
-
         countinue_btn.setOnClickListener(this);
         mainll.setOnTouchListener(this);
         onadapterItemClick();
@@ -160,7 +171,6 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
                 }
             }
         });
-
 
 
     }
@@ -206,11 +216,9 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
     public void onChanged(CompanyNameModel companyNameModel) {
 
 
-
         companyNameModelArrayAdapter = new ArrayAdapter<>(MainActivity.context, R.layout.support_simple_spinner_dropdown_item, companyNameModel.getData());
         txt_orgName_Autocomplete.setAdapter(companyNameModelArrayAdapter);
         txt_orgName_Autocomplete.showDropDown();
-
 
 
     }
@@ -221,13 +229,15 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
 
             //setData
 
-            token=clsEmployerResponseModel.getData().getAccessToken();
-            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.TOKEN,token);
+            token = clsEmployerResponseModel.getData().getAccessToken();
+            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.TOKEN, token);
 
 
 
                 ((MainActivity) getActivity()).replaceFragment(new EmployeeDetailsFragment(), false, KeyClass.FRAGMENT_EMPLOYEE_DETAIL,
                         KeyClass.FRAGMENT_EMPLOYEE_DETAIL);
+
+
 
         }
     };
@@ -332,8 +342,7 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
         }
 
 
-        saveEmployerDataViewModel.saveEmpData(empName, empEmail, empContact, orgNameId, empDesignation);
-
+        saveEmployerDataViewModel.saveEmpData(empName, empEmail, empContact, orgNameId, empDesignation, getActivity());
 
 
 
@@ -349,7 +358,7 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
                 CompanyNameModel.Data data = companyNameModelArrayAdapter.getItem(i);
 
                 orgNameId = data.getOrganizationId();
-                empOrgName=data.getOrganizationName();
+                empOrgName = data.getOrganizationName();
             }
         });
     }
@@ -357,7 +366,7 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
-        if(b){
+        if (b) {
 
             txt_name_et.clearFocus();
             txt_email_et.clearFocus();

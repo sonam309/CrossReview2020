@@ -79,18 +79,11 @@ public class WelcomeFragment extends Fragment implements View.OnClickListener
 
             case R.id.varify_now_btn:
 
-//                String token= PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.TOKEN);
-//                if(token!=null){
-//
-//                    ((MainActivity)getActivity()).replaceFragment(new EmployeeDetailsFragment(),false,KeyClass.FRAGMENT_EMPLOYEE_DETAIL,
-//                            KeyClass.FRAGMENT_EMPLOYEE_DETAIL);
-//
-//                }else {
 
-                    ((MainActivity) getActivity()).replaceFragment(new EmployerInformationFragment(), false, KeyClass.FRAGMENT_EMPLOYER_INFORMATION,
+                    ((MainActivity) getActivity()).replaceFragment(new LoginFragment(), false, KeyClass.FRAGMENT_EMPLOYER_INFORMATION,
                             KeyClass.FRAGMENT_EMPLOYER_INFORMATION);
 
-//                }
+
                 break;
         }
 

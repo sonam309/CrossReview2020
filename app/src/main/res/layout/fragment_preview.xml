@@ -20,7 +20,7 @@
         android:textSize="@dimen/text_size_22"
         android:textStyle="bold" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -140,7 +140,7 @@
                         android:layout_width="@dimen/dp100"
                         android:layout_height="@dimen/dp120"
                         android:layout_alignParentRight="true"
-                        android:layout_margin="@dimen/dp10"
+                        android:scaleType="fitXY"
                         android:background="@color/bgcolordark"
                         android:paddingTop="@dimen/dp20"
                         android:src="@drawable/ic_profile" />
@@ -253,6 +253,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="@string/EMAIL"
+                                    android:padding="@dimen/dp5"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/text_size_14" />
 
@@ -260,7 +261,7 @@
                                     android:id="@+id/company_hr_contact"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:padding="@dimen/dp10"
+                                    android:padding="@dimen/dp5"
                                     android:text="@string/Contact"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/text_size_14" />
@@ -423,7 +424,7 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>
 

@@ -5,20 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class LoginResponseModel extends ClsResultStateResponseModel {
 
-    private String status;
     @SerializedName("data")
     @Expose
     private Data data;
-
-    @Override
-    public String getStatus() {
-        return status;
-    }
-
-    @Override
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public Data getData() {
         return data;

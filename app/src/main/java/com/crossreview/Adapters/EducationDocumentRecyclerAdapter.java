@@ -60,7 +60,7 @@ public class EducationDocumentRecyclerAdapter extends RecyclerView.Adapter<Educa
             super(itemView);
 
 
-            doc_file = itemView.findViewById(R.id.doc_name);
+            doc_file = itemView.findViewById(R.id.doc_file);
             doc_name = itemView.findViewById(R.id.doc_name);
         }
     }

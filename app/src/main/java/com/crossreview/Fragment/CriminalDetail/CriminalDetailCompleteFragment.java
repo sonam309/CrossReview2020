@@ -28,6 +28,7 @@ import com.crossreview.Model.PoliceVarificataionDetailsModel;
 import com.crossreview.R;
 import com.crossreview.Utilites.Constant;
 import com.crossreview.Utilites.KeyClass;
+import com.crossreview.Utilites.PrefrenceShared;
 import com.crossreview.Utilites.Utility;
 import com.crossreview.ViewModel.EmployeeDetailsViewModel;
 import com.crossreview.ViewModel.PoliceVarificataionsViewModel;
@@ -478,6 +479,8 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
         //data json object to bind all data in single json array for sending data in api
         JsonObject data = new JsonObject();
         data.add(Constant.data, details);
+
+        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.SaveData,data.toString());
 
         policeVarificataionsViewModel.saveCriminalBgDetails(data);
 

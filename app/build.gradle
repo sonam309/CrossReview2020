@@ -72,6 +72,9 @@ dependencies {
     //pdfTile
     implementation 'com.github.barteksc:pdfium-android:1.4.0'
 
+    // Event Bus Library
+    implementation 'org.greenrobot:eventbus:3.1.1'
+
     //aws sdk
     implementation 'com.amazonaws:aws-android-sdk-s3:2.16.4'
     implementation("com.amazonaws:aws-android-sdk-mobile-client:2.16.8")

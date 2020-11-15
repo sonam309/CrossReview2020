@@ -39,7 +39,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Obs
     private RelativeLayout txt_edit_email_rl;
     private GetOtpViewModel getOtpViewModel;
     private LoginViewModel loginViewModel;
-    private LinearLayout mainll;
+    private RelativeLayout mainll;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -193,11 +193,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Obs
                 if (authToken != null) {
                     PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.AUTH_TOKEN, authToken);
                 }
-            }
+
 
             ((MainActivity) getActivity()).replaceFragment(new CheckOutFragment(), true, KeyClass.FRAGMENT_CHECKOUT,
                     KeyClass.FRAGMENT_CHECKOUT);
 
+            }
+            else {
+                Toast.makeText(mctx,"Error", Toast.LENGTH_SHORT).show();
+            }
         }
     };
 

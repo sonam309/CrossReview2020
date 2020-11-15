@@ -31,7 +31,7 @@ public class LoginViewModel extends ViewModel {
 
                 if(response.isSuccessful()){
 
-                    LoginResponseModel model= new LoginResponseModel();
+                    LoginResponseModel model=response.body();
                     if(response.body()!=null){
 
                         login.postValue(model);
