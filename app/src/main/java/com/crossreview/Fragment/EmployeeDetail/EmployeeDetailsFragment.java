@@ -18,12 +18,15 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +34,9 @@ import com.crossreview.Activity.MainActivity;
 import com.crossreview.Fragment.BasicClass;
 import com.crossreview.Fragment.EmployerInformationFragment;
 import com.crossreview.Interface.awsUploadCallback;
+import com.crossreview.Model.CitySpinnermodel;
 import com.crossreview.Model.ClsSaveEmployeeDetailModel;
+import com.crossreview.Model.StateSpinnerModel;
 import com.crossreview.R;
 import com.crossreview.Utilites.Constant;
 import com.crossreview.Utilites.FilePath;
@@ -45,8 +50,14 @@ import com.google.gson.JsonObject;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -55,7 +66,7 @@ import okhttp3.internal.Util;
 import static com.crossreview.Utilites.Constant.EmployeeProfilePic;
 
 
-public class EmployeeDetailsFragment extends BasicClass implements View.OnClickListener, View.OnTouchListener, Observer<ClsSaveEmployeeDetailModel>, TextView.OnEditorActionListener, awsUploadCallback {
+public class EmployeeDetailsFragment extends BasicClass implements View.OnClickListener, View.OnTouchListener, Observer<ClsSaveEmployeeDetailModel>, TextView.OnEditorActionListener, awsUploadCallback, AdapterView.OnItemSelectedListener {
 
     private View mview;
     private Context mctx;
@@ -73,6 +84,12 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     private ImageView profile_iv;
     private Boolean selectdate = false, Dob = false;
     private ScrollView scrollview;
+    private Spinner txt_gender_spinner;
+    private String genstr[] = {"Select Gender", "Male", "Female", "Trangender"};
+    private String Strgen, stateStr;
+    private ArrayList<StateSpinnerModel> stateModel;
+    private ArrayList<String> cityModel;
+    private String selectStateId;
 
     public EmployeeDetailsFragment() {
 
@@ -112,6 +129,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        parseJson();
         bindView();
 //        onResultReceived();
         viewSetup();
@@ -178,7 +196,35 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         }
     }
 
+    public void parseJson() {
 
+        stateModel = new ArrayList<>();
+        try {
+            JSONObject obj = new JSONObject(loadJSONFromAsset("states.json"));            JSONArray m_jArry = obj.getJSONArray("states");
+
+
+            for (int i = 0; i < m_jArry.length(); i++) {
+                JSONObject jo_inside = m_jArry.getJSONObject(i);
+//                stateModel.add(jo_inside.getString("name"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        cityModel = new ArrayList<>();
+        try {
+            JSONObject obj = new JSONObject(loadJSONFromAsset("cities.json"));
+            JSONArray m_jArry = obj.getJSONArray("cities");
+
+            for (int i = 0; i < m_jArry.length(); i++) {
+                JSONObject jo_inside = m_jArry.getJSONObject(i);
+                cityModel.add(jo_inside.getString("name"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     private void bindView() {
@@ -220,6 +266,12 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         scrollview = mview.findViewById(R.id.scrollview);
         profile_iv = mview.findViewById(R.id.profile_iv);
 
+
+        txt_gender_spinner = mview.findViewById(R.id.txt_gender_spinner);
+//        txt_state_spinner = mview.findViewById(R.id.txt_state_spinner);
+//        txt_city_spinner = mview.findViewById(R.id.txt_city_spinner);
+
+
     }
 
     private void viewModelsetup() {
@@ -230,6 +282,10 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     }
 
     private void viewSetup() {
+
+        spinnerAdapter();
+
+
         //getString
         heading = txt_heading.getText().toString();
 
@@ -249,7 +305,49 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
         txt_employee_id_et.setOnEditorActionListener(this);
 
+        txt_gender_spinner.setOnItemSelectedListener(this);
 
+
+    }
+
+    private void spinnerAdapter() {
+
+        //ArrayAdapter1
+        ArrayAdapter adapter = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, genstr);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+        //Adaptersetup
+        txt_gender_spinner.setAdapter(adapter);
+
+////        ArrayAdapter stateAdapter = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, stateModel);
+////        stateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+////
+////        txt_state_spinner.setAdapter(stateAdapter);
+//
+//
+//        ArrayAdapter cityAdapter = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, cityModel);
+//        stateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//
+//        txt_city_spinner.setAdapter(cityAdapter);
+
+    }
+
+
+    public String loadJSONFromAsset(String fileName) {
+        String json = null;
+        try {
+            InputStream is = getActivity().getAssets().open(fileName);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
     }
 
     @Override
@@ -312,16 +410,14 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
             case R.id.txt_doj_ll:
 
-                selectdate = true;
-                openDatePickerDialog();
+                openDatePickerDialogDoj();
 
 
                 break;
 
             case R.id.txt_interview_date_ll:
 
-                selectdate = false;
-                openDatePickerDialog();
+                openDatePickerDialogDoi();
 
 
                 break;
@@ -372,7 +468,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
         name = txt_name_et.getText().toString();
         fathers_name = txt_fathers_name_et.getText().toString();
-        gender = txt_gender_et.getText().toString();
+//        gender = txt_gender_et.getText().toString();
         dob = tv_txt_dob.getText().toString();
         address1 = txt_address1_et.getText().toString();
         address2 = txt_address2_et.getText().toString();
@@ -403,14 +499,10 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
             txt_fathers_name_et.clearFocus();
         }
-        if (gender.isEmpty()) {
+        if (Strgen.equalsIgnoreCase(String.valueOf(R.string.selectgender))) {
 
-            Toast.makeText(mctx, "please enter gender", Toast.LENGTH_LONG).show();
-            txt_gender_et.requestFocus();
+            Toast.makeText(mctx, "please Select gender", Toast.LENGTH_LONG).show();
             return;
-        } else {
-
-            txt_gender_et.clearFocus();
         }
         if (dob.isEmpty()) {
 
@@ -506,12 +598,12 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         }
 
 
-        JsonArray experience = new JsonArray();
+//        JsonArray experience = new JsonArray();
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty(Constant.EmployeeName, name);
         jsonObject.addProperty(Constant.EmployeeFathersName, fathers_name);
-        jsonObject.addProperty(Constant.EmployeeGender, gender);
+        jsonObject.addProperty(Constant.EmployeeGender, Strgen);
         jsonObject.addProperty(Constant.EmployeeDob, dob);
         jsonObject.addProperty(Constant.EmployeeAddress, address);
         jsonObject.addProperty(Constant.Employeecity, city);
@@ -522,13 +614,13 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         jsonObject.addProperty(Constant.EmployeeId, emp_id);
         jsonObject.addProperty(EmployeeProfilePic, profileUrl);
 
-        experience.add(jsonObject);
+//        experience.add(jsonObject);
 
-        JsonObject object = new JsonObject();
-        object.add(Constant.experience, experience);
+//        JsonObject object = new JsonObject();
+//        object.add(Constant.experience, experience);
 
         JsonObject data = new JsonObject();
-        data.add(Constant.data, object);
+        data.add(Constant.data, jsonObject);
 
 
         PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.Data, data.toString());
@@ -554,7 +646,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     }
 
 
-    private void openDatePickerDialog() {
+    private void openDatePickerDialogDoj() {
         // Get Current Date
         final Calendar calendar = Calendar.getInstance();
         if (dates != null) {
@@ -575,25 +667,12 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
                         Calendar calendarSelected = Calendar.getInstance();
 
                         calendarSelected.set(year, monthOfYear, dayOfMonth);
-//                        if (calendarSelected.getTime().after(new Date())) {
-//
-//                            return;
-//                        }
+
+                        calendar3.setTimeInMillis(calendarSelected.getTimeInMillis());
+
                         dates = calendarSelected.getTime();
-//                        if (Dob == true) {
-//
-//                            tv_txt_dob.setText(Utility.getStringFromDate(dates, KeyClass.DATE_MM_dd_yyyy));
-//                            Dob = false;
-//                        }
 
-                        if (selectdate == true) {
                             tv_txt_doj.setText(Utility.getStringFromDate(dates, KeyClass.DATE_MM_dd_yyyy));
-                            selectdate = false;
-                        } else {
-
-                            tv_txt_interview_date.setText(Utility.getStringFromDate(dates, KeyClass.DATE_MM_dd_yyyy));
-                            selectdate = true;
-                        }
 
                     }
                 }, mYear, mMonth, mDay);
@@ -610,7 +689,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
     }
 
-    private void openDatePickerDialogDob() {
+    private void openDatePickerDialogDoi() {
         // Get Current Date
         final Calendar calendar = Calendar.getInstance();
         if (dates != null) {
@@ -619,6 +698,50 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         }
 
         int mYear = (calendar.get(Calendar.YEAR));
+        int mMonth = calendar.get(Calendar.MONTH);
+        int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        final DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        Calendar calendarSelected = Calendar.getInstance();
+
+                        calendarSelected.set(year, monthOfYear, dayOfMonth);
+
+                        dates = calendarSelected.getTime();
+//
+                            tv_txt_interview_date.setText(Utility.getStringFromDate(dates, KeyClass.DATE_MM_dd_yyyy));
+
+                    }
+                }, mYear, mMonth, mDay);
+
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.set(Calendar.MONTH, mMonth + 3);
+        calendar2.set(Calendar.DAY_OF_MONTH, mDay);
+        calendar2.set(Calendar.YEAR, mYear - 60);
+        datePickerDialog.getDatePicker().setMinDate(calendar2.getTimeInMillis());
+        datePickerDialog.getDatePicker().setMaxDate(calendar3.getTimeInMillis());
+
+
+        datePickerDialog.show();
+
+
+    }
+
+    Calendar calendar3 = Calendar.getInstance();
+
+    private void openDatePickerDialogDob() {
+        // Get Current Date
+        final Calendar calendar = Calendar.getInstance();
+        if (dates != null) {
+            calendar.setTime(dates);
+
+        }
+
+        int mYear = (calendar.get(Calendar.YEAR) - 18);
         int mMonth = calendar.get(Calendar.MONTH);
         int mDay = calendar.get(Calendar.DAY_OF_MONTH);
 
@@ -646,7 +769,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         Calendar calendar1 = Calendar.getInstance();
         calendar1.set(Calendar.MONTH, mMonth - 1);
         calendar1.set(Calendar.DAY_OF_MONTH, mDay);
-        calendar1.set(Calendar.YEAR, mYear - 100);
+        calendar1.set(Calendar.YEAR, mYear - 1);
         datePickerDialog.getDatePicker().setMinDate(calendar1.getTimeInMillis());
         datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
 
@@ -678,8 +801,34 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
         profileUrl = filename;
 
-        employeeDetailsViewModel.saveEmployeeDetail(date);
+//        employeeDetailsViewModel.saveEmployeeDetail(date);
 
+
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+        switch (adapterView.getId()) {
+
+            case R.id.txt_gender_spinner:
+
+                Strgen = txt_gender_spinner.getSelectedItem().toString();
+
+                break;
+
+            case R.id.txt_state_spinner:
+
+//                stateStr = txt_state_spinner.getSelectedItem().toString();
+
+                break;
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
 }

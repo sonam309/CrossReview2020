@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -46,13 +47,14 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
     private TextView txt_company_name, txt_company_address, txt_company_state, company_hr_name, company_hr_email, company_hr_contact;
     private CardView makePayment_btn;
     private PreviewInfoViewModel previewInfoViewModel;
-    private RecyclerView employedetaill_recyclerview, education_details_recyclerview, personalDetails_recyclerview,address_RecyclerView;
+    private RecyclerView employedetaill_recyclerview, education_details_recyclerview, personalDetails_recyclerview, address_RecyclerView;
     private ImageView profile_image;
     private EmployerDetailsRecyclerAdapter employerDetailsRecyclerAdapter;
     private List<PreviewInfoModel> previewInfoModelList;
     private EducationDetailsRecyclerAdapter educationDetailsRecyclerAdapter;
     private PoliceVarificationRecyclerAdapter policeVarificationRecyclerAdapter;
     private AddressRecyclerAdapter addressRecyclerAdapter;
+    private LinearLayout employmentDetail_ll,education_detail_ll,txt_police_varification_ll;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -120,6 +122,11 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
         company_hr_contact = mview.findViewById(R.id.company_hr_contact);
 
 
+        employmentDetail_ll = mview.findViewById(R.id.employmentDetail_ll);
+        education_detail_ll = mview.findViewById(R.id.education_detail_ll);
+        txt_police_varification_ll = mview.findViewById(R.id.txt_police_varification_ll);
+
+
     }
 
     private void viewModelSetup() {
@@ -137,8 +144,6 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
         employedetaill_recyclerview.setLayoutManager(new LinearLayoutManager(mctx));
         education_details_recyclerview.setLayoutManager(new LinearLayoutManager(mctx));
         personalDetails_recyclerview.setLayoutManager(new LinearLayoutManager(mctx));
-
-
 
 
     }
@@ -180,15 +185,14 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
         if (previewInfoModel != null && previewInfoModel.getData() != null) {
 
 
-
             //employee details
             txt_emp_name.setText(previewInfoModel.getData().getEmployeeName());
             txt_emp_dob.setText(previewInfoModel.getData().getEmployeeDOB());
             txt_emp_gender.setText(previewInfoModel.getData().getEmployeeGender());
             txt_emp_address.setText(previewInfoModel.getData().getEmployeeAddress());
 
-            String fathersName=previewInfoModel.getData().getEmployeeFatherName();
-            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.FatherName,fathersName);
+            String fathersName = previewInfoModel.getData().getEmployeeFatherName();
+            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.FatherName, fathersName);
 
             Glide.with(getContext()).load(Uri.parse(previewInfoModel.getData().getEmployeProfilePic())).into(profile_image);
 
@@ -202,12 +206,27 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
             company_hr_contact.setText(previewInfoModel.getData().getEmployer().getEmployerContact());
 
 
+            if (previewInfoModel.getData().getExperiences().size() != 0 && previewInfoModel.getData().getExperiences() != null) {
+                employerDetailsRecyclerAdapter = new EmployerDetailsRecyclerAdapter(mctx, previewInfoModel.getData().getExperiences());
+                employmentDetail_ll.setVisibility(View.VISIBLE);
+            } else {
+                employmentDetail_ll.setVisibility(View.GONE);
+            }
+            if(previewInfoModel.getData().getEducation().size()!=0 && previewInfoModel.getData().getEducation()!=null) {
+                educationDetailsRecyclerAdapter = new EducationDetailsRecyclerAdapter(mctx, previewInfoModel.getData().getEducation());
+                education_detail_ll.setVisibility(View.VISIBLE);
+            }else {
 
+                education_detail_ll.setVisibility(View.GONE);
+            }
+            if (previewInfoModel.getData().getPoliceVerifications() != null && previewInfoModel.getData().getPoliceVerifications().size()!=0) {
+                policeVarificationRecyclerAdapter = new PoliceVarificationRecyclerAdapter(previewInfoModel.getData().getPoliceVerifications(), mctx);
+                txt_police_varification_ll.setVisibility(View.VISIBLE);
+            }else {
 
-            employerDetailsRecyclerAdapter = new EmployerDetailsRecyclerAdapter(mctx, previewInfoModel.getData().getExperiences());
-            educationDetailsRecyclerAdapter = new EducationDetailsRecyclerAdapter(mctx, previewInfoModel.getData().getEducation());
-            policeVarificationRecyclerAdapter = new PoliceVarificationRecyclerAdapter(previewInfoModel.getData().getPoliceVerifications(),mctx);
-            addressRecyclerAdapter= new AddressRecyclerAdapter(previewInfoModel.getData().getAddresses(),mctx);
+                txt_police_varification_ll.setVisibility(View.GONE);
+            }
+            addressRecyclerAdapter = new AddressRecyclerAdapter(previewInfoModel.getData().getAddresses(), mctx);
 
 
             employedetaill_recyclerview.setAdapter(employerDetailsRecyclerAdapter);

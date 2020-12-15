@@ -89,7 +89,6 @@
                 android:layout_centerVertical="true"
                 android:padding="@dimen/dp10"
                 android:id="@+id/txt_employment_bg_check_points_tv"
-                android:text="250"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_14"
                 android:textStyle="bold" />
@@ -127,7 +126,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/dp10"
-                android:text="100"
                 android:id="@+id/txt_employment_edu_check_points_tv"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_14"
@@ -167,7 +165,6 @@
                 android:layout_centerVertical="true"
                 android:padding="@dimen/dp10"
                 android:id="@+id/txt_employment_criminal_bg_check_points_tv"
-                android:text="100"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_14"
                 android:textStyle="bold" />
@@ -204,7 +201,6 @@
                 android:layout_centerVertical="true"
                 android:id="@+id/txt_total_paid_points_tv"
                 android:padding="@dimen/dp12"
-                android:text="450"
                 android:textStyle="bold"
                 android:textColor="@color/appcolor"
                 android:textSize="@dimen/text_size_16" />

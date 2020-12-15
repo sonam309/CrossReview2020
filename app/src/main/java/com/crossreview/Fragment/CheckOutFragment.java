@@ -46,6 +46,7 @@ public class CheckOutFragment extends Fragment implements View.OnClickListener, 
     private GetAvailablePointsViewModel getAvailablePointsViewModel;
     private String totalPoints, availPoints;
     private MakePaymentViewModel makePaymentViewModel;
+    private int empPoints = 0, eduPoints = 0, criPoints = 0;
 
 
     @Override
@@ -87,7 +88,6 @@ public class CheckOutFragment extends Fragment implements View.OnClickListener, 
         super.onActivityCreated(savedInstanceState);
 
 
-
     }
 
     private void bindView() {
@@ -127,9 +127,12 @@ public class CheckOutFragment extends Fragment implements View.OnClickListener, 
         String empChildCount = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmpChildCount);
 
         if (eduChildCount != null && empChildCount != null) {
-            int empPoints = (30 + (10 * (Integer.parseInt(empChildCount))));
-            int eduPoints = (30 + (10 * (Integer.parseInt(eduChildCount))));
-            int criPoints = 30;
+
+            if (!eduChildCount.equals("0") && !empChildCount.equals("0")) {
+                empPoints = (30 + (10 * (Integer.parseInt(empChildCount))));
+                eduPoints = (30 + (10 * (Integer.parseInt(eduChildCount))));
+                criPoints = 30;
+            }
 
             if (empChildCount != null) {
 
@@ -190,7 +193,7 @@ public class CheckOutFragment extends Fragment implements View.OnClickListener, 
         if (getSelfDetailsModel != null) {
 
             availPoints = getSelfDetailsModel.getData().getAmount();
-            int amount=Integer.parseInt(availPoints);
+            int amount = Integer.parseInt(availPoints);
 
             txt_avaliable_points.setText(String.valueOf(amount));
         }
@@ -226,7 +229,7 @@ public class CheckOutFragment extends Fragment implements View.OnClickListener, 
                 makePaymentViewModel.makePayment(data, mctx);
 
             }
-        }else {
+        } else {
 
             openDialog();
         }

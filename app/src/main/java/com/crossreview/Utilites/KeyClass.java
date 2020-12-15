@@ -2,7 +2,9 @@ package com.crossreview.Utilites;
 
 public final class KeyClass {
 
-    public static final String BASE_URL = "https://31dfa538e4fe.ngrok.io";
+//    public static final String BASE_URL = "https://31dfa538e4fe.ngrok.io";
+    public static final String BASE_URL = "http://18.221.192.243:4500/";
+//    public static final String BASE_URL = "http://10.0.0.79:4500/";
 
 
     public static final String FRAGMENT_WELCOME = "Welcome fragment";

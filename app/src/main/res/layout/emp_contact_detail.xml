@@ -52,6 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp5"
+            android:visibility="gone"
             android:text="@string/address2"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_16" />
@@ -99,7 +100,20 @@
             android:imeOptions="actionNext"
             android:maxLength="20"
             android:padding="@dimen/dp8"
+            android:visibility="visible"
             android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+        <Spinner
+            android:id="@+id/txt_state_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp35"
+            android:autofillHints="@string/state"
+            android:prompt="@string/state"
+            android:visibility="gone"
+            android:spinnerMode="dropdown"
+            android:background="@drawable/square_white_bg"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_16" />
 
@@ -140,9 +154,21 @@
                 android:imeOptions="actionNext"
                 android:maxLength="20"
                 android:padding="@dimen/dp8"
+                android:visibility="visible"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16" />
+            <Spinner
+                android:id="@+id/txt_city_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp35"
+                android:prompt="@string/city"
+                android:visibility="gone"
+                android:spinnerMode="dropdown"
+                android:background="@drawable/square_white_bg"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
 
 
         </LinearLayout>

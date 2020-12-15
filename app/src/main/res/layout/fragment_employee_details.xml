@@ -167,7 +167,16 @@
                     android:imeOptions="actionNext"
                     android:maxLength="20"
                     android:padding="@dimen/dp8"
+                    android:visibility="gone"
                     android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_16" />
+
+                <Spinner
+                    android:id="@+id/txt_gender_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp35"
+                    android:background="@drawable/square_white_bg"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_16" />
 
