@@ -12,6 +12,7 @@ import com.crossreview.Model.LoginRequestModel;
 import com.crossreview.Model.LoginResponseModel;
 import com.crossreview.Model.PoliceVarificataionDetailsModel;
 import com.crossreview.Model.PreviewInfoModel;
+import com.crossreview.Model.StateCityModel;
 import com.google.gson.JsonObject;
 
 
@@ -57,6 +58,6 @@ public interface BaseApiMethods {
     Call<ClsResultStateResponseModel> makePayment(@Header("Authorization") String bearerToke, @Header("auth_token") String bearerToken, @Body JsonObject jsonObject);
 
     @PUT
-    Call<ClsResultStateResponseModel>zipcode(@Url String url);
+    Call<StateCityModel>zipcode(@Url String url);
 
 }

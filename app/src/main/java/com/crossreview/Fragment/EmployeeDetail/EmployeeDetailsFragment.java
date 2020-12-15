@@ -13,6 +13,8 @@ import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -35,7 +37,9 @@ import com.crossreview.Fragment.BasicClass;
 import com.crossreview.Fragment.EmployerInformationFragment;
 import com.crossreview.Interface.awsUploadCallback;
 import com.crossreview.Model.CitySpinnermodel;
+import com.crossreview.Model.ClsResultStateResponseModel;
 import com.crossreview.Model.ClsSaveEmployeeDetailModel;
+import com.crossreview.Model.StateCityModel;
 import com.crossreview.Model.StateSpinnerModel;
 import com.crossreview.R;
 import com.crossreview.Utilites.Constant;
@@ -44,6 +48,7 @@ import com.crossreview.Utilites.KeyClass;
 import com.crossreview.Utilites.PrefrenceShared;
 import com.crossreview.Utilites.Utility;
 import com.crossreview.ViewModel.EmployeeDetailsViewModel;
+import com.crossreview.network.ApiClient;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -62,6 +67,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 import okhttp3.internal.Util;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.crossreview.Utilites.Constant.EmployeeProfilePic;
 
@@ -307,7 +315,53 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
         txt_gender_spinner.setOnItemSelectedListener(this);
 
+        txt_zipcode_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.toString().length()==6){
+                    hitApi(charSequence.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+    }
+
+    private void hitApi(String zip) {
+        ApiClient.getBaseApiMethods().zipcode("http://postalpincode.in/api/pincode/"+zip).enqueue(new Callback<StateCityModel>() {
+            @Override
+            public void onResponse(Call<StateCityModel> call, Response<StateCityModel> response) {
+
+                if (response.isSuccessful()) {
+
+                    StateCityModel model = response.body();
+
+                    if (model!=null){
+                        if (model.getPostOffice()!=null&&model.getPostOffice().length>0){
+                            txt_state_et.setText(model.getPostOffice()[0].getState());
+                            txt_city_et.setText(model.getPostOffice()[0].getDistrict());
+                        }
+                    }
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StateCityModel> call, Throwable t) {
+
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     private void spinnerAdapter() {
