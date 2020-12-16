@@ -350,6 +350,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
                             txt_state_et.setText(model.getPostOffice()[0].getState());
                             txt_city_et.setText(model.getPostOffice()[0].getDistrict());
                         }
+
                     }
                 } else {
                 }
