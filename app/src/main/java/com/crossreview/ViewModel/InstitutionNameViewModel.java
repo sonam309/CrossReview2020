@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.crossreview.Model.CompanyNameModel;
 import com.crossreview.Model.InstitutionNameModel;
+import com.crossreview.Utilites.Utility;
 import com.crossreview.network.ApiClient;
 
 import retrofit2.Call;
@@ -18,9 +19,13 @@ public class InstitutionNameViewModel extends ViewModel {
 
     public void InstituteNamefun(String InstituteName){
 
+
+        Utility.showLoader();
         ApiClient.getBaseApiMethods().institution(InstituteName).enqueue(new Callback<InstitutionNameModel>() {
             @Override
             public void onResponse(Call<InstitutionNameModel> call, Response<InstitutionNameModel> response) {
+
+                Utility.hideLoader();
 
                 if(response.isSuccessful()){
                     InstitutionNameModel model= response.body();
@@ -34,6 +39,8 @@ public class InstitutionNameViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<InstitutionNameModel> call, Throwable t) {
+
+                Utility.hideLoader();
 
             }
         });

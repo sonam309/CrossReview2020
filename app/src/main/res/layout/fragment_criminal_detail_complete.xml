@@ -32,6 +32,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/data_ll"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
             android:background="@color/bgcolor"
             android:orientation="vertical">
 
@@ -204,6 +207,16 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_16" />
 
+                    <TextView
+                        android:id="@+id/txt_mothers_name_tv_error"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp5"
+                        android:text="@string/motherName_error"
+                        android:textColor="@color/error_red"
+                        android:textSize="@dimen/text_size_12"
+                        android:visibility="gone" />
+
                 </LinearLayout>
 
 
@@ -236,7 +249,46 @@
                         android:padding="@dimen/dp8"
                         android:singleLine="true"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_16" />
+                        android:textSize="@dimen/text_size_16"
+                        android:visibility="gone" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/square_white_bg">
+
+                        <Spinner
+                            android:id="@+id/txt_POB_spinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp40"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp2"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:layout_marginRight="@dimen/dp2"
+                            android:background="@null"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_16" />
+
+
+                        <ImageView
+                            android:layout_width="@dimen/dp10"
+                            android:layout_height="@dimen/dp10"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dp15"
+                            android:src="@drawable/ic_down_arrow" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/txt_PoB_tv_error"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp5"
+                        android:text="@string/Placeofbirth_error"
+                        android:textColor="@color/error_red"
+                        android:textSize="@dimen/text_size_12"
+                        android:visibility="gone" />
+
 
                 </LinearLayout>
 
@@ -270,7 +322,47 @@
                         android:padding="@dimen/dp8"
                         android:singleLine="true"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_16" />
+                        android:textSize="@dimen/text_size_16"
+                        android:visibility="gone" />
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/square_white_bg">
+
+                        <Spinner
+                            android:id="@+id/txt_language_spinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp40"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp2"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:layout_marginRight="@dimen/dp2"
+                            android:background="@null"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_16" />
+
+
+                        <ImageView
+                            android:layout_width="@dimen/dp10"
+                            android:layout_height="@dimen/dp10"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dp15"
+                            android:src="@drawable/ic_down_arrow" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/txt_language_tv_error"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp5"
+                        android:text="@string/language_error"
+                        android:textColor="@color/error_red"
+                        android:textSize="@dimen/text_size_12"
+                        android:visibility="gone" />
+
 
                 </LinearLayout>
             </LinearLayout>
@@ -458,7 +550,36 @@
                             android:padding="@dimen/dp8"
                             android:singleLine="true"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_16" />
+                            android:textSize="@dimen/text_size_16"
+                            android:visibility="gone" />
+
+                        <RelativeLayout
+                            android:id="@+id/height_rl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/square_white_bg">
+
+                            <Spinner
+                                android:id="@+id/txt_height_spinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/dp40"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/dp2"
+                                android:layout_marginTop="@dimen/dp5"
+                                android:layout_marginRight="@dimen/dp2"
+                                android:background="@null"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_16" />
+
+
+                            <ImageView
+                                android:layout_width="@dimen/dp10"
+                                android:layout_height="@dimen/dp10"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="@dimen/dp15"
+                                android:src="@drawable/ic_down_arrow" />
+                        </RelativeLayout>
                     </LinearLayout>
 
 
@@ -490,8 +611,41 @@
                             android:padding="@dimen/dp8"
                             android:singleLine="true"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_16" />
+                            android:textSize="@dimen/text_size_16"
+                            android:visibility="gone" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/weight_rl"
+                            android:background="@drawable/square_white_bg">
+
+                            <Spinner
+                                android:id="@+id/txt_weight_spinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/dp40"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/dp2"
+                                android:layout_marginTop="@dimen/dp5"
+                                android:layout_marginRight="@dimen/dp2"
+                                android:background="@null"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_16" />
+
+
+                            <ImageView
+                                android:layout_width="@dimen/dp10"
+                                android:layout_height="@dimen/dp10"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="@dimen/dp15"
+                                android:src="@drawable/ic_down_arrow" />
+                        </RelativeLayout>
+
+
                     </LinearLayout>
+
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -524,6 +678,16 @@
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/txt_complexion_tv_error"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp5"
+                        android:text="@string/complexion_error"
+                        android:textColor="@color/error_red"
+                        android:textSize="@dimen/text_size_12"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -558,6 +722,17 @@
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_16" />
+
+
+                    <TextView
+                        android:id="@+id/txt_identification_mark_tv_error"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp5"
+                        android:text="@string/identification_mark_error"
+                        android:textColor="@color/error_red"
+                        android:textSize="@dimen/text_size_12"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 

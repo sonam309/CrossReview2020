@@ -8,7 +8,7 @@
     <string name="varifybtn">Verify Now</string>
     <string name="employer_info">Employer Information</string>
     <string name="name">Name*</string>
-    <string name="yourname">your name</string>
+    <string name="yourname">Employee\'s Full Name</string>
     <string name="Email">Email*</string>
     <string name="email">email</string>
     <string name="contact">Phone Number*</string>
@@ -16,7 +16,6 @@
     <string name="org_name">Organization Name*</string>
     <string name="orgName">organization name</string>
     <string name="designation">Designation*</string>
-    <string name="Designation">Designation</string>
     <string name="i_agree">I agree to the</string>
     <string name="terms_condition"><![CDATA[Terms & Conditions]]></string>
     <string name="and">and</string>
@@ -24,13 +23,13 @@
     <string name="countinue">Continue</string>
     <string name="employee_detail">Employee Details</string>
     <string name="fathersname">father\'s Name*</string>
-    <string name="fathername">father\'s name</string>
+    <string name="fathername">Employee\'s Father\'s Name</string>
     <string name="gender">Gender*</string>
     <string name="selectgender">Select Gender</string>
     <string name="dob">DOB*</string>
     <string name="Dob">dob</string>
     <string name="contactdetail">Contact Detail</string>
-    <string name="address1">Address 1*</string>
+    <string name="address1">Address*</string>
     <string name="address">address</string>
     <string name="City">City*</string>
     <string name="city">city</string>
@@ -38,15 +37,15 @@
     <string name="state">state</string>
     <string name="address2">Address 2*</string>
     <string name="address_2">address 2</string>
-    <string name="Zipcode">ZipCode*</string>
-    <string name="zipcode">zipcode</string>
-    <string name="otherDetail">Other Detail</string>
-    <string name="DOJ">Date ofJoining</string>
+    <string name="Zipcode">Pin Code*</string>
+    <string name="zipcode">Pin Code</string>
+    <string name="otherDetail">Other Details</string>
+    <string name="DOJ">Date of Joining</string>
     <string name="doj">date of joining</string>
     <string name="DOI">Date of Interview*</string>
     <string name="doi">date of interview</string>
     <string name="emp_id">Employee ID*</string>
-    <string name="Emp_id">employee ID</string>
+    <string name="Emp_id">Employee ID</string>
     <string name="uploadPhoto">Upload Photo*</string>
     <string name="Chosefile">chose file</string>
     <string name="upload">Upload picture/pdf</string>
@@ -66,10 +65,10 @@
     <string name="orgnization">Organiization*</string>
     <string name="reason_of_leaving">Reason of Leaving*</string>
     <string name="reasonOfLeaving">reason of leaving</string>
-    <string name="Remuneration">Remuneration at the time of leaving the Company*</string>
+    <string name="Remuneration">Remuneration at the time of leaving the Company</string>
     <string name="selectPackge">select package</string>
     <string name="reporting_person">Reporting Person</string>
-    <string name="Name">Name</string>
+    <string name="Name">Name*</string>
     <string name="enter_name">enter name</string>
     <string name="enter_designation">enter designation</string>
     <string name="uploaddoc">Upload Documents*</string>
@@ -90,7 +89,7 @@
     <string name="correspondence">Correspondence/Distance Learning</string>
     <string name="course_type">Course Type*</string>
     <string name="passoutyear">Passout Year*</string>
-    <string name="grade">Grade*</string>
+    <string name="grade">Grading System</string>
     <string name="criminal_bg_verification">Do you want to verify criminal background?</string>
     <string name="criminal_bg_status">Criminal Background Details</string>
     <string name="police_verification">Police Verification</string>
@@ -120,9 +119,9 @@
     <string name="voter_id">voter ID number</string>
     <string name="Passport_num">Passport Number</string>
     <string name="passport_num">passport number</string>
-    <string name="Name_of_local_F_R">Name of Local Friend/Relative</string>
+    <string name="Name_of_local_F_R">Name of Local Friend/Relative*</string>
     <string name="name_of_local_F_R">name of local friend/relative</string>
-    <string name="ADDRESS">Address</string>
+    <string name="ADDRESS">Address*</string>
     <string name="personal_details">Personal Deatils*</string>
     <string name="Height">Height</string>
     <string name="height">height</string>
@@ -187,7 +186,7 @@
     <string name="vistweb">Kindly, Visit WebSite to Add Money</string>
     <string name="url">https://www.crossreview.com/</string>
     <string name="letsgo">Let\'s Go</string>
-    <string name="profileimg">Upload Profile Picture*</string>
+    <string name="profileimg">Upload Profile Photo*</string>
     <string name="educataion">Select educataion Type</string>
     <string name="preview">Preview</string>
     <string name="year">Year</string>
@@ -196,4 +195,842 @@
     <string name="paymentConfirm">Your payment has been confirmed.</string>
     <string name="checkemail">Check your email for details.</string>
     <string name="passout">passout year</string>
+    <string name="fullName">*Please Enter Your Full Name.</string>
+    <string name="emailAddres">*Please Enter Your Email Address.</string>
+    <string name="phoneNum">*Please Enter Your Phone Number.</string>
+    <string name="orgnizationname">" *Please Enter Your Organisation Name."</string>
+    <string name="enterdesignation">*Please Enter Your Designation.</string>
+    <string name="fName">*Please Enter Employee\'s Father Name.</string>
+    <string name="selectgen">*Please Select Gender.</string>
+    <string name="empfullName">*Please Enter Employee\'s Full Name.</string>
+    <string name="empDob">*Please Enter Employee\'s DOB.</string>
+    <string name="empAdd">*Please Enter Employee\'s Address.</string>
+    <string name="empState">*Please Enter Employee\'s State.</string>
+    <string name="empzip">*Please Enter at Least 5 digits.</string>
+    <string name="empcity">*Please Enter Employee\'s City.</string>
+    <string name="empdoj">*Please Enter Employee\'s Date of Joining.</string>
+    <string name="empDoi">*Please Enter Employee\'s Date of Interview.</string>
+    <string name="empId">*Please Enter Employee\'s Employment Id.</string>
+    <string name="proPic">*Please Upload Profile Picture</string>
+    <string name="picsize">(Photo should be .png, .jpg or .jpeg format upto 10MB)</string>
+    <string name="employementDoj">*Please Enter Date of Joining.</string>
+    <string name="employementDor">*Please Enter Date of Relieving.</string>
+    <string name="empDesignation">*Please Enter Employee\'s Designation.</string>
+    <string name="job_role_error">*Please Enter Employee\'s Job Role.</string>
+    <string name="org_name_error">*Please Enter Employee\'s Organization.</string>
+    <string name="leaving_reason_error">*Please Enter Reason of Leaving.</string>
+    <string name="ctc_error">Please Enter Remuneration.</string>
+    <string name="reporting_person_error">*Please Enter Reporting Person Name.</string>
+    <string name="designation_error">*Please Enter Reporting Person Designation.</string>
+    <string name="Designation">Designation</string>
+    <string name="upload_error">*Please Upload Atleast 1 Document.</string>
+    <string name="attachment">Attach Document</string>
+    <string name="docformat">"(document should be .pdf or .doc format. Max Size upto 10MB) "</string>
+    <string name="education_error">*Please Select Education.</string>
+    <string name="course_error">*Please Enter Course Name.</string>
+    <string name="specilizataion_error">*Please Enter Specialization.</string>
+    <string name="university_error">*Please Enter University Name.</string>
+    <string name="course_type_error">*Please Enter Course Type.</string>
+    <string name="passoutyear_error">*Please Select Passing Out Year.</string>
+    <string name="grade_error">*Please Select Grading System.</string>
+    <string name="upload_edu_error">*Please Upload Educational Document.</string>
+    <string name="marks">Marks*</string>
+    <string name="enter_marks">Enter Marks</string>
+    <string name="motherName_error">Please Enter Mother Name.</string>
+    <string name="Placeofbirth_error">Please Select Birth Place.</string>
+    <string name="terms_condition_error"><![CDATA[*Please accept the Terms & conditions.]]></string>
+    <string name="language_error">Please Select Spoken Language.</string>
+    <string name="sameAddress">Local Address Same as Permanent Address</string>
+    <string name="local_add_error">Please Enter Address.</string>
+    <string name="permanent_add_error">Please Enter Address.</string>
+    <string name="aadhar_num_error">Please Enter Aadhar No.</string>
+    <string name="relative_error">Please Enter Relative Name.</string>
+    <string name="relative_add_error">Please Enter Relative Address.</string>
+    <string name="complexion_error">Please Enter Complexion.</string>
+    <string name="identification_mark_error">Please Enter Identity Mark.</string>
+
+
+    <string-array name="height_arr">
+<!--        <item>30cm   1\'</item>-->
+<!--        <item>31cm   1\'</item>-->
+<!--        <item>32cm   1\' 1\"</item>-->
+<!--        <item>33cm   1\' 1\"</item>-->
+<!--        <item>34cm   1\' 1\"</item>-->
+<!--        <item>35cm   1\' 2\"</item>-->
+<!--        <item>36cm   1\' 2\"</item>-->
+<!--        <item>37cm   1\' 3\"</item>-->
+<!--        <item>38cm   1\' 3\"</item>-->
+<!--        <item>39cm   1\' 3\"</item>-->
+<!--        <item>40cm   1\' 4\"</item>-->
+<!--        <item>41cm   1\' 4\"</item>-->
+<!--        <item>42cm   1\' 5\"</item>-->
+<!--        <item>43cm   1\' 5\"</item>-->
+<!--        <item>44cm   1\' 5\"</item>-->
+<!--        <item>45cm   1\' 6\"</item>-->
+<!--        <item>46cm   1\' 6\"</item>-->
+<!--        <item>47cm   1\' 7\"</item>-->
+<!--        <item>48cm   1\' 7\"</item>-->
+<!--        <item>49cm   1\' 7\"</item>-->
+<!--        <item>50cm   1\' 8\"</item>-->
+<!--        <item>51cm   1\' 8\"</item>-->
+<!--        <item>52cm   1\' 8\"</item>-->
+<!--        <item>53cm   1\' 9\"</item>-->
+<!--        <item>54cm   1\' 9\"</item>-->
+<!--        <item>55cm   1\' 10\"</item>-->
+<!--        <item>56cm   1\' 10\"</item>-->
+<!--        <item>57cm   1\' 10\"</item>-->
+<!--        <item>58cm   1\' 11\"</item>-->
+<!--        <item>59cm   1\' 11\"</item>-->
+<!--        <item>60cm   2\' 0\"</item>-->
+<!--        <item>61cm   2\' 0\"</item>-->
+<!--        <item>62cm   2\' 0\"</item>-->
+<!--        <item>63cm   2\' 1\"</item>-->
+<!--        <item>64cm   2\' 1\"</item>-->
+<!--        <item>65cm   2\' 2\"</item>-->
+<!--        <item>66cm   2\' 2\"</item>-->
+<!--        <item>67cm   2\' 2\"</item>-->
+<!--        <item>68cm   2\' 3\"</item>-->
+<!--        <item>69cm   2\' 3\"</item>-->
+<!--        <item>70cm   2\' 4\"</item>-->
+<!--        <item>71cm   2\' 4\"</item>-->
+<!--        <item>72cm   2\' 4\"</item>-->
+<!--        <item>73cm   2\' 5\"</item>-->
+<!--        <item>74cm   2\' 5\"</item>-->
+<!--        <item>75cm   2\' 6\"</item>-->
+<!--        <item>76cm   2\' 6\"</item>-->
+<!--        <item>77cm   2\' 6\"</item>-->
+<!--        <item>78cm   2\' 7\"</item>-->
+<!--        <item>79cm   2\' 7\"</item>-->
+<!--        <item>80cm   2\' 7\"</item>-->
+<!--        <item>81cm   2\' 8\"</item>-->
+<!--        <item>82cm   2\' 8\"</item>-->
+<!--        <item>83cm   2\' 9\"</item>-->
+<!--        <item>84cm   2\' 9\"</item>-->
+<!--        <item>85cm   2\' 9\"</item>-->
+<!--        <item>86cm   2\' 10\"</item>-->
+<!--        <item>87cm   2\' 10\"</item>-->
+<!--        <item>88cm   2\' 11\"</item>-->
+<!--        <item>89cm   2\' 11\"</item>-->
+<!--        <item>90cm   2\' 11\"</item>-->
+<!--        <item>91cm   3\' 0\"</item>-->
+<!--        <item>92cm   3\' 0\"</item>-->
+<!--        <item>93cm   3\' 1\"</item>-->
+<!--        <item>94cm   3\' 1\"</item>-->
+<!--        <item>95cm   3\' 1\"</item>-->
+<!--        <item>96cm   3\' 2\"</item>-->
+<!--        <item>97cm   3\' 2\"</item>-->
+<!--        <item>98cm   3\' 3\"</item>-->
+<!--        <item>99cm   3\' 3\"</item>-->
+<!--        <item>100cm   3\' 3\"</item>-->
+<!--        <item>101cm   3\' 4\"</item>-->
+<!--        <item>102cm   3\' 4\"</item>-->
+<!--        <item>103cm   3\' 5\"</item>-->
+<!--        <item>104cm   3\' 5\"</item>-->
+<!--        <item>105cm   3\' 5\"</item>-->
+<!--        <item>106cm   3\' 6\"</item>-->
+<!--        <item>107cm   3\' 6\"</item>-->
+<!--        <item>108cm   3\' 7\"</item>-->
+<!--        <item>109cm   3\' 7\"</item>-->
+<!--        <item>110cm   3\' 7\"</item>-->
+<!--        <item>111cm   3\' 8\"</item>-->
+<!--        <item>112cm   3\' 8\"</item>-->
+<!--        <item>113cm   3\' 8\"</item>-->
+<!--        <item>114cm   3\' 9\"</item>-->
+<!--        <item>115cm   3\' 9\"</item>-->
+<!--        <item>116cm   3\' 10\"</item>-->
+<!--        <item>117cm   3\' 10\"</item>-->
+<!--        <item>118cm   3\' 10\"</item>-->
+<!--        <item>119cm   3\' 11\"</item>-->
+<!--        <item>120cm   3\' 11\"</item>-->
+        <item>121cm   4\' 0\"</item>
+        <item>122cm   4\' 0\"</item>
+        <item>123cm   4\' 0\"</item>
+        <item>124cm   4\' 1\"</item>
+        <item>125cm   4\' 1\"</item>
+        <item>126cm   4\' 2\"</item>
+        <item>127cm   4\' 2\"</item>
+        <item>128cm   4\' 2\"</item>
+        <item>129cm   4\' 3\"</item>
+        <item>130cm   4\' 3\"</item>
+        <item>131cm   4\' 4\"</item>
+        <item>132cm   4\' 4\"</item>
+        <item>133cm   4\' 4\"</item>
+        <item>134cm   4\' 5\"</item>
+        <item>135cm   4\' 5\"</item>
+        <item>136cm   4\' 6\"</item>
+        <item>137cm   4\' 6\"</item>
+        <item>138cm   4\' 6\"</item>
+        <item>139cm   4\' 7\"</item>
+        <item>140cm   4\' 7\"</item>
+        <item>141cm   4\' 8\"</item>
+        <item>142cm   4\' 8\"</item>
+        <item>143cm   4\' 8\"</item>
+        <item>144cm   4\' 9\"</item>
+        <item>145cm   4\' 9\"</item>
+        <item>146cm   4\' 9\"</item>
+        <item>147cm   4\' 10\"</item>
+        <item>148cm   4\' 10\"</item>
+        <item>149cm   4\' 11\"</item>
+        <item>150cm   4\' 11\"</item>
+        <item>151cm   4\' 11\"</item>
+        <item>152cm   5\' 0\"</item>
+        <item>153cm   5\' 0\"</item>
+        <item>154cm   5\' 1\"</item>
+        <item>155cm   5\' 1\"</item>
+        <item>156cm   5\' 1\"</item>
+        <item>157cm   5\' 2\"</item>
+        <item>158cm   5\' 2\"</item>
+        <item>159cm   5\' 3\"</item>
+        <item>160cm   5\' 3\"</item>
+        <item>161cm   5\' 3\"</item>
+        <item>162cm   5\' 4\"</item>
+        <item>163cm   5\' 4\"</item>
+        <item>164cm   5\' 5\"</item>
+        <item>165cm   5\' 5\"</item>
+        <item>166cm   5\' 5\"</item>
+        <item>167cm   5\' 6\"</item>
+        <item>168cm   5\' 6\"</item>
+        <item>169cm   5\' 7\"</item>
+        <item>170cm   5\' 7\"</item>
+        <item>171cm   5\' 7\"</item>
+        <item>172cm   5\' 8\"</item>
+        <item>173cm   5\' 8\"</item>
+        <item>174cm   5\' 9\"</item>
+        <item>175cm   5\' 9\"</item>
+        <item>176cm   5\' 9\"</item>
+        <item>177cm   5\' 10\"</item>
+        <item>178cm   5\' 10\"</item>
+        <item>179cm   5\' 10\"</item>
+        <item>180cm   5\' 11\"</item>
+        <item>181cm   5\' 11\"</item>
+        <item>182cm   6\' 0\"</item>
+        <item>183cm   6\' 0\"</item>
+        <item>184cm   6\' 0\"</item>
+        <item>185cm   6\' 1\"</item>
+        <item>186cm   6\' 1\"</item>
+        <item>187cm   6\' 2\"</item>
+        <item>188cm   6\' 2\"</item>
+        <item>189cm   6\' 2\"</item>
+        <item>190cm   6\' 3\"</item>
+        <item>191cm   6\' 3\"</item>
+        <item>192cm   6\' 4\"</item>
+        <item>193cm   6\' 4\"</item>
+        <item>194cm   6\' 4\"</item>
+        <item>195cm   6\' 5\"</item>
+        <item>196cm   6\' 5\"</item>
+        <item>197cm   6\' 6\"</item>
+        <item>198cm   6\' 6\"</item>
+        <item>199cm   6\' 6\"</item>
+        <item>200cm   6\' 7\"</item>
+        <item>201cm   6\' 7\"</item>
+        <item>202cm   6\' 8\"</item>
+        <item>203cm   6\' 8\"</item>
+        <item>204cm   6\' 8\"</item>
+        <item>205cm   6\' 9\"</item>
+        <item>206cm   6\' 9\"</item>
+        <item>207cm   6\' 9\"</item>
+        <item>208cm   6\' 10\"</item>
+        <item>209cm   6\' 10\"</item>
+        <item>210cm   6\' 11\"</item>
+        <item>211cm   6\' 11\"</item>
+        <item>212cm   6\' 11\"</item>
+        <item>213cm   7\' 0\"</item>
+        <item>214cm   7\' 0\"</item>
+        <item>215cm   7\' 1\"</item>
+        <item>216cm   7\' 1\"</item>
+        <item>217cm   7\' 1\"</item>
+        <item>218cm   7\' 2\"</item>
+        <item>219cm   7\' 2\"</item>
+        <item>220cm   7\' 3\"</item>
+        <item>221cm   7\' 3\"</item>
+        <item>222cm   7\' 3\"</item>
+        <item>223cm   7\' 4\"</item>
+        <item>224cm   7\' 4\"</item>
+        <item>225cm   7\' 5\"</item>
+        <item>226cm   7\' 5\"</item>
+        <item>227cm   7\' 5\"</item>
+        <item>228cm   7\' 6\"</item>
+        <item>229cm   7\' 6\"</item>
+        <item>230cm   7\' 7\"</item>
+        <item>231cm   7\' 7\"</item>
+        <item>232cm   7\' 7\"</item>
+        <item>233cm   7\' 8\"</item>
+        <item>234cm   7\' 8\"</item>
+        <item>235cm   7\' 9\"</item>
+        <item>236cm   7\' 9\"</item>
+        <item>237cm   7\' 9\"</item>
+        <item>238cm   7\' 10\"</item>
+        <item>239cm   7\' 10\"</item>
+        <item>240cm   7\' 10\"</item>
+        <item>241cm   7\' 11\"</item>
+        <item>242cm   7\' 11\"</item>
+        <item>243cm   8\' 0\"</item>
+        <item>244cm   8\' 0\"</item>
+        <item>245cm   8\' 0\"</item>
+        <item>246cm   8\' 1\"</item>
+        <item>247cm   8\' 1\"</item>
+        <item>248cm   8\' 2\"</item>
+        <item>249cm   8\' 2\"</item>
+        <item>250cm   8\' 2\"</item>
+        <item>251cm   8\' 3\"</item>
+        <item>252cm   8\' 3\"</item>
+        <item>253cm   8\' 4\"</item>
+        <item>254cm   8\' 4\"</item>
+        <item>255cm   8\' 4\"</item>
+        <item>256cm   8\' 5\"</item>
+        <item>257cm   8\' 5\"</item>
+        <item>258cm   8\' 6\"</item>
+        <item>259cm   8\' 6\"</item>
+        <item>260cm   8\' 6\"</item>
+        <item>261cm   8\' 7\"</item>
+        <item>262cm   8\' 7\"</item>
+        <item>263cm   8\' 8\"</item>
+        <item>264cm   8\' 8\"</item>
+        <item>265cm   8\' 8\"</item>
+        <item>266cm   8\' 9\"</item>
+        <item>267cm   8\' 9\"</item>
+        <item>268cm   8\' 10\"</item>
+        <item>269cm   8\' 10\"</item>
+        <item>270cm   8\' 10\"</item>
+        <item>271cm   8\' 11\"</item>
+        <item>272cm   8\' 11\"</item>
+        <item>273cm   8\' 11\"</item>
+        <item>274cm   9\' 0\"</item>
+        <item>275cm   9\' 0\"</item>
+        <item>276cm   9\' 1\"</item>
+        <item>277cm   9\' 1\"</item>
+        <item>278cm   9\' 1\"</item>
+        <item>279cm   9\' 2\"</item>
+        <item>280cm   9\' 2\"</item>
+        <item>281cm   9\' 3\"</item>
+        <item>282cm   9\' 3\"</item>
+        <item>283cm   9\' 3\"</item>
+        <item>284cm   9\' 4\"</item>
+        <item>285cm   9\' 4\"</item>
+        <item>286cm   9\' 5\"</item>
+        <item>287cm   9\' 5\"</item>
+        <item>288cm   9\' 5\"</item>
+        <item>289cm   9\' 6\"</item>
+        <item>290cm   9\' 6\"</item>
+        <item>291cm   9\' 7\"</item>
+        <item>292cm   9\' 7\"</item>
+        <item>293cm   9\' 7\"</item>
+        <item>294cm   9\' 8\"</item>
+        <item>295cm   9\' 8\"</item>
+        <item>296cm   9\' 9\"</item>
+        <item>297cm   9\' 9\"</item>
+        <item>298cm   9\' 9\"</item>
+        <item>299cm   9\' 10\"</item>
+        <item>300cm   9\' 10\"</item>
+        <item>301cm   9\' 11\"</item>
+        <item>302cm   9\' 11\"</item>
+        <item>303cm   9\' 11\"</item>
+        <item>304cm   10\' 0\"</item>
+        <item>305cm   10\' 0\" +</item>
+    </string-array>
+
+
+    <string-array name="weight_arr">
+        <item>1kg  2</item>
+        <item>1.5kg  3</item>
+        <item>2kg   4</item>
+        <item>2.5kg   6</item>
+        <item>3kg   7</item>
+        <item>3.5kg   8</item>
+        <item>4kg   9</item>
+        <item>4.5kg   10</item>
+        <item>5kg   11</item>
+        <item>5.5kg   12</item>
+        <item>6kg   13</item>
+        <item>6.5kg   14</item>
+        <item>7kg   15</item>
+        <item>7.5kg   17</item>
+        <item>8kg   18</item>
+        <item>8.5kg   19</item>
+        <item>9kg   20</item>
+        <item>9.5kg   21</item>
+        <item>10kg   22</item>
+        <item>10.5kg   23</item>
+        <item>11kg   24</item>
+        <item>11.5kg   25</item>
+        <item>12kg   26</item>
+        <item>12.5kg   28</item>
+        <item>13kg   29</item>
+        <item>13.5kg   30</item>
+        <item>14kg   31</item>
+        <item>14.5kg   32</item>
+        <item>15kg   33</item>
+        <item>15.5kg   34</item>
+        <item>16kg   35</item>
+        <item>16.5kg   36</item>
+        <item>17kg   37</item>
+        <item>17.5kg   39</item>
+        <item>18kg   40</item>
+        <item>18.5kg   41</item>
+        <item>19kg   42</item>
+        <item>19.5kg   43</item>
+        <item>20kg   44</item>
+        <item>20.5kg   45</item>
+        <item>21kg   46</item>
+        <item>21.5kg   47</item>
+        <item>22kg   49</item>
+        <item>22.5kg   50</item>
+        <item>23kg   51</item>
+        <item>23.5kg   52</item>
+        <item>24kg   53</item>
+        <item>24.5kg   54</item>
+        <item>25kg   55</item>
+        <item>25.5kg   56</item>
+        <item>26kg   57</item>
+        <item>26.5kg   58</item>
+        <item>27kg   60</item>
+        <item>27.5kg   61</item>
+        <item>28kg   62</item>
+        <item>28.5kg   63</item>
+        <item>29kg   64</item>
+        <item>29.5kg   65</item>
+        <item>30kg   66</item>
+        <item>30.5kg   67</item>
+        <item>31kg   68</item>
+        <item>31.5kg   69</item>
+        <item>32kg   71</item>
+        <item>32.5kg   72</item>
+        <item>33kg   73</item>
+        <item>33.5kg   74</item>
+        <item>34kg   75</item>
+        <item>34.5kg   76</item>
+        <item>35kg   77</item>
+        <item>35.5kg   78</item>
+        <item>36kg   79</item>
+        <item>36.5kg   80</item>
+        <item>37kg   82</item>
+        <item>37.5kg   83</item>
+        <item>38kg   84</item>
+        <item>38.5kg   85</item>
+        <item>39kg   86</item>
+        <item>39.5kg   87</item>
+        <item>40kg   88</item>
+        <item>40.5kg   89</item>
+        <item>41kg   90</item>
+        <item>41.5kg   92</item>
+        <item>42kg   93</item>
+        <item>42.5kg   94</item>
+        <item>43kg   95</item>
+        <item>43.5kg   96</item>
+        <item>44kg   97</item>
+        <item>44.5kg   98</item>
+        <item>45kg   99</item>
+        <item>45.5kg   100</item>
+        <item>46kg   101</item>
+        <item>46.5kg   103</item>
+        <item>47kg   104</item>
+        <item>47.5kg   105</item>
+        <item>48kg   106</item>
+        <item>48.5kg   107</item>
+        <item>49kg   108</item>
+        <item>49.5kg   109</item>
+        <item>50kg   110</item>
+        <item>50.5kg   111</item>
+        <item>51kg   112</item>
+        <item>51.5kg   114</item>
+        <item>52kg   115</item>
+        <item>52.5kg   116</item>
+        <item>53kg   117</item>
+        <item>53.5kg   118</item>
+        <item>54kg   119</item>
+        <item>54.5kg   120</item>
+        <item>55kg   121</item>
+        <item>55.5kg   122</item>
+        <item>56kg   123</item>
+        <item>56.5kg   125</item>
+        <item>57kg   126</item>
+        <item>57.5kg   127</item>
+        <item>58kg   128</item>
+        <item>58.5kg   129</item>
+        <item>59kg   130</item>
+        <item>59.5kg   131</item>
+        <item>60kg   132</item>
+        <item>60.5kg   133</item>
+        <item>61kg   135</item>
+        <item>61.5kg   136</item>
+        <item>62kg   137</item>
+        <item>62.5kg   138</item>
+        <item>63kg   139</item>
+        <item>63.5kg   140</item>
+        <item>64kg   141</item>
+        <item>64.5kg   142</item>
+        <item>65kg   143</item>
+        <item>65.5kg   144</item>
+        <item>66kg   146</item>
+        <item>66.5kg   147</item>
+        <item>67kg   148</item>
+        <item>67.5kg   149</item>
+        <item>68kg   150</item>
+        <item>68.5kg   151</item>
+        <item>69kg   152</item>
+        <item>69.5kg   153</item>
+        <item>70kg   154</item>
+        <item>70.5kg   155</item>
+        <item>71kg   157</item>
+        <item>71.5kg   158</item>
+        <item>72kg   159</item>
+        <item>72.5kg   160</item>
+        <item>73kg   161</item>
+        <item>73.5kg   162</item>
+        <item>74kg   163</item>
+        <item>74.5kg   164</item>
+        <item>75kg   165</item>
+        <item>75.5kg   166</item>
+        <item>76kg   168</item>
+        <item>76.5kg   169</item>
+        <item>77kg   170</item>
+        <item>77.5kg   171</item>
+        <item>78kg   172</item>
+        <item>78.5kg   173</item>
+        <item>79kg   174</item>
+        <item>79.5kg   175</item>
+        <item>80kg   176</item>
+        <item>80.5kg   178</item>
+        <item>81kg   179</item>
+        <item>81.5kg   180</item>
+        <item>82kg   181</item>
+        <item>82.5kg   182</item>
+        <item>83kg   183</item>
+        <item>83.5kg   184</item>
+        <item>84kg   185</item>
+        <item>84.5kg   186</item>
+        <item>85kg   187</item>
+        <item>85.5kg   189</item>
+        <item>86kg   190</item>
+        <item>86.5kg   191</item>
+        <item>87kg   192</item>
+        <item>87.5kg   193</item>
+        <item>88kg   194</item>
+        <item>88.5kg   195</item>
+        <item>89kg   196</item>
+        <item>89.5kg   197</item>
+        <item>90kg   198</item>
+        <item>90.5kg   200</item>
+        <item>91kg   201</item>
+        <item>91.5kg   202</item>
+        <item>92kg   203</item>
+        <item>92.5kg   204</item>
+        <item>93kg   205</item>
+        <item>93.5kg   206</item>
+        <item>94kg   207</item>
+        <item>94.5kg   208</item>
+        <item>95kg   209</item>
+        <item>95.5kg   211</item>
+        <item>96kg   212</item>
+        <item>96.5kg   213</item>
+        <item>97kg   214</item>
+        <item>97.5kg   215</item>
+        <item>98kg   216</item>
+        <item>98.5kg   217</item>
+        <item>99kg   218</item>
+        <item>99.5kg   219</item>
+        <item>100kg   221</item>
+        <item>100.5kg   222</item>
+        <item>101kg   223</item>
+        <item>101.5kg   224</item>
+        <item>102kg   225</item>
+        <item>102.5kg   226</item>
+        <item>103kg   227</item>
+        <item>103.5kg   228</item>
+        <item>104kg   229</item>
+        <item>104.5kg   230</item>
+        <item>105kg   232</item>
+        <item>105.5kg   233</item>
+        <item>106kg   234</item>
+        <item>106.5kg   235</item>
+        <item>107kg   236</item>
+        <item>107.5kg   237</item>
+        <item>108kg   238</item>
+        <item>108.5kg   239</item>
+        <item>109kg   240</item>
+        <item>109.5kg   241</item>
+        <item>110kg   243</item>
+        <item>110.5kg   244</item>
+        <item>111kg   245</item>
+        <item>111.5kg   246</item>
+        <item>112kg   247</item>
+        <item>112.5kg   248</item>
+        <item>113kg   249</item>
+        <item>113.5kg   250</item>
+        <item>114kg   251</item>
+        <item>114.5kg   252</item>
+        <item>115kg   254</item>
+        <item>115.5kg   255</item>
+        <item>116kg   256</item>
+        <item>116.5kg   257</item>
+        <item>117kg   258</item>
+        <item>117.5kg   259</item>
+        <item>118kg   260</item>
+        <item>118.5kg   261</item>
+        <item>119kg   262</item>
+        <item>119.5kg   263</item>
+        <item>120kg   265</item>
+        <item>120.5kg   266</item>
+        <item>121kg   267</item>
+        <item>121.5kg   268</item>
+        <item>122kg   269</item>
+        <item>122.5kg   270</item>
+        <item>123kg   271</item>
+        <item>123.5kg   272</item>
+        <item>124kg   273</item>
+        <item>124.5kg   275</item>
+        <item>125kg   276</item>
+        <item>125.5kg   277</item>
+        <item>126kg   278</item>
+        <item>126.5kg   279</item>
+        <item>127kg   280</item>
+        <item>127.5kg   281</item>
+        <item>128kg   282</item>
+        <item>128.5kg   283</item>
+        <item>129kg   284</item>
+        <item>129.5kg   286</item>
+        <item>130kg   287</item>
+        <item>130.5kg   288</item>
+        <item>131kg   289</item>
+        <item>131.5kg   290</item>
+        <item>132kg   291</item>
+        <item>132.5kg   292</item>
+        <item>133kg   293</item>
+        <item>133.5kg   294</item>
+        <item>134kg   295</item>
+        <item>134.5kg   297</item>
+        <item>135kg   298</item>
+        <item>135.5kg   299</item>
+        <item>136kg   300</item>
+        <item>137kg   302</item>
+        <item>138kg   304</item>
+        <item>139kg   306</item>
+        <item>140kg   309</item>
+        <item>141kg   311</item>
+        <item>142kg   313</item>
+        <item>143kg   315</item>
+        <item>144kg   318</item>
+        <item>145kg   320</item>
+        <item>146kg   322</item>
+        <item>147kg   324</item>
+        <item>148kg   326</item>
+        <item>149kg   329</item>
+        <item>150kg   331</item>
+        <item>151kg   333</item>
+        <item>152kg   335</item>
+        <item>153kg   337</item>
+        <item>154kg   340</item>
+        <item>155kg   342</item>
+        <item>156kg   344</item>
+        <item>157kg   346</item>
+        <item>158kg   348</item>
+        <item>159kg   351</item>
+        <item>160kg   353</item>
+        <item>161kg   355</item>
+        <item>162kg   357</item>
+        <item>163kg   359</item>
+        <item>164kg   362</item>
+        <item>165kg   364</item>
+        <item>166kg   366</item>
+        <item>167kg   368</item>
+        <item>168kg   370</item>
+        <item>169kg   373</item>
+        <item>170kg   375</item>
+        <item>171kg   377</item>
+        <item>172kg   379</item>
+        <item>173kg   381</item>
+        <item>174kg   384</item>
+        <item>175kg   386</item>
+        <item>176kg   388</item>
+        <item>177kg   390</item>
+        <item>178kg   392</item>
+        <item>179kg   395</item>
+        <item>180kg   397</item>
+        <item>181kg   399</item>
+        <item>182kg   401</item>
+        <item>183kg   404</item>
+        <item>184kg   406</item>
+        <item>185kg   408</item>
+        <item>186kg   410</item>
+        <item>187kg   412</item>
+        <item>188kg   415</item>
+        <item>189kg   417</item>
+        <item>190kg   419</item>
+        <item>191kg   421</item>
+        <item>192kg   423</item>
+        <item>193kg   426</item>
+        <item>194kg   428</item>
+        <item>195kg   430</item>
+        <item>196kg   432</item>
+        <item>197kg   434</item>
+        <item>198kg   437</item>
+        <item>199kg   439</item>
+        <item>200kg   441</item>
+        <item>201kg   443</item>
+        <item>202kg   445</item>
+        <item>203kg   448</item>
+        <item>204kg   450</item>
+        <item>205kg   452</item>
+        <item>206kg   454</item>
+        <item>207kg   456</item>
+        <item>208kg   459</item>
+        <item>209kg   461</item>
+        <item>210kg   463</item>
+        <item>211kg   465</item>
+        <item>212kg   467</item>
+        <item>213kg   470</item>
+        <item>214kg   472</item>
+        <item>215kg   474</item>
+        <item>216kg   476</item>
+        <item>217kg   478</item>
+        <item>218kg   481</item>
+        <item>219kg   483</item>
+        <item>220kg   485</item>
+        <item>221kg   487</item>
+        <item>222kg   490</item>
+        <item>223kg   492</item>
+        <item>224kg   494</item>
+        <item>225kg   496</item>
+        <item>226kg   498</item>
+        <item>227kg   501</item>
+        <item>228kg   503</item>
+        <item>229kg   505</item>
+        <item>230kg   507</item>
+        <item>231kg   509</item>
+        <item>232kg   512</item>
+        <item>233kg   514</item>
+        <item>234kg   516</item>
+        <item>235kg   518</item>
+        <item>236kg   520</item>
+        <item>237kg   523</item>
+        <item>238kg   525</item>
+        <item>239kg   527</item>
+        <item>240kg   529</item>
+        <item>241kg   531</item>
+        <item>242kg   534</item>
+        <item>243kg   536</item>
+        <item>244kg   538</item>
+        <item>245kg   540</item>
+        <item>246kg   542</item>
+        <item>247kg   545</item>
+        <item>248kg   547</item>
+        <item>249kg   549</item>
+        <item>250kg   551</item>
+        <item>251kg   553</item>
+        <item>252kg   556</item>
+        <item>253kg   558</item>
+        <item>254kg   560</item>
+        <item>255kg   562</item>
+        <item>256kg   564</item>
+        <item>257kg   567</item>
+        <item>258kg   569</item>
+        <item>259kg   571</item>
+        <item>260kg   573</item>
+        <item>261kg   576</item>
+        <item>262kg   578</item>
+        <item>263kg   580</item>
+        <item>264kg   582</item>
+        <item>265kg   584</item>
+        <item>266kg   587</item>
+        <item>267kg   589</item>
+        <item>268kg   591</item>
+        <item>269kg   593</item>
+        <item>270kg   595</item>
+        <item>271kg   598</item>
+        <item>272kg   600</item>
+        <item>273kg   602</item>
+        <item>274kg   604</item>
+        <item>275kg   606</item>
+        <item>276kg   609</item>
+        <item>277kg   611</item>
+        <item>278kg   613</item>
+        <item>279kg   615</item>
+        <item>280kg   617</item>
+        <item>281kg   620</item>
+        <item>282kg   622</item>
+        <item>283kg   624</item>
+        <item>284kg   626</item>
+        <item>285kg   628</item>
+        <item>286kg   631</item>
+        <item>287kg   633</item>
+        <item>288kg   635</item>
+        <item>289kg   637</item>
+        <item>290kg   639</item>
+        <item>291kg   642</item>
+        <item>292kg   644</item>
+        <item>293kg   646</item>
+        <item>294kg   648</item>
+        <item>295kg   650</item>
+        <item>296kg   653</item>
+        <item>297kg   655</item>
+        <item>298kg   657</item>
+        <item>299kg   659</item>
+        <item>300kg   662</item>
+        <item>301kg   664</item>
+        <item>302kg   666</item>
+        <item>303kg   668</item>
+        <item>304kg   670</item>
+        <item>305kg   673</item>
+        <item>306kg   675</item>
+        <item>307kg   677</item>
+        <item>308kg   679</item>
+        <item>309kg   681</item>
+        <item>310kg   684</item>
+        <item>311kg   686</item>
+        <item>312kg   688</item>
+        <item>313kg   690</item>
+        <item>314kg   692</item>
+        <item>315kg   695</item>
+        <item>316kg   697</item>
+        <item>317kg   699</item>
+        <item>318kg   701</item>
+        <item>319kg   703</item>
+        <item>320kg   706</item>
+        <item>321kg   708</item>
+        <item>322kg   710</item>
+        <item>323kg   712</item>
+        <item>324kg   714</item>
+        <item>325kg   717</item>
+        <item>326kg   719</item>
+        <item>327kg   721</item>
+        <item>328kg   723</item>
+        <item>329kg   725</item>
+        <item>330kg   728</item>
+        <item>331kg   730</item>
+        <item>332kg   732</item>
+        <item>333kg   734</item>
+        <item>334kg   736</item>
+        <item>335kg   739</item>
+        <item>336kg   741</item>
+        <item>337kg   743</item>
+        <item>338kg   745</item>
+        <item>339kg   747</item>
+        <item>340kg   750</item>
+        <item>341kg   752</item>
+        <item>342kg   754</item>
+        <item>343kg   756</item>
+        <item>344kg   759</item>
+        <item>345kg   761</item>
+        <item>346kg   763</item>
+        <item>347kg   765</item>
+        <item>348kg   767</item>
+        <item>349kg   770</item>
+        <item>350kg   772</item>
+        <item>351kg   774</item>
+        <item>352kg   776</item>
+        <item>353kg   778</item>
+        <item>354kg   781</item>
+        <item>355kg   783</item>
+        <item>356kg   785</item>
+        <item>357kg   787</item>
+        <item>358kg   789</item>
+        <item>359kg   792</item>
+        <item>360kg   794</item>
+        <item>361kg   796</item>
+        <item>362kg   798</item>
+        <item>363kg   800 </item>
+
+    </string-array>
+
+
 </resources>

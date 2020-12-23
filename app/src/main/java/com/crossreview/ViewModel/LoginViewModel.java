@@ -11,6 +11,7 @@ import com.crossreview.Model.LoginRequestModel;
 import com.crossreview.Model.LoginResponseModel;
 import com.crossreview.Utilites.KeyClass;
 import com.crossreview.Utilites.PrefrenceShared;
+import com.crossreview.Utilites.Utility;
 import com.crossreview.network.ApiClient;
 import com.google.android.gms.common.api.Api;
 
@@ -25,10 +26,12 @@ public class LoginViewModel extends ViewModel {
 
     public void login(String email, String otp, Context context){
 
+        Utility.showLoader();
         ApiClient.getBaseApiMethods().logIn(new LoginRequestModel(email,otp)).enqueue(new Callback<LoginResponseModel>() {
             @Override
             public void onResponse(Call<LoginResponseModel> call, Response<LoginResponseModel> response) {
 
+                Utility.hideLoader();
                 if(response.isSuccessful()){
 
                     LoginResponseModel model=response.body();
@@ -44,7 +47,9 @@ public class LoginViewModel extends ViewModel {
             @Override
             public void onFailure(Call<LoginResponseModel> call, Throwable t) {
 
-                Toast.makeText(context, "Please enter a valid Otp", Toast.LENGTH_SHORT).show();
+                Utility.hideLoader();
+
+//                Toast.makeText(context, "Please enter a valid Otp", Toast.LENGTH_SHORT).show();
 
             }
         });

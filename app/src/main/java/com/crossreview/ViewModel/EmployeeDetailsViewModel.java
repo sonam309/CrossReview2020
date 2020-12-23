@@ -10,6 +10,7 @@ import com.crossreview.Model.ClsSaveEmployeeDetailModel;
 import com.crossreview.Utilites.Constant;
 import com.crossreview.Utilites.KeyClass;
 import com.crossreview.Utilites.PrefrenceShared;
+import com.crossreview.Utilites.Utility;
 import com.crossreview.network.ApiClient;
 import com.google.gson.JsonObject;
 
@@ -31,31 +32,34 @@ public class EmployeeDetailsViewModel extends ViewModel {
     public void saveEmployeeDetail(JsonObject jsonObject) {
 
 
-            String token = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.TOKEN);
+        String token = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.TOKEN);
 
 
-            ApiClient.getBaseApiMethods().employeeDetail(token, jsonObject).enqueue(new Callback<ClsSaveEmployeeDetailModel>() {
-                @Override
-                public void onResponse(Call<ClsSaveEmployeeDetailModel> call, Response<ClsSaveEmployeeDetailModel> response) {
+        Utility.showLoader();
+        ApiClient.getBaseApiMethods().employeeDetail(token, jsonObject).enqueue(new Callback<ClsSaveEmployeeDetailModel>() {
+            @Override
+            public void onResponse(Call<ClsSaveEmployeeDetailModel> call, Response<ClsSaveEmployeeDetailModel> response) {
+                Utility.hideLoader();
+                if (response.isSuccessful()) {
+                    ClsSaveEmployeeDetailModel model = response.body();
+                    if (response.body() != null) {
 
-                    if (response.isSuccessful()) {
-                        ClsSaveEmployeeDetailModel model = response.body();
-                        if (response.body() != null) {
-
-                            EmployeeDetails.postValue(model);
-                        }
-
+                        EmployeeDetails.postValue(model);
                     }
-                }
-
-                @Override
-                public void onFailure(Call<ClsSaveEmployeeDetailModel> call, Throwable t) {
-
-                    Log.e("kkkkkkkkkkkkkkkkkk",t.getMessage());
 
                 }
-            });
-        }
+            }
 
+            @Override
+            public void onFailure(Call<ClsSaveEmployeeDetailModel> call, Throwable t) {
+                    
+                Utility.hideLoader();
+
+                Log.e("kkkkkkkkkkkkkkkkkk", t.getMessage());
+
+            }
+        });
     }
+
+}
 

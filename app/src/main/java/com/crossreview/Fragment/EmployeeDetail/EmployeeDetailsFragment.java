@@ -36,8 +36,6 @@ import com.crossreview.Activity.MainActivity;
 import com.crossreview.Fragment.BasicClass;
 import com.crossreview.Fragment.EmployerInformationFragment;
 import com.crossreview.Interface.awsUploadCallback;
-import com.crossreview.Model.CitySpinnermodel;
-import com.crossreview.Model.ClsResultStateResponseModel;
 import com.crossreview.Model.ClsSaveEmployeeDetailModel;
 import com.crossreview.Model.StateCityModel;
 import com.crossreview.Model.StateSpinnerModel;
@@ -49,24 +47,18 @@ import com.crossreview.Utilites.PrefrenceShared;
 import com.crossreview.Utilites.Utility;
 import com.crossreview.ViewModel.EmployeeDetailsViewModel;
 import com.crossreview.network.ApiClient;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -74,8 +66,16 @@ import retrofit2.Response;
 import static com.crossreview.Utilites.Constant.EmployeeProfilePic;
 
 
-public class EmployeeDetailsFragment extends BasicClass implements View.OnClickListener, View.OnTouchListener, Observer<ClsSaveEmployeeDetailModel>, TextView.OnEditorActionListener, awsUploadCallback, AdapterView.OnItemSelectedListener {
+public class EmployeeDetailsFragment extends BasicClass implements View.OnClickListener, View.OnTouchListener, Observer<ClsSaveEmployeeDetailModel>, TextView.OnEditorActionListener, awsUploadCallback, AdapterView.OnItemSelectedListener, TextWatcher {
+    final Calendar calendar = Calendar.getInstance();
+//        if (dates != null) {
+//            calendar.setTime(dates);
+//
+//        }
 
+    int mYear = (calendar.get(Calendar.YEAR));
+    int mMonth = calendar.get(Calendar.MONTH);
+    int mDay = calendar.get(Calendar.DAY_OF_MONTH);
     private View mview;
     private Context mctx;
     private RelativeLayout employer_info_rl, txt_contact_deatil_rl, txt_other_detail_rl;
@@ -88,7 +88,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
             txt_zipcode_et, txt_employee_id_et;
     private EmployeeDetailsViewModel employeeDetailsViewModel;
     private String name, fathers_name, gender, dob, address1, address2, address, state, city, zipcode, doj, doi, emp_id, data, profileUrl;
-    private Date dates;
+    private Date dates, date;
     private ImageView profile_iv;
     private Boolean selectdate = false, Dob = false;
     private ScrollView scrollview;
@@ -98,6 +98,9 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     private ArrayList<StateSpinnerModel> stateModel;
     private ArrayList<String> cityModel;
     private String selectStateId;
+    private TextView txt_name_tv_error, txt_fathers_name_tv_error, txt_gender_tv_error, txt_dob_tv_error, txt_address_tv_error,
+            txt_state_tv_error, txt_city_tv_error, txt_zipcode_tv_error, txt_doj_tv_error, txt_doi_tv_error, txt_empId_tv_error,
+            txt_profile_tv_error;
 
     public EmployeeDetailsFragment() {
 
@@ -208,7 +211,8 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
         stateModel = new ArrayList<>();
         try {
-            JSONObject obj = new JSONObject(loadJSONFromAsset("states.json"));            JSONArray m_jArry = obj.getJSONArray("states");
+            JSONObject obj = new JSONObject(loadJSONFromAsset("states.json"));
+            JSONArray m_jArry = obj.getJSONArray("states");
 
 
             for (int i = 0; i < m_jArry.length(); i++) {
@@ -274,6 +278,20 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         scrollview = mview.findViewById(R.id.scrollview);
         profile_iv = mview.findViewById(R.id.profile_iv);
 
+        //TextView
+        txt_name_tv_error = mview.findViewById(R.id.txt_name_tv_error);
+        txt_fathers_name_tv_error = mview.findViewById(R.id.txt_fathers_name_tv_error);
+        txt_gender_tv_error = mview.findViewById(R.id.txt_gender_tv_error);
+        txt_dob_tv_error = mview.findViewById(R.id.txt_dob_tv_error);
+        txt_address_tv_error = mview.findViewById(R.id.txt_address_tv_error);
+        txt_state_tv_error = mview.findViewById(R.id.txt_state_tv_error);
+        txt_city_tv_error = mview.findViewById(R.id.txt_city_tv_error);
+        txt_zipcode_tv_error = mview.findViewById(R.id.txt_zipcode_tv_error);
+        txt_doj_tv_error = mview.findViewById(R.id.txt_doj_tv_error);
+        txt_doi_tv_error = mview.findViewById(R.id.txt_doi_tv_error);
+        txt_empId_tv_error = mview.findViewById(R.id.txt_empId_tv_error);
+        txt_profile_tv_error = mview.findViewById(R.id.txt_profile_tv_error);
+
 
         txt_gender_spinner = mview.findViewById(R.id.txt_gender_spinner);
 //        txt_state_spinner = mview.findViewById(R.id.txt_state_spinner);
@@ -290,6 +308,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     }
 
     private void viewSetup() {
+
 
         spinnerAdapter();
 
@@ -308,6 +327,14 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         txt_dob_ll.setOnClickListener(this);
         profile_iv.setOnClickListener(this);
 
+        txt_name_et.addTextChangedListener(this);
+        txt_fathers_name_et.addTextChangedListener(this);
+        txt_address1_et.addTextChangedListener(this);
+        txt_state_et.addTextChangedListener(this);
+        txt_city_et.addTextChangedListener(this);
+        txt_zipcode_et.addTextChangedListener(this);
+        txt_employee_id_et.addTextChangedListener(this);
+
         emp_detail_mainll.setOnTouchListener(this);
         mainll.setOnTouchListener(this);
 
@@ -323,8 +350,8 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.toString().length()==6){
-                    hitApi(charSequence.toString());
+                if (charSequence.toString().length() == 6) {
+                    AddressfromZipcoded(charSequence.toString());
                 }
             }
 
@@ -336,8 +363,8 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
     }
 
-    private void hitApi(String zip) {
-        ApiClient.getBaseApiMethods().zipcode("http://postalpincode.in/api/pincode/"+zip).enqueue(new Callback<StateCityModel>() {
+    private void AddressfromZipcoded(String zip) {
+        ApiClient.getBaseApiMethods().zipcode("http://postalpincode.in/api/pincode/" + zip).enqueue(new Callback<StateCityModel>() {
             @Override
             public void onResponse(Call<StateCityModel> call, Response<StateCityModel> response) {
 
@@ -345,8 +372,8 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
                     StateCityModel model = response.body();
 
-                    if (model!=null){
-                        if (model.getPostOffice()!=null&&model.getPostOffice().length>0){
+                    if (model != null) {
+                        if (model.getPostOffice() != null && model.getPostOffice().length > 0) {
                             txt_state_et.setText(model.getPostOffice()[0].getState());
                             txt_city_et.setText(model.getPostOffice()[0].getDistrict());
                         }
@@ -375,16 +402,6 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         //Adaptersetup
         txt_gender_spinner.setAdapter(adapter);
 
-////        ArrayAdapter stateAdapter = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, stateModel);
-////        stateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-////
-////        txt_state_spinner.setAdapter(stateAdapter);
-//
-//
-//        ArrayAdapter cityAdapter = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, cityModel);
-//        stateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//        txt_city_spinner.setAdapter(cityAdapter);
 
     }
 
@@ -527,7 +544,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         dob = tv_txt_dob.getText().toString();
         address1 = txt_address1_et.getText().toString();
         address2 = txt_address2_et.getText().toString();
-        address = address1 + " " + address2;
+//        address = address1 + " " + address2;
         state = txt_state_et.getText().toString();
         city = txt_city_et.getText().toString();
         zipcode = txt_zipcode_et.getText().toString();
@@ -535,125 +552,123 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         doi = tv_txt_interview_date.getText().toString();
         emp_id = txt_employee_id_et.getText().toString();
 
+
         if (name.isEmpty()) {
 
-            Toast.makeText(mctx, "enter name", Toast.LENGTH_LONG).show();
+            if (fathers_name.isEmpty()) {
+
+                if (Strgen.equalsIgnoreCase("Select Gender")) {
+
+                    if (dob.isEmpty()) {
+
+                        if (address1.isEmpty()) {
+
+                            if (state.isEmpty()) {
+
+                                if (city.isEmpty()) {
+
+                                    if (zipcode.isEmpty()) {
+
+                                        if (doj.isEmpty()) {
+
+                                            if (doi.isEmpty()) {
+
+                                                if (emp_id.isEmpty()) {
+
+                                                    if (path_of_pic == null || (path_of_pic == "")) {
+
+                                                        txt_profile_tv_error.setVisibility(View.VISIBLE);
+                                                    } else {
+
+                                                        txt_profile_tv_error.setVisibility(View.GONE);
+
+                                                    }
+
+                                                    txt_empId_tv_error.setVisibility(View.VISIBLE);
+                                                    txt_employee_id_et.requestFocus();
+                                                } else {
+
+                                                    txt_employee_id_et.clearFocus();
+                                                }
+
+                                                txt_doi_tv_error.setVisibility(View.VISIBLE);
+
+                                            } else {
+
+                                                txt_doi_tv_error.setVisibility(View.GONE);
+
+                                            }
+
+                                            txt_doj_tv_error.setVisibility(View.VISIBLE);
+
+                                        } else {
+
+                                            txt_doj_tv_error.setVisibility(View.GONE);
+
+                                        }
+
+                                        txt_zipcode_tv_error.setVisibility(View.VISIBLE);
+                                        txt_zipcode_et.requestFocus();
+
+                                    } else {
+
+                                        txt_zipcode_et.clearFocus();
+                                    }
+
+                                    txt_city_tv_error.setVisibility(View.VISIBLE);
+                                    txt_city_et.requestFocus();
+
+                                } else {
+
+                                    txt_city_et.clearFocus();
+                                }
+
+                                txt_state_tv_error.setVisibility(View.VISIBLE);
+                                txt_state_et.requestFocus();
+
+                            } else {
+
+                                txt_state_et.clearFocus();
+                            }
+
+                            txt_address_tv_error.setVisibility(View.VISIBLE);
+                            txt_address1_et.requestFocus();
+
+                        } else {
+
+                            txt_address1_et.clearFocus();
+                        }
+
+                        txt_dob_tv_error.setVisibility(View.VISIBLE);
+
+                    } else {
+
+                        txt_dob_tv_error.setVisibility(View.GONE);
+
+                    }
+
+                    txt_gender_tv_error.setVisibility(View.VISIBLE);
+
+                } else {
+
+                    txt_gender_tv_error.setVisibility(View.GONE);
+                }
+
+                txt_fathers_name_tv_error.setVisibility(View.VISIBLE);
+                txt_fathers_name_et.requestFocus();
+
+            } else {
+
+                txt_fathers_name_et.clearFocus();
+            }
+
+            txt_name_tv_error.setVisibility(View.VISIBLE);
             txt_name_et.requestFocus();
-            return;
+
         } else {
 
             txt_name_et.clearFocus();
         }
-        if (fathers_name.isEmpty()) {
-
-            Toast.makeText(mctx, "enter fathers name", Toast.LENGTH_LONG).show();
-            txt_fathers_name_et.requestFocus();
-            return;
-
-        } else {
-
-            txt_fathers_name_et.clearFocus();
-        }
-        if (Strgen.equalsIgnoreCase(String.valueOf(R.string.selectgender))) {
-
-            Toast.makeText(mctx, "please Select gender", Toast.LENGTH_LONG).show();
-            return;
-        }
-        if (dob.isEmpty()) {
-
-            Toast.makeText(mctx, "please enter DOB", Toast.LENGTH_LONG).show();
-//            focusOnView(tv_txt_dob);
-            onClick(txt_dob_ll);
-            return;
-
-        } else {
-//            tv_txt_dob.clearFocus();
-        }
-        if (address1.isEmpty()) {
-
-            Toast.makeText(mctx, "please enter address1", Toast.LENGTH_LONG).show();
-            txt_address1_et.requestFocus();
-            return;
-
-        } else {
-            txt_address1_et.clearFocus();
-        }
-        if (address2.isEmpty()) {
-
-            Toast.makeText(mctx, "please enter address2", Toast.LENGTH_LONG).show();
-            txt_address2_et.requestFocus();
-            return;
-
-        } else {
-            txt_address2_et.clearFocus();
-        }
-        if (state.isEmpty()) {
-            Toast.makeText(mctx, "please enter state", Toast.LENGTH_LONG).show();
-            txt_state_et.requestFocus();
-            return;
-
-        } else {
-
-            txt_state_et.clearFocus();
-        }
-        if (city.isEmpty()) {
-
-            Toast.makeText(mctx, "please enter city", Toast.LENGTH_LONG).show();
-            txt_city_et.requestFocus();
-            return;
-
-        } else {
-
-            txt_city_et.clearFocus();
-        }
-        if (zipcode.isEmpty()) {
-
-            Toast.makeText(mctx, "please enter zipcode", Toast.LENGTH_LONG).show();
-            txt_zipcode_et.requestFocus();
-            return;
-
-        } else {
-
-            txt_zipcode_et.clearFocus();
-        }
-        if (doj.isEmpty()) {
-
-            Toast.makeText(mctx, "please enter Date of joining", Toast.LENGTH_LONG).show();
-//            focusOnView(tv_txt_doj);
-            onClick(txt_doj_ll);
-
-            return;
-
-        } else {
-//            tv_txt_doj.clearFocus();
-        }
-        if (doi.isEmpty()) {
-
-            Toast.makeText(mctx, "please enter Date of interview", Toast.LENGTH_LONG).show();
-//            focusOnView(tv_txt_interview_date);
-            onClick(txt_interview_date_ll);
-
-            return;
-
-        } else {
-
-        }
-        if (emp_id.isEmpty()) {
-
-            Toast.makeText(mctx, "please enter Employee ID", Toast.LENGTH_LONG).show();
-            txt_employee_id_et.requestFocus();
-            return;
-
-        } else {
-            txt_employee_id_et.clearFocus();
-        }
-        if (path_of_pic == null && !(path_of_pic == "")) {
-
-            Toast.makeText(mctx, "Please select Profile Pictue", Toast.LENGTH_SHORT).show();
-        }
-
-
-//        JsonArray experience = new JsonArray();
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty(Constant.EmployeeName, name);
@@ -704,8 +719,8 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     private void openDatePickerDialogDoj() {
         // Get Current Date
         final Calendar calendar = Calendar.getInstance();
-        if (dates != null) {
-            calendar.setTime(dates);
+        if (date != null) {
+            calendar.setTime(date);
 
         }
 
@@ -723,19 +738,21 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
                         calendarSelected.set(year, monthOfYear, dayOfMonth);
 
-                        calendar3.setTimeInMillis(calendarSelected.getTimeInMillis());
+                        tempDate.setTimeInMillis(calendarSelected.getTimeInMillis());
 
-                        dates = calendarSelected.getTime();
+                        date = calendarSelected.getTime();
 
-                            tv_txt_doj.setText(Utility.getStringFromDate(dates, KeyClass.DATE_MM_dd_yyyy));
+                        tv_txt_doj.setText(Utility.getStringFromDate(date, KeyClass.DATE_MM_dd_yyyy));
+                        tv_txt_interview_date.setText("");
+                        txt_doj_tv_error.setVisibility(View.GONE);
 
                     }
                 }, mYear, mMonth, mDay);
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.set(Calendar.MONTH, mMonth + 3);
-        calendar1.set(Calendar.DAY_OF_MONTH, mDay);
-        calendar1.set(Calendar.YEAR, mYear - 60);
-        datePickerDialog.getDatePicker().setMinDate(calendar1.getTimeInMillis());
+        Calendar Doj = Calendar.getInstance();
+        Doj.set(Calendar.MONTH, mMonth + 3);
+        Doj.set(Calendar.DAY_OF_MONTH, mDay);
+        Doj.set(Calendar.YEAR, mYear - 60);
+        datePickerDialog.getDatePicker().setMinDate(Doj.getTimeInMillis());
         datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
 
 
@@ -747,8 +764,8 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     private void openDatePickerDialogDoi() {
         // Get Current Date
         final Calendar calendar = Calendar.getInstance();
-        if (dates != null) {
-            calendar.setTime(dates);
+        if (date != null) {
+            calendar.setTime(date);
 
         }
 
@@ -766,19 +783,21 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
                         calendarSelected.set(year, monthOfYear, dayOfMonth);
 
-                        dates = calendarSelected.getTime();
+                        date = calendarSelected.getTime();
 //
-                            tv_txt_interview_date.setText(Utility.getStringFromDate(dates, KeyClass.DATE_MM_dd_yyyy));
+                        tv_txt_interview_date.setText(Utility.getStringFromDate(date, KeyClass.DATE_MM_dd_yyyy));
+                        txt_doi_tv_error.setVisibility(View.GONE);
 
                     }
                 }, mYear, mMonth, mDay);
 
-        Calendar calendar2 = Calendar.getInstance();
-        calendar2.set(Calendar.MONTH, mMonth + 3);
-        calendar2.set(Calendar.DAY_OF_MONTH, mDay);
-        calendar2.set(Calendar.YEAR, mYear - 60);
-        datePickerDialog.getDatePicker().setMinDate(calendar2.getTimeInMillis());
-        datePickerDialog.getDatePicker().setMaxDate(calendar3.getTimeInMillis());
+        Calendar Doi = Calendar.getInstance();
+        Doi.set(Calendar.MONTH, mMonth + 3);
+        Doi.set(Calendar.DAY_OF_MONTH, mDay);
+        Doi.set(Calendar.YEAR, mYear - 60);
+        datePickerDialog.getDatePicker().setMinDate(Doi.getTimeInMillis());
+        long maxDte = (tempDate.getTimeInMillis() - (1000 * 60 * 60 * 24 * 1));
+        datePickerDialog.getDatePicker().setMaxDate(maxDte);
 
 
         datePickerDialog.show();
@@ -786,19 +805,20 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
     }
 
-    Calendar calendar3 = Calendar.getInstance();
+    Calendar tempDate = Calendar.getInstance();
+
 
     private void openDatePickerDialogDob() {
         // Get Current Date
-        final Calendar calendar = Calendar.getInstance();
-        if (dates != null) {
-            calendar.setTime(dates);
-
-        }
-
-        int mYear = (calendar.get(Calendar.YEAR) - 18);
-        int mMonth = calendar.get(Calendar.MONTH);
-        int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+//        final Calendar calendar = Calendar.getInstance();
+////        if (dates != null) {
+////            calendar.setTime(dates);
+////
+////        }
+//
+//         int mYear = (calendar.get(Calendar.YEAR));
+//        int mMonth = calendar.get(Calendar.MONTH);
+//        int mDay = calendar.get(Calendar.DAY_OF_MONTH);
 
         final DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                 new DatePickerDialog.OnDateSetListener() {
@@ -809,24 +829,28 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
                         Calendar calendarSelected = Calendar.getInstance();
 
                         calendarSelected.set(year, monthOfYear, dayOfMonth);
-//                        if (calendarSelected.getTime().after(new Date())) {
-//
-//                            return;
-//                        }
+
                         dates = calendarSelected.getTime();
-//
+
                         tv_txt_dob.setText(Utility.getStringFromDate(dates, KeyClass.DATE_MM_dd_yyyy));
-//
+
+                        txt_dob_tv_error.setVisibility(View.GONE);
+                        mYear = year;
+                        mMonth = monthOfYear;
+                        mDay = dayOfMonth;
 
 
                     }
                 }, mYear, mMonth, mDay);
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.set(Calendar.MONTH, mMonth - 1);
-        calendar1.set(Calendar.DAY_OF_MONTH, mDay);
-        calendar1.set(Calendar.YEAR, mYear - 1);
-        datePickerDialog.getDatePicker().setMinDate(calendar1.getTimeInMillis());
-        datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
+        Calendar Dob = Calendar.getInstance();
+        Dob.set(Calendar.MONTH, mMonth);
+        Dob.set(Calendar.DAY_OF_MONTH, mDay);
+        Dob.set(Calendar.YEAR, mYear);
+
+        long currentDate = System.currentTimeMillis() - (1000L * 60 * 60 * 24 * 6575);
+//        datePickerDialog.getDatePicker().setMinDate(Dob.getTimeInMillis());
+        datePickerDialog.getDatePicker().setMaxDate(currentDate);
+//        datePickerDialog.getDatePicker().setMaxDate(Dob.getTimeInMillis());
 
 
         datePickerDialog.show();
@@ -856,6 +880,8 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
         profileUrl = filename;
 
+        txt_profile_tv_error.setVisibility(View.GONE);
+
 //        employeeDetailsViewModel.saveEmployeeDetail(date);
 
 
@@ -870,6 +896,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
             case R.id.txt_gender_spinner:
 
                 Strgen = txt_gender_spinner.getSelectedItem().toString();
+                txt_gender_tv_error.setVisibility(View.GONE);
 
                 break;
 
@@ -884,6 +911,52 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        if (txt_name_et.getText().length() > 0) {
+
+            txt_name_tv_error.setVisibility(View.GONE);
+        }
+        if (txt_fathers_name_et.getText().length() > 0) {
+
+            txt_fathers_name_tv_error.setVisibility(View.GONE);
+        }
+        if (txt_address1_et.getText().length() > 0) {
+
+            txt_address_tv_error.setVisibility(View.GONE);
+        }
+        if (txt_state_et.getText().length() > 0) {
+
+            txt_state_tv_error.setVisibility(View.GONE);
+
+        }
+        if (txt_city_et.getText().length() > 0) {
+
+            txt_city_tv_error.setVisibility(View.GONE);
+        }
+        if (txt_zipcode_et.getText().length() > 0) {
+
+            txt_zipcode_tv_error.setVisibility(View.GONE);
+
+        }
+        if (txt_employee_id_et.getText().length() > 0) {
+
+            txt_empId_tv_error.setVisibility(View.GONE);
+        }
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
 
     }
 }

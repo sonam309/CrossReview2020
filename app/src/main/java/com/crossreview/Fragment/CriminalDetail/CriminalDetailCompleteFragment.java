@@ -9,14 +9,25 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crossreview.Activity.MainActivity;
@@ -25,6 +36,7 @@ import com.crossreview.Fragment.EmployeeDetail.EmployeeDetailsFragment;
 import com.crossreview.Fragment.EmployeeDetail.EmployementDetailsFragment;
 import com.crossreview.Fragment.PreviewFragment;
 import com.crossreview.Model.PoliceVarificataionDetailsModel;
+import com.crossreview.Model.StateCityModel;
 import com.crossreview.R;
 import com.crossreview.Utilites.Constant;
 import com.crossreview.Utilites.KeyClass;
@@ -32,11 +44,23 @@ import com.crossreview.Utilites.PrefrenceShared;
 import com.crossreview.Utilites.Utility;
 import com.crossreview.ViewModel.EmployeeDetailsViewModel;
 import com.crossreview.ViewModel.PoliceVarificataionsViewModel;
+import com.crossreview.network.ApiClient;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 
-public class CriminalDetailCompleteFragment extends Fragment implements View.OnClickListener, Observer<PoliceVarificataionDetailsModel>, View.OnTouchListener {
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
+public class CriminalDetailCompleteFragment extends Fragment implements View.OnClickListener, Observer<PoliceVarificataionDetailsModel>, View.OnTouchListener, AdapterView.OnItemSelectedListener, TextWatcher {
 
     private View mview;
     private Context mctx;
@@ -52,8 +76,17 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
     private CardView next_btn;
     private ImageView uparrow_txtadd, downarrow_txtadd, downarrow_txtproof, uparrow_txtproof, downarrow_txtpersonal, uparrow_txtpersonal;
     private PoliceVarificataionsViewModel policeVarificataionsViewModel;
-    private LinearLayout mainll;
-
+    private LinearLayout mainll, data_ll;
+    private RelativeLayout height_rl, weight_rl;
+    private Spinner txt_POB_spinner, txt_language_spinner, txt_height_spinner, txt_weight_spinner;
+    private String birthPlaceStr, language, heightstr, weightstr;
+    private CheckBox checkbox_address;
+    private TextView txt_PoB_tv_error, txt_pincode_tv, txt_post_office_tv, txt_police_station_tv, txt_district_tv, txt_state_tv, txt_local_address_tv_error,
+            txt_local_city_tv, txt_local_post_office_tv, txt_local_police_station_tv, txt_local_district_tv, txt_local_state_tv, txt_mothers_name_tv_error,
+            txt_language_tv_error, txt_address_tv_error, txt_city_tv, txt_local_pincode_tv, txt_aadhar_num_tv_error, txt_relative_tv_error,
+            txt_relative_add_tv_error, txt_height_tv, txt_weight_tv, txt_complexion_tv_error, txt_identification_mark_tv_error;
+    private int count=0;
+    String str=""; int strOldlen=0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,6 +125,7 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
         txt_identity_proof_rl = mview.findViewById(R.id.txt_identity_proof_rl);
         txt_personal_details_rl = mview.findViewById(R.id.txt_personal_details_rl);
         mainll = mview.findViewById(R.id.mainll);
+        data_ll = mview.findViewById(R.id.data_ll);
 
         txt_mothers_name_et = mview.findViewById(R.id.txt_mothers_name_et);
         txt_birth_place_et = mview.findViewById(R.id.txt_birth_place_et);
@@ -106,6 +140,10 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
         txt_weight_et = mview.findViewById(R.id.txt_weight_et);
         txt_Complexion_et = mview.findViewById(R.id.txt_Complexion_et);
         txt_identification_mark_et = mview.findViewById(R.id.txt_identification_mark_et);
+
+        //relative layout
+        height_rl = mview.findViewById(R.id.height_rl);
+        weight_rl = mview.findViewById(R.id.weight_rl);
 
 
         txt_permanent_address_et = mview.findViewById(R.id.txt_permanent_address_et);
@@ -129,6 +167,9 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
 
         next_btn = mview.findViewById(R.id.next_btn);
 
+        //check box
+        checkbox_address = mview.findViewById(R.id.checkbox_address);
+
         uparrow_txtadd = mview.findViewById(R.id.uparrow_txtadd);
         downarrow_txtadd = mview.findViewById(R.id.downarrow_txtadd);
         downarrow_txtproof = mview.findViewById(R.id.downarrow_txtproof);
@@ -136,6 +177,39 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
         downarrow_txtpersonal = mview.findViewById(R.id.downarrow_txtpersonal);
         uparrow_txtpersonal = mview.findViewById(R.id.uparrow_txtpersonal);
 
+        //Error TextView
+
+        txt_PoB_tv_error = mview.findViewById(R.id.txt_PoB_tv_error);
+        txt_pincode_tv = mview.findViewById(R.id.txt_pincode_tv);
+        txt_post_office_tv = mview.findViewById(R.id.txt_post_office_tv);
+        txt_police_station_tv = mview.findViewById(R.id.txt_police_station_tv);
+        txt_district_tv = mview.findViewById(R.id.txt_district_tv);
+        txt_state_tv = mview.findViewById(R.id.txt_state_tv);
+        txt_city_tv = mview.findViewById(R.id.txt_city_tv);
+        txt_local_address_tv_error = mview.findViewById(R.id.txt_local_address_tv_error);
+        txt_local_city_tv = mview.findViewById(R.id.txt_local_city_tv);
+        txt_local_post_office_tv = mview.findViewById(R.id.txt_local_post_office_tv);
+        txt_local_police_station_tv = mview.findViewById(R.id.txt_local_police_station_tv);
+        txt_local_district_tv = mview.findViewById(R.id.txt_local_district_tv);
+        txt_local_state_tv = mview.findViewById(R.id.txt_local_state_tv);
+        txt_mothers_name_tv_error = mview.findViewById(R.id.txt_mothers_name_tv_error);
+        txt_language_tv_error = mview.findViewById(R.id.txt_language_tv_error);
+        txt_address_tv_error = mview.findViewById(R.id.txt_address_tv_error);
+        txt_local_pincode_tv = mview.findViewById(R.id.txt_local_pincode_tv);
+        txt_aadhar_num_tv_error = mview.findViewById(R.id.txt_aadhar_num_tv_error);
+        txt_relative_tv_error = mview.findViewById(R.id.txt_relative_tv_error);
+        txt_relative_add_tv_error = mview.findViewById(R.id.txt_relative_add_tv_error);
+        txt_height_tv = mview.findViewById(R.id.txt_height_tv);
+        txt_weight_tv = mview.findViewById(R.id.txt_weight_tv);
+        txt_complexion_tv_error = mview.findViewById(R.id.txt_complexion_tv_error);
+        txt_identification_mark_tv_error = mview.findViewById(R.id.txt_identification_mark_tv_error);
+
+
+        //Spinner
+        txt_POB_spinner = mview.findViewById(R.id.txt_POB_spinner);
+        txt_language_spinner = mview.findViewById(R.id.txt_language_spinner);
+        txt_height_spinner = mview.findViewById(R.id.txt_height_spinner);
+        txt_weight_spinner = mview.findViewById(R.id.txt_weight_spinner);
 
     }
 
@@ -156,8 +230,240 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
         txt_personal_details_rl.setOnClickListener(this);
         next_btn.setOnClickListener(this);
         mainll.setOnTouchListener(this);
+        data_ll.setOnTouchListener(this);
+
+        txt_POB_spinner.setOnItemSelectedListener(this);
+        txt_language_spinner.setOnItemSelectedListener(this);
+        txt_height_spinner.setOnItemSelectedListener(this);
+        txt_weight_spinner.setOnItemSelectedListener(this);
+
+        txt_mothers_name_et.addTextChangedListener(this);
+        txt_permanent_address_et.addTextChangedListener(this);
+        txt_pincode_et.addTextChangedListener(this);
+        txt_post_office_et.addTextChangedListener(this);
+        txt_police_station_et.addTextChangedListener(this);
+        txt_district_et.addTextChangedListener(this);
+        txt_state_et.addTextChangedListener(this);
+        txt_city_et.addTextChangedListener(this);
+        txt_Local_address_et.addTextChangedListener(this);
+        txt_local_pincode_et.addTextChangedListener(this);
+        txt_local_post_office_et.addTextChangedListener(this);
+        txt_local_police_station_et.addTextChangedListener(this);
+        txt_local_district_et.addTextChangedListener(this);
+        txt_local_state_et.addTextChangedListener(this);
+        txt_local_city_et.addTextChangedListener(this);
+        txt_aadhar_num_et.addTextChangedListener(this);
+        txt_name_of_local_F_R_et.addTextChangedListener(this);
+        txt_address_et.addTextChangedListener(this);
+        txt_Complexion_et.addTextChangedListener(this);
+        txt_identification_mark_et.addTextChangedListener(this);
+
+        setData();
+
+        spinnerAdapterSetup();
+        setupHeightSpinner();
+        setupWeightSpinner();
+
+    }
 
 
+    public void setData() {
+
+        checkbox_address.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+
+                    txt_Local_address_et.setText(txt_permanent_address_et.getText().toString());
+                    txt_local_pincode_et.setText(txt_pincode_et.getText().toString());
+                    txt_local_post_office_et.setText(txt_post_office_et.getText().toString());
+                    txt_local_police_station_et.setText(txt_police_station_et.getText().toString());
+                    txt_local_district_et.setText(txt_district_et.getText().toString());
+                    txt_local_state_et.setText(txt_state_et.getText().toString());
+                    txt_local_city_et.setText(txt_city_et.getText().toString());
+
+                } else {
+
+                    txt_Local_address_et.setText("");
+                    txt_local_pincode_et.setText("");
+                    txt_local_post_office_et.setText("");
+                    txt_local_police_station_et.setText("");
+                    txt_local_district_et.setText("");
+                    txt_local_state_et.setText("");
+                    txt_local_city_et.setText("");
+
+                }
+            }
+        });
+
+
+        txt_pincode_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.toString().length() == 6) {
+                    AddressfromZipcoded(charSequence.toString());
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        txt_local_pincode_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.toString().length() == 6) {
+                    AddressfromZipcoded(charSequence.toString());
+                }
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+        txt_aadhar_num_et.addTextChangedListener(new TextWatcher() {
+
+            private static final char space = ' ';
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                str = txt_aadhar_num_et.getText().toString();
+                int strLen = str.length();
+
+
+                if(strOldlen<strLen) {
+
+                    if (strLen > 0) {
+                        if (strLen == 4 || strLen == 9) {
+
+                            str=str+" ";
+
+                            txt_aadhar_num_et.setText(str);
+                            txt_aadhar_num_et.setSelection(txt_aadhar_num_et.getText().length());
+
+                        }else{
+
+                            if(strLen==5){
+                                if(!str.contains(" ")){
+                                    String tempStr=str.substring(0,strLen-1);
+                                    tempStr +=" "+str.substring(strLen-1,strLen);
+                                    txt_aadhar_num_et.setText(tempStr);
+                                    txt_aadhar_num_et.setSelection(txt_aadhar_num_et.getText().length());
+                                }
+                            }
+                            if(strLen==10){
+                                if(str.lastIndexOf(" ")!=9){
+                                    String tempStr=str.substring(0,strLen-1);
+                                    tempStr +=" "+str.substring(strLen-1,strLen);
+                                    txt_aadhar_num_et.setText(tempStr);
+                                    txt_aadhar_num_et.setSelection(txt_aadhar_num_et.getText().length());
+                                }
+                            }
+                            strOldlen = strLen;
+                        }
+                    }else{
+                        return;
+                    }
+
+                }else{
+                    strOldlen = strLen;
+
+
+//                    Log.i("MainActivity ","keyDel is Pressed ::: strLen : "+strLen+"\n old Str Len : "+strOldlen);
+
+
+            }
+        }
+    });
+
+
+}
+
+    private void spinnerAdapterSetup() {
+
+        ArrayList<String> POB = getData("IndianStates.json");
+        ArrayAdapter<String> pobAdapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, POB);
+        txt_POB_spinner.setAdapter(pobAdapter);
+
+        ArrayList<String> language = getLanguage("language.json");
+        ArrayAdapter<String> languageAdapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, language);
+        txt_language_spinner.setAdapter(languageAdapter);
+
+
+    }
+
+
+    private void setupHeightSpinner() {
+        String[] heightArr = new String[186];
+        heightArr[0] = Constant.Select_height;
+        for (int i = 121; i < 306; i++) {
+            heightArr[i - 120] = i + "cm";
+            //        +" ("+Util.convertHeightToInches(i)+")"
+            heightArr[i - 120] = i + "cm" + " "
+                    + " (" + Utility.convertHeightToInches(i) + ")";
+        }
+        ArrayAdapter<String> heightAdapter = new ArrayAdapter<>
+                (MainActivity.context, android.R.layout.simple_spinner_item,
+                        heightArr);
+        heightAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        txt_height_spinner.setAdapter(heightAdapter);
+    }
+
+
+    private void setupWeightSpinner() {
+        String[] weightArr = new String[498];
+        int count = 0;
+        weightArr[0] = Constant.Select_weight;
+        for (int i = 1; i < 270; i++) {
+            if (i % 2 != 0) {
+                weightArr[i] = (i - count) + "kg" + " " + " (" + Utility.convertWeightToLbs(i - count) + "lbs)";
+                count++;
+            } else {
+                weightArr[i] = (i / 2 + 0.5) + "kg" + " " + " (" + Utility.convertWeightToLbs(i / 2 + 0.5) + "lbs)";
+            }
+
+        }
+        for (int i = 271; i <= 498; i++) {
+            weightArr[i - 1] = i - 135 + "kg" + " " + " (" + Utility.convertWeightToLbs(i - 135) + "lbs)";
+        }
+        ArrayAdapter<String> weightAdapter = new ArrayAdapter<>
+                (mctx, android.R.layout.simple_spinner_item,
+                        weightArr);
+        weightAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        txt_weight_spinner.setAdapter(weightAdapter);
     }
 
     @Override
@@ -250,202 +556,249 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
 
         if (txt_mothers_name_et.getText().toString().isEmpty()) {
 
-            Toast.makeText(mctx, "Please fill mothers name", Toast.LENGTH_LONG).show();
+            if (txt_POB_spinner.getSelectedItem().toString().equalsIgnoreCase("select place of birth")) {
+
+                if (txt_language_spinner.getSelectedItem().toString().equalsIgnoreCase("--select--")) {
+
+                    if (txt_permanent_address_et.getText().toString().isEmpty()) {
+
+                        if (txt_pincode_et.getText().toString().isEmpty() && txt_pincode_et.getText().toString().length() < 5) {
+
+                            if (txt_post_office_et.getText().toString().isEmpty()) {
+
+                                if (txt_police_station_et.getText().toString().isEmpty()) {
+
+                                    if (txt_district_et.getText().toString().isEmpty()) {
+
+                                        if (txt_state_et.getText().toString().isEmpty()) {
+
+                                            if (txt_city_et.getText().toString().isEmpty()) {
+
+                                                if (txt_Local_address_et.getText().toString().isEmpty()) {
+
+                                                    if (txt_local_pincode_et.getText().toString().isEmpty()) {
+
+                                                        if (txt_local_post_office_et.getText().toString().isEmpty()) {
+
+                                                            if (txt_local_police_station_et.getText().toString().isEmpty()) {
+
+                                                                if (txt_local_district_et.getText().toString().isEmpty()) {
+
+                                                                    if (txt_local_state_et.getText().toString().isEmpty()) {
+
+                                                                        if (txt_local_city_et.getText().toString().isEmpty()) {
+
+                                                                            if (txt_aadhar_num_et.getText().toString().isEmpty()) {
+
+                                                                                if (txt_name_of_local_F_R_et.getText().toString().isEmpty()) {
+
+                                                                                    if (txt_address_et.getText().toString().isEmpty()) {
+
+                                                                                        if (txt_height_spinner.getSelectedItem().toString().equalsIgnoreCase("0 cm")) {
+
+                                                                                            if (txt_weight_spinner.getSelectedItem().toString().equalsIgnoreCase("0 kg")) {
+
+                                                                                                if (txt_Complexion_et.getText().toString().isEmpty()) {
+
+                                                                                                    if (txt_identification_mark_et.getText().toString().isEmpty()) {
+
+                                                                                                        txt_identification_mark_tv_error.setVisibility(View.VISIBLE);
+                                                                                                    }
+
+                                                                                                    txt_complexion_tv_error.setVisibility(View.VISIBLE);
+
+                                                                                                }
+
+                                                                                                txt_weight_tv.setTextColor(getResources().getColor(R.color.error_red));
+                                                                                                weight_rl.setBackground(getResources().getDrawable(R.drawable.error_bg));
+
+                                                                                            }
+
+                                                                                            txt_height_tv.setTextColor(getResources().getColor(R.color.error_red));
+                                                                                            height_rl.setBackground(getResources().getDrawable(R.drawable.error_bg));
+
+                                                                                        }
+
+                                                                                        txt_relative_add_tv_error.setVisibility(View.VISIBLE);
+                                                                                    }
+
+                                                                                    txt_relative_tv_error.setVisibility(View.VISIBLE);
+                                                                                }
+
+                                                                                txt_aadhar_num_tv_error.setVisibility(View.VISIBLE);
+                                                                            }
+
+                                                                            Utility.setError(txt_local_city_tv, txt_local_city_et, mctx);
+
+                                                                        } else {
+
+                                                                            Utility.setError(txt_local_city_tv, txt_local_city_et, mctx);
+
+                                                                        }
+                                                                        Utility.setError(txt_local_state_tv, txt_local_state_et, mctx);
+                                                                    } else {
+
+                                                                        Utility.removeError(txt_local_state_tv, txt_local_state_et, mctx);
+
+
+                                                                    }
+
+                                                                    Utility.setError(txt_local_district_tv, txt_local_district_et, mctx);
+
+                                                                } else {
+
+                                                                    Utility.removeError(txt_local_district_tv, txt_local_district_et, mctx);
+
+
+                                                                }
+                                                                Utility.setError(txt_local_police_station_tv, txt_local_police_station_et, mctx);
+
+                                                            } else {
+
+                                                                Utility.setError(txt_local_police_station_tv, txt_local_post_office_et, mctx);
+
+                                                            }
+
+                                                            Utility.setError(txt_local_post_office_tv, txt_local_post_office_et, mctx);
+
+                                                        } else {
+
+                                                            Utility.removeError(txt_local_post_office_tv, txt_local_post_office_et, mctx);
+
+
+                                                        }
+
+                                                        Utility.setError(txt_local_pincode_tv, txt_local_pincode_et, mctx);
+
+                                                    } else {
+
+                                                        Utility.removeError(txt_local_pincode_tv, txt_local_pincode_et, mctx);
+
+
+                                                    }
+
+                                                    txt_local_address_tv_error.setVisibility(View.VISIBLE);
+
+                                                }
+
+                                                Utility.setError(txt_city_tv, txt_city_et, mctx);
+
+                                            } else {
+
+                                                Utility.removeError(txt_city_tv, txt_city_et, mctx);
+
+                                            }
+
+                                            Utility.setError(txt_state_tv, txt_state_et, mctx);
+
+                                        } else {
+
+                                            Utility.removeError(txt_state_tv, txt_state_et, mctx);
+
+
+                                        }
+
+                                        Utility.setError(txt_district_tv, txt_district_et, mctx);
+
+                                    } else {
+
+                                        Utility.removeError(txt_district_tv, txt_district_et, mctx);
+
+                                    }
+
+                                    Utility.setError(txt_police_station_tv, txt_police_station_et, mctx);
+
+                                } else {
+
+                                    Utility.removeError(txt_police_station_tv, txt_police_station_et, mctx);
+
+                                }
+
+                                Utility.setError(txt_post_office_tv, txt_post_office_et, mctx);
+
+                            } else {
+
+                                Utility.removeError(txt_post_office_tv, txt_post_office_et, mctx);
+
+
+                            }
+
+                            Utility.setError(txt_pincode_tv, txt_pincode_et, mctx);
+
+                        } else {
+
+                            Utility.removeError(txt_pincode_tv, txt_pincode_et, mctx);
+
+                        }
+
+                        txt_address_tv_error.setVisibility(View.VISIBLE);
+                        txt_permanent_address_et.requestFocus();
+                    } else {
+
+                        txt_address_tv_error.clearFocus();
+                    }
+
+                    txt_language_tv_error.setVisibility(View.VISIBLE);
+                }
+
+                txt_PoB_tv_error.setVisibility(View.VISIBLE);
+
+            }
+
+            txt_mothers_name_tv_error.setVisibility(View.VISIBLE);
             txt_mothers_name_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_birth_place_et.getText().toString().isEmpty()) {
 
-            Toast.makeText(mctx, "Please fill Place of Birth", Toast.LENGTH_LONG).show();
-            txt_birth_place_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-
-        if (txt_permanent_address_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill Permanenet Address", Toast.LENGTH_LONG).show();
-            txt_permanent_address_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-
-        if (txt_city_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill city", Toast.LENGTH_LONG).show();
-            txt_city_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_post_office_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill Post Office", Toast.LENGTH_LONG).show();
-            txt_post_office_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_police_station_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill Police Station", Toast.LENGTH_LONG).show();
-            txt_police_station_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_district_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill District", Toast.LENGTH_LONG).show();
-            txt_district_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_state_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill State", Toast.LENGTH_LONG).show();
-            txt_state_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_pincode_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill Zipcode", Toast.LENGTH_LONG).show();
-            txt_pincode_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_Local_address_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill Local Address", Toast.LENGTH_LONG).show();
-            txt_Local_address_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_local_city_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill Local Address city", Toast.LENGTH_LONG).show();
-            txt_local_city_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_local_post_office_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill Local Address Post office", Toast.LENGTH_LONG).show();
-            txt_local_post_office_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_local_police_station_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill Local Address Police station", Toast.LENGTH_LONG).show();
-            txt_local_police_station_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_local_district_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill Local Address District", Toast.LENGTH_LONG).show();
-            txt_local_district_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_local_state_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill Local Address state", Toast.LENGTH_LONG).show();
-            txt_local_state_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_local_pincode_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill Local Address pin code", Toast.LENGTH_LONG).show();
-            txt_local_pincode_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_aadhar_num_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill Aadhar number", Toast.LENGTH_LONG).show();
-            txt_aadhar_num_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_height_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill Height", Toast.LENGTH_LONG).show();
-            txt_height_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_weight_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill Weight", Toast.LENGTH_LONG).show();
-            txt_weight_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_Complexion_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill Complexion", Toast.LENGTH_LONG).show();
-            txt_Complexion_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-        if (txt_identification_mark_et.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill identifiacation mark", Toast.LENGTH_LONG).show();
-            txt_identification_mark_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        }
-
-        Utility.hideKeyboard(getActivity());
-
-        //json Array for add relative info
-        JsonArray relative = new JsonArray();
-
-        // for (int i=0;i<2;i++) {
-        //for add relatiev infi items
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(Constant.Relative_name, txt_name_of_local_F_R_et.getText().toString());
-        jsonObject.addProperty(Constant.Relative_address, txt_address_et.getText().toString());
-        jsonObject.addProperty(Constant.Relative_contact, 0);
-
-        //add relative object in json array
-        relative.add(jsonObject);
-        //  }
+        } else {
 
 
-        //json object to add perament address details
-        JsonObject permanemt = new JsonObject();
-        permanemt.addProperty(Constant.Address_type, Constant.permanenet);
-        permanemt.addProperty(Constant.PermanentAddress, txt_permanent_address_et.getText().toString());
-        permanemt.addProperty(Constant.City, txt_city_et.getText().toString());
-        permanemt.addProperty(Constant.PostOffice, txt_post_office_et.getText().toString());
-        permanemt.addProperty(Constant.PoliceStation, txt_police_station_et.getText().toString());
-        permanemt.addProperty(Constant.District, txt_district_et.getText().toString());
-        permanemt.addProperty(Constant.State, txt_state_et.getText().toString());
-        permanemt.addProperty(Constant.Zipcode, txt_pincode_et.getText().toString());
+            txt_mothers_name_et.clearFocus();
+
+            //json Array for add relative info
+            JsonArray relative = new JsonArray();
+
+            // for (int i=0;i<2;i++) {
+            //for add relatiev infi items
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty(Constant.Relative_name, txt_name_of_local_F_R_et.getText().toString());
+            jsonObject.addProperty(Constant.Relative_address, txt_address_et.getText().toString());
+            jsonObject.addProperty(Constant.Relative_contact, 0);
+
+            //add relative object in json array
+            relative.add(jsonObject);
+            //  }
 
 
-        //json object to add local address details
-        JsonObject local = new JsonObject();
-        local.addProperty(Constant.Address_type, Constant.local);
-        local.addProperty(Constant.LocalAddress, txt_Local_address_et.getText().toString());
-        local.addProperty(Constant.City, txt_local_city_et.getText().toString());
-        local.addProperty(Constant.PostOffice, txt_local_post_office_et.getText().toString());
-        local.addProperty(Constant.PoliceStation, txt_local_police_station_et.getText().toString());
-        local.addProperty(Constant.District, txt_local_district_et.getText().toString());
-        local.addProperty(Constant.State, txt_local_state_et.getText().toString());
-        local.addProperty(Constant.Zipcode, txt_local_pincode_et.getText().toString());
+            //json object to add perament address details
+            JsonObject permanemt = new JsonObject();
+            permanemt.addProperty(Constant.Address_type, Constant.permanenet);
+            permanemt.addProperty(Constant.PermanentAddress, txt_permanent_address_et.getText().toString());
+            permanemt.addProperty(Constant.City, txt_city_et.getText().toString());
+            permanemt.addProperty(Constant.PostOffice, txt_post_office_et.getText().toString());
+            permanemt.addProperty(Constant.PoliceStation, txt_police_station_et.getText().toString());
+            permanemt.addProperty(Constant.District, txt_district_et.getText().toString());
+            permanemt.addProperty(Constant.State, txt_state_et.getText().toString());
+            permanemt.addProperty(Constant.Zipcode, txt_pincode_et.getText().toString());
 
 
-        //json object to add combine address in one json object whic is address
-        JsonObject address = new JsonObject();
-        address.add(Constant.permanent_address, permanemt);
-        address.add(Constant.local_address, local);
+            //json object to add local address details
+            JsonObject local = new JsonObject();
+            local.addProperty(Constant.Address_type, Constant.local);
+            local.addProperty(Constant.LocalAddress, txt_Local_address_et.getText().toString());
+            local.addProperty(Constant.City, txt_local_city_et.getText().toString());
+            local.addProperty(Constant.PostOffice, txt_local_post_office_et.getText().toString());
+            local.addProperty(Constant.PoliceStation, txt_local_police_station_et.getText().toString());
+            local.addProperty(Constant.District, txt_local_district_et.getText().toString());
+            local.addProperty(Constant.State, txt_local_state_et.getText().toString());
+            local.addProperty(Constant.Zipcode, txt_local_pincode_et.getText().toString());
 
-        //json array to add documents details
-        JsonArray document = new JsonArray();
+
+            //json object to add combine address in one json object whic is address
+            JsonObject address = new JsonObject();
+            address.add(Constant.permanent_address, permanemt);
+            address.add(Constant.local_address, local);
+
+            //json array to add documents details
+            JsonArray document = new JsonArray();
 //        for (int i=0;i<2;i++) {
 //            //json object for adding componets in a json object for adding data in document json array
 ////            JsonObject object = new JsonObject();
@@ -458,32 +811,33 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
 //        }
 //
 
-        //json object to add all info of data in data json object
-        JsonObject details = new JsonObject();
-        details.addProperty(Constant.MothersName, txt_mothers_name_et.getText().toString());
-        details.addProperty(Constant.PlaceOfBirth, txt_birth_place_et.getText().toString());
-        details.addProperty(Constant.LanguageSpoken, txt_language_et.getText().toString());
-        details.addProperty(Constant.Height, txt_height_et.getText().toString());
-        details.addProperty(Constant.Weight, txt_weight_et.getText().toString());
-        details.addProperty(Constant.Complexion, txt_Complexion_et.getText().toString());
-        details.addProperty(Constant.IdentificationMark, txt_identification_mark_et.getText().toString());
-        details.addProperty(Constant.AadharNumber, txt_aadhar_num_et.getText().toString());
-        details.addProperty(Constant.DrivingliecenceNum, txt_Dl_num_et.getText().toString());
-        details.addProperty(Constant.VotarId, txt_voter_id_et.getText().toString());
-        details.addProperty(Constant.PassportNum, txt_passport_num_et.getText().toString());
-        details.add(Constant.UploadDocument, document);
-        details.add(Constant.address, address);
-        details.add(Constant.relatives, relative);
+            //json object to add all info of data in data json object
+            JsonObject details = new JsonObject();
+            details.addProperty(Constant.MothersName, txt_mothers_name_et.getText().toString());
+            details.addProperty(Constant.PlaceOfBirth, txt_birth_place_et.getText().toString());
+            details.addProperty(Constant.LanguageSpoken, txt_language_et.getText().toString());
+            details.addProperty(Constant.Height, txt_height_et.getText().toString());
+            details.addProperty(Constant.Weight, txt_weight_et.getText().toString());
+            details.addProperty(Constant.Complexion, txt_Complexion_et.getText().toString());
+            details.addProperty(Constant.IdentificationMark, txt_identification_mark_et.getText().toString());
+            details.addProperty(Constant.AadharNumber, txt_aadhar_num_et.getText().toString());
+            details.addProperty(Constant.DrivingliecenceNum, txt_Dl_num_et.getText().toString());
+            details.addProperty(Constant.VotarId, txt_voter_id_et.getText().toString());
+            details.addProperty(Constant.PassportNum, txt_passport_num_et.getText().toString());
+            details.add(Constant.UploadDocument, document);
+            details.add(Constant.address, address);
+            details.add(Constant.relatives, relative);
 
 
-        //data json object to bind all data in single json array for sending data in api
-        JsonObject data = new JsonObject();
-        data.add(Constant.data, details);
+            //data json object to bind all data in single json array for sending data in api
+            JsonObject data = new JsonObject();
+            data.add(Constant.data, details);
 
-        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.SaveData,data.toString());
+            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.SaveData, data.toString());
 
-        policeVarificataionsViewModel.saveCriminalBgDetails(data);
+            policeVarificataionsViewModel.saveCriminalBgDetails(data);
 
+        }
 
     }
 
@@ -502,11 +856,278 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
         switch (view.getId()) {
 
             case R.id.mainll:
+            case R.id.data_ll:
 
                 Utility.hideKeyboard(view);
 
                 break;
         }
         return false;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        switch (adapterView.getId()) {
+
+            case R.id.txt_POB_spinner:
+
+                if (i == 0) {
+//                    txt_PoB_tv_error.setVisibility(View.VISIBLE);
+                } else {
+                    birthPlaceStr = txt_POB_spinner.getSelectedItem().toString();
+                    txt_PoB_tv_error.setVisibility(View.GONE);
+                }
+
+                break;
+
+            case R.id.txt_language_spinner:
+
+                if (i == 0) {
+
+
+                } else {
+
+                    language = txt_language_spinner.getSelectedItem().toString();
+                    txt_language_tv_error.setVisibility(View.GONE);
+
+                }
+
+
+                break;
+
+            case R.id.txt_height_spinner:
+
+                if (i == 0) {
+
+
+                } else {
+
+                    heightstr = txt_height_spinner.getSelectedItem().toString();
+                    txt_height_tv.setTextColor(getResources().getColor(R.color.black));
+                    height_rl.setBackground(getResources().getDrawable(R.drawable.square_white_bg));
+
+                }
+
+                break;
+
+            case R.id.txt_weight_spinner:
+
+                if (i != 0) {
+
+                    txt_weight_tv.setTextColor(getResources().getColor(R.color.black));
+                    weight_rl.setBackground(getResources().getDrawable(R.drawable.square_white_bg));
+                    weightstr = txt_weight_spinner.getSelectedItem().toString();
+                }
+
+
+                break;
+        }
+
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+
+    private ArrayList<String> getData(String fileName) {
+        JSONArray jsonArray = null;
+        ArrayList<String> cList = new ArrayList<String>();
+        try {
+            InputStream inputStream = getResources().getAssets().open(fileName);
+
+            int size = inputStream.available();
+            byte[] data = new byte[size];
+            inputStream.read(data);
+            inputStream.close();
+
+            String json = new String(data, "UTF-8");
+            jsonArray = new JSONArray(json);
+            if (jsonArray != null) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    cList.add(jsonArray.getJSONObject(i).getString("name"));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+        return cList;
+    }
+
+    private ArrayList<String> getLanguage(String fileName) {
+        JSONArray jsonArray = null;
+        ArrayList<String> cList = new ArrayList<String>();
+        try {
+            InputStream inputStream = getResources().getAssets().open(fileName);
+
+            int size = inputStream.available();
+            byte[] data = new byte[size];
+            inputStream.read(data);
+            inputStream.close();
+
+            String json = new String(data, "UTF-8");
+            jsonArray = new JSONArray(json);
+            if (jsonArray != null) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    cList.add(jsonArray.getJSONObject(i).getString("Language"));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+        return cList;
+    }
+
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        if (txt_mothers_name_et.getText().toString().length() > 0) {
+
+            txt_mothers_name_tv_error.setVisibility(View.GONE);
+        }
+        if (txt_permanent_address_et.getText().toString().length() > 0) {
+
+            txt_address_tv_error.setVisibility(View.GONE);
+
+        }
+        if (txt_pincode_et.getText().toString().length() > 0) {
+
+            Utility.removeError(txt_pincode_tv, txt_pincode_et, mctx);
+
+        }
+        if (txt_post_office_et.getText().toString().length() > 0) {
+
+            Utility.removeError(txt_post_office_tv, txt_post_office_et, mctx);
+
+        }
+        if (txt_police_station_et.getText().toString().length() > 0) {
+
+            Utility.removeError(txt_police_station_tv, txt_police_station_et, mctx);
+
+        }
+        if (txt_district_et.getText().toString().length() > 0) {
+
+            Utility.removeError(txt_district_tv, txt_district_et, mctx);
+
+        }
+        if (txt_state_et.getText().toString().length() > 0) {
+
+            Utility.removeError(txt_state_tv, txt_state_et, mctx);
+
+        }
+        if (txt_city_et.getText().toString().length() > 0) {
+
+            Utility.removeError(txt_city_tv, txt_city_et, mctx);
+
+        }
+        if (txt_Local_address_et.getText().toString().length() > 0) {
+
+            txt_local_address_tv_error.setVisibility(View.GONE);
+
+        }
+        if (txt_local_pincode_et.getText().toString().length() > 0) {
+
+            Utility.removeError(txt_local_pincode_tv, txt_local_pincode_et, mctx);
+
+        }
+        if (txt_local_post_office_et.getText().toString().length() > 0) {
+
+            Utility.removeError(txt_local_post_office_tv, txt_local_post_office_et, mctx);
+
+        }
+        if (txt_local_police_station_et.getText().toString().length() > 0) {
+
+            Utility.removeError(txt_local_police_station_tv, txt_local_police_station_et, mctx);
+
+        }
+        if (txt_local_district_et.getText().toString().length() > 0) {
+
+            Utility.removeError(txt_local_district_tv, txt_local_district_et, mctx);
+
+        }
+        if (txt_local_state_et.getText().toString().length() > 0) {
+
+            Utility.removeError(txt_local_state_tv, txt_local_state_et, mctx);
+
+        }
+        if (txt_local_city_et.getText().toString().length() > 0) {
+
+            Utility.removeError(txt_local_city_tv, txt_local_city_et, mctx);
+
+        }
+        if (txt_aadhar_num_et.getText().toString().length() > 0) {
+
+            txt_aadhar_num_tv_error.setVisibility(View.GONE);
+
+        }
+        if (txt_name_of_local_F_R_et.getText().toString().length() > 0) {
+
+            txt_relative_tv_error.setVisibility(View.GONE);
+
+        }
+        if (txt_address_et.getText().toString().length() > 0) {
+
+            txt_relative_add_tv_error.setVisibility(View.GONE);
+        }
+        if (txt_Complexion_et.getText().toString().length() > 0) {
+
+            txt_complexion_tv_error.setVisibility(View.GONE);
+        }
+        if (txt_identification_mark_et.getText().toString().length() > 0) {
+
+            txt_identification_mark_tv_error.setVisibility(View.GONE);
+
+        }
+
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
+
+    }
+
+
+    private void AddressfromZipcoded(String zip) {
+        ApiClient.getBaseApiMethods().zipcode("http://postalpincode.in/api/pincode/" + zip).enqueue(new Callback<StateCityModel>() {
+            @Override
+            public void onResponse(Call<StateCityModel> call, Response<StateCityModel> response) {
+
+                if (response.isSuccessful()) {
+
+                    StateCityModel model = response.body();
+
+                    if (model != null) {
+                        if (model.getPostOffice() != null && model.getPostOffice().length > 0) {
+                            txt_district_et.setText(model.getPostOffice()[0].getDistrict());
+                            txt_state_et.setText(model.getPostOffice()[0].getState());
+                            txt_city_et.setText(model.getPostOffice()[0].getDistrict());
+                        }
+
+                    }
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StateCityModel> call, Throwable t) {
+
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 }

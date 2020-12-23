@@ -103,4 +103,8 @@ public class Constant {
     public static final String Relative_contact="relative_contact";
 
 
+    public static final String Select_height="0 cm";
+    public static final String Select_weight="0 kg";
+
+
 }

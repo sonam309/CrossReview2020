@@ -27,12 +27,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/square_white_bg"
-            android:hint="@string/doj"
+            android:hint="@string/DOJ"
             android:maxLength="50"
             android:padding="@dimen/dp8"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:id="@+id/txt_doj_tv_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/empdoj"
+            android:textColor="@color/error_red"
+            android:textSize="@dimen/text_size_12"
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -60,13 +70,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/square_white_bg"
-            android:hint="@string/doi"
+            android:hint="@string/DOI"
             android:imeOptions="actionNext"
             android:maxLength="50"
             android:padding="@dimen/dp8"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:id="@+id/txt_doi_tv_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/empDoi"
+            android:textColor="@color/error_red"
+            android:textSize="@dimen/text_size_12"
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -102,6 +122,16 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_16" />
 
+        <TextView
+            android:id="@+id/txt_empId_tv_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/empId"
+            android:textColor="@color/error_red"
+            android:textSize="@dimen/text_size_12"
+            android:visibility="gone" />
+
     </LinearLayout>
 
 
@@ -122,6 +152,17 @@
             android:text="@string/profileimg"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:id="@+id/txt_profile_tv_Suggesstion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/picsize"
+            android:layout_marginLeft="@dimen/dp5"
+            android:layout_marginTop="-5dp"
+            android:textColor="@color/suggestion_red"
+            android:textSize="@dimen/text_size_10"
+            android:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -164,10 +205,9 @@
 
             <ImageView
                 android:id="@+id/profile_iv"
-                android:layout_width="53dp"
-                android:layout_height="38dp"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                android:padding="@dimen/dp5"
                 android:src="@drawable/ic_profile" />
 
             <TextView
@@ -183,6 +223,16 @@
                 android:textSize="@dimen/text_size_12" />
 
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_profile_tv_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/proPic"
+            android:textColor="@color/error_red"
+            android:textSize="@dimen/text_size_12"
+            android:visibility="gone" />
 
     </LinearLayout>
 

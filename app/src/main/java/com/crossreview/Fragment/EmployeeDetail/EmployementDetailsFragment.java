@@ -61,7 +61,7 @@ import java.util.Date;
 import okhttp3.internal.Util;
 
 
-public class EmployementDetailsFragment extends BasicClass implements View.OnClickListener, View.OnTouchListener, Observer<ClsSaveEmployeeDetailModel>, AdapterView.OnItemSelectedListener, awsUploadCallback {
+public class EmployementDetailsFragment extends BasicClass implements View.OnClickListener, View.OnTouchListener, Observer<ClsSaveEmployeeDetailModel>, AdapterView.OnItemSelectedListener, awsUploadCallback, TextWatcher {
     private View mview;
     private Context mctx;
     private RelativeLayout employer_Detail_rl, txt_org_deatil_rl, date_of_joining_rl, date_of_relieving_rl, employee_Detail_rl,
@@ -72,7 +72,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
     private CardView next_btn;
     private String data, stringCtcLac, stringCtcThousand, reportingPersonaName, reportingPersonaDesignation, orgNameId, OrgName;
     private LinearLayout addEmploymentDetailView, addEmploymentDetailTile, mainll, upload_doc;
-    private ImageView iv_delete, doc_file;
+    private ImageView iv_delete, doc_file, delete_iv;
     private Date dates;
     private Spinner ctc_in_lac_spinner, ctc_in_thous_spinner;
     private Boolean selectdate = false, to_varify = true;
@@ -84,6 +84,10 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
     private Handler handler = new Handler();
     private ArrayAdapter<CompanyNameModel.Data> companyNameModelArrayAdapter;
     private ProgressDialog progressDialog;
+    private TextView txt_doj_tv_error, txt_dor_tv_error, txt_designataion_tv_error, txt_jobRole_tv_error, txt_org_name_tv_error,
+            txt_reason_of_leaving_tv_error, txt_ctc_tv_error, txt_reporting_person_tv_error, txt_reporting_person_designataion_tv_error,
+            txt_upload_tv_error;
+    private int count = 1;
 
 
     @Override
@@ -306,6 +310,21 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
         ctc_in_lac_spinner = view.findViewById(R.id.ctc_in_lac_spinner);
         ctc_in_thous_spinner = view.findViewById(R.id.ctc_in_thous_spinner);
+
+        //Error TextView
+
+        txt_doj_tv_error = view.findViewById(R.id.txt_doj_tv_error);
+        txt_dor_tv_error = view.findViewById(R.id.txt_dor_tv_error);
+        txt_designataion_tv_error = view.findViewById(R.id.txt_designataion_tv_error);
+        txt_jobRole_tv_error = view.findViewById(R.id.txt_jobRole_tv_error);
+        txt_org_name_tv_error = view.findViewById(R.id.txt_org_name_tv_error);
+        txt_reason_of_leaving_tv_error = view.findViewById(R.id.txt_reason_of_leaving_tv_error);
+        txt_ctc_tv_error = view.findViewById(R.id.txt_ctc_tv_error);
+        txt_reporting_person_tv_error = view.findViewById(R.id.txt_reporting_person_tv_error);
+        txt_reporting_person_designataion_tv_error = view.findViewById(R.id.txt_reporting_person_designataion_tv_error);
+        txt_upload_tv_error = view.findViewById(R.id.txt_upload_tv_error);
+
+
         AutoCompleteTextView txt_orgName_Autocomplete = view.findViewById(R.id.txt_orgName_Autocomplete);
         viewOnclick();
         setSpinnerAdapter();
@@ -339,7 +358,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
         addEmploymentDetailView.addView(view);
 
         companyNameViewModel = new ViewModelProvider(this).get(CompanyNameViewModel.class);
-        companyNameViewModel.companyName.observe(this, new Observer<CompanyNameModel>() {
+        companyNameViewModel.companyName.observe(getViewLifecycleOwner(), new Observer<CompanyNameModel>() {
             @Override
             public void onChanged(CompanyNameModel companyNameModel) {
                 companyNameModelArrayAdapter = new ArrayAdapter<>(MainActivity.context, R.layout.autocomplte_textview_layout, companyNameModel.getData());
@@ -359,6 +378,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                 orgNameId = data.getOrganizationId();
                 OrgName = data.getOrganizationName();
 
+                txt_org_name_tv_error.setVisibility(View.GONE);
                 autotextcomplte.setText(orgNameId);
 
             }
@@ -378,6 +398,12 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
         ctc_in_lac_spinner.setOnItemSelectedListener(this);
         ctc_in_thous_spinner.setOnItemSelectedListener(this);
+
+        txt_designation_et.addTextChangedListener(this);
+        txt_job_role_et.addTextChangedListener(this);
+        txt_reason_of_leaving_et.addTextChangedListener(this);
+        txt_reporting_person_et.addTextChangedListener(this);
+        txt_reporting_person_designataion_et.addTextChangedListener(this);
 
         reportingPersonaName = txt_reporting_person_et.getText().toString();
         reportingPersonaDesignation = txt_reporting_person_designataion_et.getText().toString();
@@ -460,7 +486,17 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
         upload_doc.addView(uploadDoc);
 
         doc_file = uploadDoc.findViewById(R.id.doc_file);
+        delete_iv = uploadDoc.findViewById(R.id.delete_iv);
         doc_name = uploadDoc.findViewById(R.id.doc_name);
+
+        delete_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                upload_doc.removeView(uploadDoc);
+
+            }
+        });
 
 
     }
@@ -500,10 +536,12 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
                         if (selectdate == true) {
                             txt_joining_date.setText(Utility.getStringFromDate(dates, KeyClass.DATE_MM_dd_yyyy));
+                            txt_doj_tv_error.setVisibility(View.GONE);
                             selectdate = false;
                         } else {
 
                             txt_relieving_date.setText(Utility.getStringFromDate(dates, KeyClass.DATE_MM_dd_yyyy));
+                            txt_dor_tv_error.setVisibility(View.GONE);
                             selectdate = true;
                         }
 
@@ -542,6 +580,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
                 stringCtcLac = ctc_in_lac_spinner.getSelectedItem().toString();
 //                Toast.makeText(mctx, stringCtcLac, Toast.LENGTH_SHORT).show();
+                txt_ctc_tv_error.setVisibility(View.GONE);
 
                 break;
 
@@ -550,6 +589,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
                 stringCtcThousand = ctc_in_thous_spinner.getSelectedItem().toString();
 //                Toast.makeText(mctx, stringCtcThousand, Toast.LENGTH_SHORT).show();
+                txt_ctc_tv_error.setVisibility(View.GONE);
 
                 break;
         }
@@ -570,62 +610,121 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
         TextView joining_date = view.findViewById(R.id.txt_joining_date);
         TextView relieving_date = view.findViewById(R.id.txt_relieving_date);
         EditText reason_of_leaving_et = view.findViewById(R.id.txt_reason_of_leaving_et);
+        EditText txt_designation_et = view.findViewById(R.id.txt_designation_et);
+        EditText txt_job_role_et = view.findViewById(R.id.txt_job_role_et);
+        EditText txt_reporting_person_et = view.findViewById(R.id.txt_reporting_person_et);
+        EditText txt_reporting_person_designataion_et = view.findViewById(R.id.txt_reporting_person_designataion_et);
 
 
         if (joining_date.getText().toString().isEmpty()) {
 
-            Toast.makeText(mctx, "Please select Date of Joining", Toast.LENGTH_LONG).show();
-            return;
-        }
-        if (relieving_date.getText().toString().isEmpty()) {
+
+            if (relieving_date.getText().toString().isEmpty()) {
 
 
-            Toast.makeText(mctx, "Please select Date of relieving", Toast.LENGTH_LONG).show();
-            return;
-        }
-        if (txt_designation_et.getText().toString().isEmpty()) {
+                if (txt_designation_et.getText().toString().isEmpty()) {
 
-            txt_designation_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            Toast.makeText(mctx, "Please enter Designantion", Toast.LENGTH_SHORT).show();
-            return;
+
+                    if (txt_job_role_et.getText().toString().isEmpty()) {
+
+
+                        if (orgNameId == null) {
+
+
+                            if (reason_of_leaving_et.getText().toString().isEmpty()) {
+
+
+                                if ((stringCtcLac.equalsIgnoreCase("0 Lac")) && (stringCtcThousand.equalsIgnoreCase("0 thousand"))) {
+
+
+                                    if (txt_reporting_person_et.getText().toString().isEmpty()) {
+
+
+                                        if (txt_reporting_person_designataion_et.getText().toString().isEmpty()) {
+
+
+                                            if (doc_file != null) {
+
+                                                txt_upload_tv_error.setVisibility(View.VISIBLE);
+
+                                            } else {
+
+                                                txt_upload_tv_error.setVisibility(View.GONE);
+
+                                            }
+
+                                            txt_reporting_person_designataion_tv_error.setVisibility(View.VISIBLE);
+                                            txt_reporting_person_designataion_et.requestFocus();
+
+
+                                        } else {
+
+                                            txt_reporting_person_designataion_et.clearFocus();
+                                        }
+
+                                        txt_reporting_person_tv_error.setVisibility(View.VISIBLE);
+                                        txt_reporting_person_et.requestFocus();
+
+
+                                    } else {
+
+                                        txt_reporting_person_et.clearFocus();
+                                    }
+
+                                    txt_ctc_tv_error.setVisibility(View.VISIBLE);
+
+                                } else {
+
+                                    txt_ctc_tv_error.setVisibility(View.GONE);
+                                }
+
+
+                                txt_reason_of_leaving_tv_error.setVisibility(View.VISIBLE);
+                                txt_reason_of_leaving_et.requestFocus();
+
+
+                            } else {
+
+                                txt_reason_of_leaving_et.clearFocus();
+
+                            }
+
+                            txt_org_name_tv_error.setVisibility(View.VISIBLE);
+
+                        }
+
+                        txt_jobRole_tv_error.setVisibility(View.VISIBLE);
+                        txt_job_role_et.requestFocus();
+
+
+                    } else {
+
+                        txt_job_role_et.clearFocus();
+
+                    }
+
+                    txt_designataion_tv_error.setVisibility(View.VISIBLE);
+                    txt_designation_et.requestFocus();
+
+                } else {
+
+                    txt_designation_et.clearFocus();
+
+                }
+
+                txt_dor_tv_error.setVisibility(View.VISIBLE);
+
+            }
+
+            txt_doj_tv_error.setVisibility(View.VISIBLE);
+
         } else {
 
-            txt_designation_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
+
+            view.setVisibility(View.GONE);
+            addEmployementView();
+            addTile();
         }
-        if (txt_job_role_et.getText().toString().isEmpty()) {
-
-            txt_job_role_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            Toast.makeText(mctx, "Please enter Job Role", Toast.LENGTH_SHORT).show();
-            return;
-
-        } else {
-
-            txt_job_role_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
-        }
-        if (reason_of_leaving_et.getText().toString().isEmpty()) {
-
-            reason_of_leaving_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            Toast.makeText(mctx, "Please fill the Reason of Leaving ", Toast.LENGTH_LONG).show();
-            return;
-        } else {
-            reason_of_leaving_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
-        }
-        if (stringCtcLac.equals("0") && stringCtcThousand.equals("0")) {
-
-            Toast.makeText(mctx, "Please select Remuneration", Toast.LENGTH_SHORT).show();
-
-        }
-
-
-        view.setVisibility(View.GONE);
-        addEmployementView();
-        addTile();
 
 
     }
@@ -790,7 +889,10 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
         doc_file.setVisibility(View.VISIBLE);
         doc_name.setVisibility(View.VISIBLE);
-        doc_name.setText(filename);
+        delete_iv.setVisibility(View.VISIBLE);
+        doc_name.setText("file" + count++);
+
+        txt_upload_tv_error.setVisibility(View.GONE);
         uploadDocuments();
 
     }
@@ -816,6 +918,18 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
             Spinner ctcLac = view2.findViewById(R.id.ctc_in_lac_spinner);
             Spinner ctcthos = view2.findViewById(R.id.ctc_in_thous_spinner);
             TextView doc_name = view2.findViewById(R.id.doc_name);
+
+            TextView txt_doj_tv_error = view2.findViewById(R.id.txt_doj_tv_error);
+            TextView txt_dor_tv_error = view2.findViewById(R.id.txt_dor_tv_error);
+            TextView txt_designataion_tv_error = view2.findViewById(R.id.txt_designataion_tv_error);
+            TextView txt_jobRole_tv_error = view2.findViewById(R.id.txt_jobRole_tv_error);
+            TextView txt_org_name_tv_error = view2.findViewById(R.id.txt_org_name_tv_error);
+            TextView txt_reason_of_leaving_tv_error = view2.findViewById(R.id.txt_reason_of_leaving_tv_error);
+            TextView txt_ctc_tv_error = view2.findViewById(R.id.txt_ctc_tv_error);
+            TextView txt_reporting_person_tv_error = view2.findViewById(R.id.txt_reporting_person_tv_error);
+            TextView txt_reporting_person_designataion_tv_error = view2.findViewById(R.id.txt_reporting_person_designataion_tv_error);
+            TextView txt_upload_tv_error = view2.findViewById(R.id.txt_upload_tv_error);
+
             String organizationId = orgId.getText().toString();
 
             String lac = ctcLac.getSelectedItem().toString();
@@ -840,124 +954,177 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
             if (doj.getText().toString().isEmpty()) {
 
-                Toast.makeText(mctx, "Please select date Of Joining", Toast.LENGTH_SHORT).show();
-                return;
 
-            }
-            if (dor.getText().toString().isEmpty()) {
+                if (dor.getText().toString().isEmpty()) {
 
-                Toast.makeText(mctx, "please select date Of Relieving", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (designataion.getText().toString().isEmpty()) {
 
-                Toast.makeText(mctx, "Please fill Designanation", Toast.LENGTH_SHORT).show();
-                txt_designation_et.requestFocus();
-                Utility.showKeyboard(getActivity());
-                return;
+                    if (designataion.getText().toString().isEmpty()) {
+
+
+                        if (jobRole.getText().toString().isEmpty()) {
+
+
+                            if (orgName.getText().toString().isEmpty()) {
+
+
+                                if (reasonOfLeaving.getText().toString().isEmpty()) {
+
+
+                                    if ((ctcLac.getSelectedItem().toString().equalsIgnoreCase("0 Lac")) && (ctcthos.getSelectedItem().toString().equalsIgnoreCase("0 thousand"))) {
+
+
+                                        if (reportingPersonName.getText().toString().isEmpty()) {
+
+
+                                            if (reportingPersonDesignation.getText().toString().isEmpty()) {
+
+
+                                                if (docFile.size() == 1) {
+
+                                                    txt_upload_tv_error.setVisibility(View.VISIBLE);
+
+                                                } else {
+
+                                                    txt_upload_tv_error.setVisibility(View.GONE);
+
+                                                }
+
+                                                txt_reporting_person_designataion_tv_error.setVisibility(View.VISIBLE);
+                                                txt_reporting_person_designataion_et.requestFocus();
+
+
+                                            } else {
+
+                                                reportingPersonDesignation.clearFocus();
+                                            }
+
+                                            txt_reporting_person_tv_error.setVisibility(View.VISIBLE);
+                                            txt_reporting_person_et.requestFocus();
+
+
+                                        } else {
+
+                                            txt_reporting_person_et.clearFocus();
+                                        }
+
+                                        txt_ctc_tv_error.setVisibility(View.VISIBLE);
+
+                                    } else {
+
+                                        txt_ctc_tv_error.setVisibility(View.GONE);
+                                    }
+
+
+                                    txt_reason_of_leaving_tv_error.setVisibility(View.VISIBLE);
+                                    txt_reason_of_leaving_et.requestFocus();
+
+
+                                } else {
+
+                                    txt_reason_of_leaving_et.clearFocus();
+
+                                }
+
+                                txt_org_name_tv_error.setVisibility(View.VISIBLE);
+
+                            }
+
+                            txt_jobRole_tv_error.setVisibility(View.VISIBLE);
+                            txt_job_role_et.requestFocus();
+
+
+                        } else {
+
+                            txt_job_role_et.clearFocus();
+
+                        }
+
+                        txt_designataion_tv_error.setVisibility(View.VISIBLE);
+                        txt_designation_et.requestFocus();
+
+                    } else {
+
+                        txt_designation_et.clearFocus();
+
+                    }
+
+                    txt_dor_tv_error.setVisibility(View.VISIBLE);
+
+                }
+
+                txt_doj_tv_error.setVisibility(View.VISIBLE);
+
             } else {
 
-                txt_designation_et.clearFocus();
-                Utility.hideKeyboard(view2);
+                String childCount = String.valueOf(j);
+                PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmpChildCount, childCount);
 
-            }
-            if (jobRole.getText().toString().isEmpty()) {
-
-                Toast.makeText(mctx, "Please fill Job Role", Toast.LENGTH_SHORT).show();
-                txt_job_role_et.requestFocus();
-                Utility.showKeyboard(getActivity());
-                return;
-
-            } else {
-
-                txt_job_role_et.clearFocus();
-                Utility.hideKeyboard(view2);
-
-            }
-            if (orgName.getText().toString().isEmpty()) {
-
-                Toast.makeText(mctx, "Please select Organization", Toast.LENGTH_SHORT).show();
-
-            }
-            if (reasonOfLeaving.getText().toString().isEmpty()) {
-
-                Toast.makeText(mctx, "please fill Reason of leaving", Toast.LENGTH_SHORT).show();
-                txt_reason_of_leaving_et.requestFocus();
-                Utility.showKeyboard(getActivity());
-                return;
-
-            } else {
-
-                txt_reason_of_leaving_et.clearFocus();
-                Utility.hideKeyboard(view2);
-
-            }
-            if ((ctcLac.getSelectedItem().toString() == "0 Lac") || (ctcthos.getSelectedItem().toString() == "0 thousand")) {
-
-                Toast.makeText(mctx, "Please select ctc", Toast.LENGTH_SHORT).show();
-                return;
-
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty(Constant.Employer_D_O_Joining, doj.getText().toString());
+                jsonObject.addProperty(Constant.Employer_D_O_Relieving, dor.getText().toString());
+                jsonObject.addProperty(Constant.Employer_Designataion, designataion.getText().toString());
+                jsonObject.addProperty(Constant.Employer_Job_role, jobRole.getText().toString());
+                jsonObject.addProperty(Constant.Employer_Organizataion_id, organizationId);
+                jsonObject.addProperty(Constant.Employer_Reason_Of_Leaving, reasonOfLeaving.getText().toString());
+                jsonObject.addProperty(Constant.Employer_ctc_lac, lac);
+                jsonObject.addProperty(Constant.Employer_ctc_thous, thou);
+                jsonObject.addProperty(Constant.Employer_Reporting_Persona_name, reportingPersonName.getText().toString());
+                jsonObject.addProperty(Constant.Employer_Reporting_person_designantion, reportingPersonDesignation.getText().toString());
+                jsonObject.addProperty(Constant.to_varify, to_varify);
+                jsonObject.add(Constant.UploadDocument, document);
+                jsonArray.add(jsonObject);
             }
 
-            if (reportingPersonName.getText().toString().isEmpty()) {
+            JsonObject experience = new JsonObject();
+            experience.add(Constant.experience, jsonArray);
 
-                Toast.makeText(mctx, "Please Fill Reporting Person Name", Toast.LENGTH_SHORT).show();
-                txt_reporting_person_et.requestFocus();
-                Utility.showKeyboard(getActivity());
-                return;
+            JsonObject data = new JsonObject();
+            data.add(Constant.data, experience);
 
-            } else {
+            employeeDetailsViewModel.saveEmployeeDetail(data);
 
-                txt_reporting_person_et.clearFocus();
-                Utility.hideKeyboard(view2);
-            }
-            if (reportingPersonDesignation.getText().toString().isEmpty()) {
-
-                Toast.makeText(mctx, "Please Fill Reporting person Designanation", Toast.LENGTH_SHORT).show();
-                txt_reporting_person_designataion_et.requestFocus();
-                Utility.showKeyboard(getActivity());
-                return;
-
-            } else {
-
-                reportingPersonDesignation.clearFocus();
-                Utility.hideKeyboard(view2);
-            }
-            if (docFile.isEmpty()) {
-
-                Toast.makeText(mctx, "Please Choose Documents", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            String childCount= String.valueOf(j);
-            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmpChildCount,childCount);
-
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty(Constant.Employer_D_O_Joining, doj.getText().toString());
-            jsonObject.addProperty(Constant.Employer_D_O_Relieving, dor.getText().toString());
-            jsonObject.addProperty(Constant.Employer_Designataion, designataion.getText().toString());
-            jsonObject.addProperty(Constant.Employer_Job_role, jobRole.getText().toString());
-            jsonObject.addProperty(Constant.Employer_Organizataion_id, organizationId);
-            jsonObject.addProperty(Constant.Employer_Reason_Of_Leaving, reasonOfLeaving.getText().toString());
-            jsonObject.addProperty(Constant.Employer_ctc_lac, lac);
-            jsonObject.addProperty(Constant.Employer_ctc_thous, thou);
-            jsonObject.addProperty(Constant.Employer_Reporting_Persona_name, reportingPersonName.getText().toString());
-            jsonObject.addProperty(Constant.Employer_Reporting_person_designantion, reportingPersonDesignation.getText().toString());
-            jsonObject.addProperty(Constant.to_varify, to_varify);
-            jsonObject.add(Constant.UploadDocument, document);
-            jsonArray.add(jsonObject);
         }
-
-        JsonObject experience = new JsonObject();
-        experience.add(Constant.experience, jsonArray);
-
-        JsonObject data = new JsonObject();
-        data.add(Constant.data, experience);
-
-        employeeDetailsViewModel.saveEmployeeDetail(data);
-
 
     }
 
 
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        if (txt_designation_et.getText().toString().length() > 0) {
+
+            txt_designataion_tv_error.setVisibility(View.GONE);
+        }
+        if (txt_job_role_et.getText().toString().length() > 0) {
+
+            txt_jobRole_tv_error.setVisibility(View.GONE);
+
+        }
+        if (txt_reason_of_leaving_et.getText().toString().length() > 0) {
+
+            txt_reason_of_leaving_tv_error.setVisibility(View.GONE);
+
+        }
+        if (txt_reporting_person_et.getText().toString().length() > 0) {
+
+            txt_reporting_person_tv_error.setVisibility(View.GONE);
+
+        }
+        if (txt_reporting_person_designataion_et.getText().toString().length() > 0) {
+
+            txt_reporting_person_designataion_tv_error.setVisibility(View.GONE);
+        }
+
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
+    }
 }

@@ -71,7 +71,45 @@
             android:singleLine="true"
             android:textColorHint="@color/input_text_color"
             android:textSize="@dimen/text_size_16"
-            android:visibility="visible" />
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/square_white_bg"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/txt_education_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:layout_marginLeft="@dimen/dp2"
+                android:layout_marginRight="@dimen/dp2"
+                android:layout_marginTop="@dimen/dp5"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+
+            <ImageView
+                android:layout_width="@dimen/dp10"
+                android:layout_height="@dimen/dp10"
+                android:src="@drawable/ic_down_arrow"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp15"/>
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/txt_education_tv_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/education_error"
+            android:textColor="@color/error_red"
+            android:textSize="@dimen/text_size_12"
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -104,7 +142,44 @@
             android:singleLine="true"
             android:textColorHint="@color/input_text_color"
             android:textSize="@dimen/text_size_16"
-            android:visibility="visible" />
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/square_white_bg"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/txt_course_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:layout_marginLeft="@dimen/dp2"
+                android:layout_marginRight="@dimen/dp2"
+                android:layout_marginTop="@dimen/dp5"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+
+            <ImageView
+                android:layout_width="@dimen/dp10"
+                android:layout_height="@dimen/dp10"
+                android:src="@drawable/ic_down_arrow"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp15"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_course_tv_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/course_error"
+            android:textColor="@color/error_red"
+            android:textSize="@dimen/text_size_12"
+            android:visibility="gone" />
     </LinearLayout>
 
 
@@ -137,6 +212,18 @@
             android:textColorHint="@color/input_text_color"
             android:textSize="@dimen/text_size_16"
             android:visibility="visible" />
+
+
+        <TextView
+            android:id="@+id/txt_specilizataion_tv_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/specilizataion_error"
+            android:textColor="@color/error_red"
+            android:textSize="@dimen/text_size_12"
+            android:visibility="gone" />
+
     </LinearLayout>
 
     <RelativeLayout
@@ -216,6 +303,16 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/txt_university_tv_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:text="@string/university_error"
+                android:textColor="@color/error_red"
+                android:textSize="@dimen/text_size_12"
+                android:visibility="gone" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -278,6 +375,16 @@
 
 
             </RadioGroup>
+
+            <TextView
+                android:id="@+id/txt_course_type_tv_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:text="@string/course_type_error"
+                android:textColor="@color/error_red"
+                android:textSize="@dimen/text_size_12"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -294,7 +401,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp5"
-
                 android:text="@string/passoutyear"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16" />
@@ -312,7 +418,45 @@
                 android:singleLine="true"
                 android:textColorHint="@color/input_text_color"
                 android:textSize="@dimen/text_size_16"
-                android:visibility="visible" />
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/square_white_bg"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/txt_passout_year_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp40"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:layout_marginLeft="@dimen/dp2"
+                    android:layout_marginRight="@dimen/dp2"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_16" />
+
+
+                <ImageView
+                    android:layout_width="@dimen/dp10"
+                    android:layout_height="@dimen/dp10"
+                    android:src="@drawable/ic_down_arrow"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp15"/>
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/txt_passoutyear_tv_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:text="@string/passoutyear_error"
+                android:textColor="@color/error_red"
+                android:textSize="@dimen/text_size_12"
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -346,7 +490,91 @@
                 android:singleLine="true"
                 android:textColorHint="@color/input_text_color"
                 android:textSize="@dimen/text_size_16"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/square_white_bg"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/txt_grade_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp40"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:layout_marginLeft="@dimen/dp2"
+                    android:layout_marginRight="@dimen/dp2"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_16" />
+
+
+                <ImageView
+                    android:layout_width="@dimen/dp10"
+                    android:layout_height="@dimen/dp10"
+                    android:src="@drawable/ic_down_arrow"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp15"/>
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/txt_grade_tv_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:text="@string/grade_error"
+                android:textColor="@color/error_red"
+                android:textSize="@dimen/text_size_12"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/marks_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp5"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:paddingLeft="@dimen/dp20"
+            android:paddingTop="@dimen/dp20"
+            android:paddingRight="@dimen/dp20">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:text="@string/marks"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <EditText
+                android:id="@+id/txt_Marks_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/square_white_bg"
+                android:hint="@string/enter_marks"
+                android:imeOptions="actionNext"
+                android:padding="@dimen/dp8"
+                android:singleLine="true"
+                android:textColorHint="@color/input_text_color"
+                android:textSize="@dimen/text_size_16"
                 android:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/txt_Marks_tv_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:text="@string/specilizataion_error"
+                android:textColor="@color/error_red"
+                android:textSize="@dimen/text_size_12"
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -366,10 +594,23 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="-10dp"
                 android:padding="@dimen/dp10"
+                android:id="@+id/txt_upload_document_tv"
                 android:text="@string/uploaddoc"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_doc_tv_Suggesstion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/docformat"
+                android:layout_below="@id/txt_upload_document_tv"
+                android:textColor="@color/suggestion_red"
+                android:textSize="@dimen/text_size_10"
+                android:visibility="visible" />
+
+
 
             <ImageView
                 android:layout_width="@dimen/dp15"
@@ -417,11 +658,24 @@
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
                     android:padding="@dimen/dp5"
+                    android:visibility="gone"
                     android:text="@string/upload"
                     android:textColor="@color/appcolor"
                     android:textSize="@dimen/text_size_14" />
 
             </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/txt_upload_doc_tv_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:layout_marginLeft="@dimen/dp5"
+                android:text="@string/upload_edu_error"
+                android:textColor="@color/error_red"
+                android:textSize="@dimen/text_size_12"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/upload_doc_ll"

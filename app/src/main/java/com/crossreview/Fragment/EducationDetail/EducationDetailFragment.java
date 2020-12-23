@@ -31,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,22 +58,27 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.Key;
 import java.util.ArrayList;
+import java.util.Calendar;
 
-public class EducationDetailFragment extends BasicClass implements View.OnClickListener, awsUploadCallback, View.OnTouchListener, TextView.OnEditorActionListener, Observer<ClsSaveEmployeeDetailModel> {
+public class EducationDetailFragment extends BasicClass implements View.OnClickListener, awsUploadCallback, View.OnTouchListener, TextView.OnEditorActionListener, Observer<ClsSaveEmployeeDetailModel>, AdapterView.OnItemSelectedListener {
 
     private View mview;
     private Context mctx;
     private RelativeLayout txt_add_education_rl, employer_Detail_rl, employment_Detail_rl, txt_university_rl;
-    private LinearLayout education_dynamic_view, univercity_detail_ll, upload_doc_ll, addEducationTile, mainll, education_detail_ll;
+    private LinearLayout education_dynamic_view, univercity_detail_ll, upload_doc_ll, addEducationTile, mainll, education_detail_ll,
+            marks_ll;
     private CardView next_btn;
-    private EditText txt_education_et, txt_course_et, txt_specialization_et, txt_passout_year_et, txt_grade_et;
+    private EditText txt_education_et, txt_course_et, txt_specialization_et, txt_passout_year_et, txt_grade_et, txt_Marks_et;
     private RadioGroup course_type_rg;
     private RadioButton radioButton;
-    private String courseType;
-    private ImageView doc_file, iv_delete;
+    private String courseType="Full Time";
+    private ImageView doc_file, iv_delete, delete_iv;
     private TextView uploadBtn, doc_name, txt_university_tv;
     private Handler handler = new Handler();
     private InstitutionNameViewModel institutionNameViewModel;
@@ -80,6 +86,14 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
     private String instituteName;
     private EmployeeDetailsViewModel employeeDetailsViewModel;
     private Boolean to_varify = true;
+    private int count = 1;
+    private TextView txt_education_tv_error, txt_course_tv_error, txt_specilizataion_tv_error, txt_university_tv_error, txt_course_type_tv_error,
+            txt_passoutyear_tv_error, txt_grade_tv_error, txt_upload_doc_tv_error, txt_Marks_tv_error;
+    private Spinner txt_education_spinner, txt_course_spinner, txt_passout_year_spinner, txt_grade_spinner;
+    private String eduStr[] = {"--Select--", " PHD", " Masters", " Graduations", " 12th", " 10th"};
+    private String courseStr[] = {"--Select--", ""};
+    private String gradeStr[] = {"--Select--", "CGPA", "Percentage"};
+    private String educationStr, strCourse, strPassoutYear, strGrade;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,6 +107,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
                              Bundle savedInstanceState) {
         if (mview == null) {
 
+            mctx = getActivity();
             // Inflate the layout for this fragment
             mview = inflater.inflate(R.layout.fragment_education_detail, container, false);
 
@@ -151,7 +166,6 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         mainll.setOnTouchListener(this);
 
         addDynamicEducataionLayour();
-
 
 
     }
@@ -227,6 +241,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         getIds(view);
         onClicks(view);
         uploadDocument();
+        spinnerAdapterSetup();
 
 
         education_dynamic_view.addView(view);
@@ -242,6 +257,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         txt_specialization_et = view.findViewById(R.id.txt_specialization_et);
         txt_passout_year_et = view.findViewById(R.id.txt_passout_year_et);
         txt_grade_et = view.findViewById(R.id.txt_grade_et);
+        txt_Marks_et = view.findViewById(R.id.txt_Marks_et);
 
         //Relative layout
         txt_university_rl = view.findViewById(R.id.txt_university_rl);
@@ -251,6 +267,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         univercity_detail_ll = view.findViewById(R.id.univercity_detail_ll);
         upload_doc_ll = view.findViewById(R.id.upload_doc_ll);
         education_detail_ll = view.findViewById(R.id.education_detail_ll);
+        marks_ll = view.findViewById(R.id.marks_ll);
 
 
         //Radio Group
@@ -259,6 +276,24 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         //TextView
         uploadBtn = view.findViewById(R.id.uploadBtn);
         txt_university_tv = view.findViewById(R.id.txt_university_tv);
+
+        //error TextView
+        txt_education_tv_error = view.findViewById(R.id.txt_education_tv_error);
+        txt_course_tv_error = view.findViewById(R.id.txt_course_tv_error);
+        txt_specilizataion_tv_error = view.findViewById(R.id.txt_specilizataion_tv_error);
+        txt_university_tv_error = view.findViewById(R.id.txt_university_tv_error);
+        txt_course_type_tv_error = view.findViewById(R.id.txt_course_type_tv_error);
+        txt_passoutyear_tv_error = view.findViewById(R.id.txt_passoutyear_tv_error);
+        txt_grade_tv_error = view.findViewById(R.id.txt_grade_tv_error);
+        txt_upload_doc_tv_error = view.findViewById(R.id.txt_upload_doc_tv_error);
+        txt_Marks_tv_error = view.findViewById(R.id.txt_Marks_tv_error);
+
+        //spinner
+
+        txt_education_spinner = view.findViewById(R.id.txt_education_spinner);
+        txt_course_spinner = view.findViewById(R.id.txt_course_spinner);
+        txt_passout_year_spinner = view.findViewById(R.id.txt_passout_year_spinner);
+        txt_grade_spinner = view.findViewById(R.id.txt_grade_spinner);
 
 
         //AutoTextComplete
@@ -274,6 +309,9 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                txt_university_tv_error.setVisibility(View.GONE);
+
 
             }
 
@@ -321,6 +359,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
                 txt_university_tv.setText(instituteName);
 
+
             }
         });
     }
@@ -354,6 +393,11 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         uploadBtn.setOnClickListener(this);
         education_detail_ll.setOnTouchListener(this);
 
+        txt_education_spinner.setOnItemSelectedListener(this);
+        txt_course_spinner.setOnItemSelectedListener(this);
+        txt_passout_year_spinner.setOnItemSelectedListener(this);
+        txt_grade_spinner.setOnItemSelectedListener(this);
+
 
         //radio button
         course_type_rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -366,24 +410,108 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
                 courseType = radioButton.getText().toString();
 
+                txt_course_type_tv_error.setVisibility(View.GONE);
+
             }
         });
 
+        txt_specialization_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if (txt_specialization_et.getText().toString().length() > 0) {
+
+                    txt_specilizataion_tv_error.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        txt_Marks_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if (txt_Marks_et.getText().toString().length() > 0) {
+
+                    txt_Marks_tv_error.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
     }
 
+    public void spinnerAdapterSetup() {
+
+        //ArrayAdapter
+        ArrayAdapter adapter = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, eduStr);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+        //Adaptersetup
+        txt_education_spinner.setAdapter(adapter);
+
+
+        ArrayList<String> years = new ArrayList<String>();
+        years.add("--Select--");
+        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+        for (int i = thisYear; i >= 1980; i--) {
+            years.add(Integer.toString(i));
+        }
+        ArrayAdapter<String> Yearadapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, years);
+
+        txt_passout_year_spinner.setAdapter(Yearadapter);
+
+        ArrayAdapter grade = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, gradeStr);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+        txt_grade_spinner.setAdapter(grade);
+
+
+    }
 
     public void uploadDocument() {
 
         LayoutInflater inflater = (LayoutInflater) getActivity().getApplicationContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.upload_document, null);
+        View uploadDoc = inflater.inflate(R.layout.upload_document, null);
 
-        upload_doc_ll.addView(view);
+        upload_doc_ll.addView(uploadDoc);
 
 
-        doc_file = view.findViewById(R.id.doc_file);
-        doc_name = view.findViewById(R.id.doc_name);
+        doc_file = uploadDoc.findViewById(R.id.doc_file);
+        doc_name = uploadDoc.findViewById(R.id.doc_name);
+        delete_iv = uploadDoc.findViewById(R.id.delete_iv);
+
+        delete_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                upload_doc_ll.removeView(uploadDoc);
+
+            }
+        });
 
     }
 
@@ -393,7 +521,10 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
         doc_file.setVisibility(View.VISIBLE);
         doc_name.setVisibility(View.VISIBLE);
-        doc_name.setText(filename);
+        delete_iv.setVisibility(View.VISIBLE);
+        doc_name.setText("file" + count++);
+        txt_upload_doc_tv_error.setVisibility(View.GONE);
+
         uploadDocument();
 
     }
@@ -426,85 +557,79 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
         View view2 = education_dynamic_view.getChildAt(education_dynamic_view.getChildCount() - 1);
 
-        EditText educations = view2.findViewById(R.id.txt_education_et);
-        EditText course = view2.findViewById(R.id.txt_course_et);
         EditText specialization = view2.findViewById(R.id.txt_specialization_et);
         AutoCompleteTextView university = view2.findViewById(R.id.txt_university_et);
-        EditText passingYear = view2.findViewById(R.id.txt_passout_year_et);
-        EditText grade = view2.findViewById(R.id.txt_grade_et);
 
-        if (educations.getText().toString().isEmpty()) {
 
-            Toast.makeText(mctx, "Please fill Educations", Toast.LENGTH_SHORT).show();
-            txt_education_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
+        if (educationStr.equalsIgnoreCase("--Select--")) {
+
+
+            if (strCourse.equalsIgnoreCase("--Select--")) {
+
+
+                if (specialization.getText().toString().isEmpty()) {
+
+
+                    if (university.getText().toString() != null) {
+
+                        if (strPassoutYear.equalsIgnoreCase("--Select--")) {
+
+                            if (strGrade.equalsIgnoreCase("--Select--")) {
+
+                                if (photoFile == null) {
+
+                                    txt_upload_doc_tv_error.setVisibility(View.VISIBLE);
+                                }
+
+                                txt_grade_tv_error.setVisibility(View.VISIBLE);
+
+                            } else {
+
+                                if (txt_Marks_et.getText().toString().isEmpty()) {
+
+
+                                    txt_Marks_tv_error.setVisibility(View.VISIBLE);
+                                    txt_Marks_et.requestFocus();
+
+
+                                } else {
+
+                                    txt_Marks_et.clearFocus();
+                                }
+
+
+                            }
+
+                            txt_passoutyear_tv_error.setVisibility(View.VISIBLE);
+
+                        }
+
+                        txt_university_tv_error.setVisibility(View.VISIBLE);
+                        university.requestFocus();
+
+                    } else {
+                        txt_university_tv_error.setVisibility(View.GONE);
+                        university.clearFocus();
+                    }
+
+                    txt_specilizataion_tv_error.setVisibility(View.VISIBLE);
+                    txt_specialization_et.requestFocus();
+
+                } else {
+
+                    txt_specialization_et.clearFocus();
+                }
+
+                txt_course_tv_error.setVisibility(View.VISIBLE);
+            }
+
+            txt_education_tv_error.setVisibility(View.VISIBLE);
+
         } else {
-
-            txt_education_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
-
+            view2.setVisibility(View.GONE);
+            addDynamicEducataionLayour();
+            addEducationTileView();
         }
-        if (course.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please Fill Course", Toast.LENGTH_SHORT).show();
-            txt_course_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        } else {
-
-            txt_course_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
-        }
-        if (specialization.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please Fill Specialization", Toast.LENGTH_SHORT).show();
-            txt_specialization_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        } else {
-
-            txt_specialization_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
-        }
-        if (university.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill Institution name", Toast.LENGTH_SHORT).show();
-            university.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        } else {
-
-            university.clearFocus();
-            Utility.hideKeyboard(getActivity());
-        }
-        if (passingYear.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill Pass Out year", Toast.LENGTH_SHORT).show();
-            txt_passout_year_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        } else {
-
-            txt_passout_year_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
-        }
-        if (grade.getText().toString().isEmpty()) {
-
-            Toast.makeText(mctx, "Please fill grade", Toast.LENGTH_SHORT).show();
-            txt_grade_et.requestFocus();
-            Utility.showKeyboard(getActivity());
-            return;
-        } else {
-
-            txt_grade_et.clearFocus();
-            Utility.hideKeyboard(getActivity());
-        }
-
-
-        view2.setVisibility(View.GONE);
-        addDynamicEducataionLayour();
-        addEducationTileView();
 
 
     }
@@ -620,16 +745,14 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
             View view1 = education_dynamic_view.getChildAt(i);
 
 
-            EditText txt_education_et = view1.findViewById(R.id.txt_education_et);
-            EditText txt_course_et = view1.findViewById(R.id.txt_course_et);
             EditText txt_specialization_et = view1.findViewById(R.id.txt_specialization_et);
+            EditText txt_Marks_et = view1.findViewById(R.id.txt_Marks_et);
             TextView txt_university_tv = view1.findViewById(R.id.txt_university_tv);
             RadioGroup course_type_rg = view1.findViewById(R.id.course_type_rg);
-            EditText txt_passout_year_et = view1.findViewById(R.id.txt_passout_year_et);
-            EditText txt_grade_et = view1.findViewById(R.id.txt_grade_et);
+
 
             String instituteName = txt_university_tv.getText().toString();
-            String courseType = course_type_rg.toString();
+//            String courseType = course_type_rg.toString();
 
 
             String fileName = "";
@@ -649,100 +772,100 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
                 document.add(object);
 
             }
+            if (photoFile == null) {
+
+                if (strGrade.equalsIgnoreCase("--select--")) {
+
+                    if (strPassoutYear.equalsIgnoreCase("--select--")) {
+
+                        if (txt_university_tv.getText().toString().isEmpty()) {
+
+                            if (txt_specialization_et.getText().toString().isEmpty()) {
+
+                                if (strCourse.equalsIgnoreCase("--select--")) {
+
+                                    if (educationStr.equalsIgnoreCase("--Select--")) {
 
 
-            if (txt_education_et.getText().toString().isEmpty()) {
 
-                Toast.makeText(mctx, "Please fill Education Type", Toast.LENGTH_SHORT).show();
-                txt_education_et.requestFocus();
-                Utility.showKeyboard(getActivity());
-                return;
-            } else {
+                                        txt_education_tv_error.setVisibility(View.VISIBLE);
 
-                txt_education_et.clearFocus();
-                Utility.hideKeyboard(view1);
 
-            }
-            if (txt_course_et.getText().toString().isEmpty()) {
+                                    }
 
-                Toast.makeText(mctx, "Please fill course", Toast.LENGTH_SHORT).show();
-                txt_course_et.requestFocus();
-                Utility.showKeyboard(getActivity());
-                return;
-            } else {
 
-                txt_course_et.clearFocus();
-                Utility.hideKeyboard(view1);
 
-            }
-            if (txt_specialization_et.getText().toString().isEmpty()) {
+                                    txt_course_tv_error.setVisibility(View.VISIBLE);
+                                }
 
-                Toast.makeText(mctx, "Please fill specialization", Toast.LENGTH_SHORT).show();
-                txt_specialization_et.requestFocus();
-                Utility.showKeyboard(getActivity());
-                return;
-            } else {
 
-                txt_specialization_et.clearFocus();
-                Utility.hideKeyboard(view1);
 
-            }
-            if (txt_university_tv.getText().toString().isEmpty()) {
+                                txt_specilizataion_tv_error.setVisibility(View.VISIBLE);
+                                txt_specialization_et.requestFocus();
+                            } else {
 
-                Toast.makeText(mctx, "please select Institution", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (txt_passout_year_et.getText().toString().isEmpty()) {
+                                txt_specialization_et.clearFocus();
+                            }
 
-                Toast.makeText(mctx, "Please fill Passout year", Toast.LENGTH_SHORT).show();
-                txt_passout_year_et.requestFocus();
-                Utility.showKeyboard(getActivity());
-                return;
-            } else {
+                            txt_university_tv_error.setVisibility(View.VISIBLE);
+                        }
 
-                txt_passout_year_et.clearFocus();
-                Utility.hideKeyboard(view1);
-            }
-            if (txt_grade_et.getText().toString().isEmpty()) {
 
-                Toast.makeText(mctx, "Please fill  grade", Toast.LENGTH_SHORT).show();
-                txt_grade_et.requestFocus();
-                Utility.showKeyboard(getActivity());
-                return;
-            } else {
+                        txt_passoutyear_tv_error.setVisibility(View.VISIBLE);
 
-                txt_grade_et.clearFocus();
-                Utility.hideKeyboard(view1);
+                    }
+
+                    txt_grade_tv_error.setVisibility(View.VISIBLE);
+                }else {
+
+                    if (txt_Marks_et.getText().toString().isEmpty()) {
+
+
+                        txt_Marks_tv_error.setVisibility(View.VISIBLE);
+                        txt_Marks_et.requestFocus();
+
+
+                    } else {
+
+                        txt_Marks_et.clearFocus();
+                    }
+
+                }
+
+
+                txt_upload_doc_tv_error.setVisibility(View.VISIBLE);
             }
 
-            String getChildCount= String.valueOf(i);
+            else {
 
-            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EduChildCount,getChildCount);
+                String getChildCount = String.valueOf(i);
 
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty(Constant.Education_type, txt_education_et.getText().toString());
-            jsonObject.addProperty(Constant.Course, txt_course_et.getText().toString());
-            jsonObject.addProperty(Constant.Specialization, txt_specialization_et.getText().toString());
-            jsonObject.addProperty(Constant.InstitutionName, instituteName);
-            jsonObject.addProperty(Constant.CourseType, courseType);
-            jsonObject.addProperty(Constant.PassOutYear, txt_passout_year_et.getText().toString());
-            jsonObject.addProperty(Constant.Grade, txt_grade_et.getText().toString());
-            jsonObject.add(Constant.UploadDocument, document);
-            jsonObject.addProperty(Constant.to_varify, to_varify);
+                PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EduChildCount, getChildCount);
+
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty(Constant.Education_type, educationStr);
+                jsonObject.addProperty(Constant.Course, strCourse);
+                jsonObject.addProperty(Constant.Specialization, txt_specialization_et.getText().toString());
+                jsonObject.addProperty(Constant.InstitutionName, instituteName);
+                jsonObject.addProperty(Constant.CourseType, courseType);
+                jsonObject.addProperty(Constant.PassOutYear, strPassoutYear);
+                jsonObject.addProperty(Constant.Grade, strGrade);
+                jsonObject.add(Constant.UploadDocument, document);
+                jsonObject.addProperty(Constant.to_varify, to_varify);
 
 
-            jsonArray.add(jsonObject);
+                jsonArray.add(jsonObject);
+            }
+
+
+            JsonObject experience = new JsonObject();
+            experience.add(Constant.education, jsonArray);
+
+            JsonObject data = new JsonObject();
+            data.add(Constant.data, experience);
+
+            employeeDetailsViewModel.saveEmployeeDetail(data);
         }
-
-
-
-        JsonObject experience = new JsonObject();
-        experience.add(Constant.education, jsonArray);
-
-        JsonObject data = new JsonObject();
-        data.add(Constant.data, experience);
-
-        employeeDetailsViewModel.saveEmployeeDetail(data);
 
 
     }
@@ -756,4 +879,110 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+        switch (adapterView.getId()) {
+
+            case R.id.txt_education_spinner:
+
+//                Toast.makeText(mctx, i+"", Toast.LENGTH_SHORT).show();
+                if (i == 1) {
+
+                    //show phd data
+
+                    ArrayList<String> phd = getPhdData("phd.json");
+                    ArrayAdapter<String> phdAdapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, phd);
+                    txt_course_spinner.setAdapter(phdAdapter);
+
+                } else if (i == 2) {
+                    //show masters data
+
+                    ArrayList<String> masters = getPhdData("master.json");
+                    ArrayAdapter<String> mastersAdapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, masters);
+                    txt_course_spinner.setAdapter(mastersAdapter);
+
+                } else if (i == 3) {
+                    //show graduation data
+                    ArrayList<String> graduation = getPhdData("graduation.json");
+                    ArrayAdapter<String> graduationAdapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, graduation);
+                    txt_course_spinner.setAdapter(graduationAdapter);
+
+                } else {
+
+                    ArrayAdapter<String> course = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, courseStr);
+                    txt_course_spinner.setAdapter(course);
+
+                }
+
+                educationStr = txt_education_spinner.getSelectedItem().toString();
+
+                txt_education_tv_error.setVisibility(View.GONE);
+
+                break;
+
+            case R.id.txt_course_spinner:
+
+                strCourse = txt_course_spinner.getSelectedItem().toString();
+                txt_course_tv_error.setVisibility(View.GONE);
+
+
+                break;
+
+            case R.id.txt_passout_year_spinner:
+
+                strPassoutYear = txt_passout_year_spinner.getSelectedItem().toString();
+                txt_passoutyear_tv_error.setVisibility(View.GONE);
+
+                break;
+
+            case R.id.txt_grade_spinner:
+
+                if (i == 0) {
+                    marks_ll.setVisibility(View.GONE);
+                } else {
+
+                    marks_ll.setVisibility(View.VISIBLE);
+
+                }
+                strGrade = txt_grade_spinner.getSelectedItem().toString();
+                txt_grade_tv_error.setVisibility(View.GONE);
+
+                break;
+
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+
+    private ArrayList<String> getPhdData(String fileName) {
+        JSONArray jsonArray = null;
+        ArrayList<String> cList = new ArrayList<String>();
+        try {
+            InputStream inputStream = getResources().getAssets().open(fileName);
+
+            int size = inputStream.available();
+            byte[] data = new byte[size];
+            inputStream.read(data);
+            inputStream.close();
+
+            String json = new String(data, "UTF-8");
+            jsonArray = new JSONArray(json);
+            if (jsonArray != null) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    cList.add(jsonArray.getJSONObject(i).getString("CourseName"));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+        return cList;
+    }
 }

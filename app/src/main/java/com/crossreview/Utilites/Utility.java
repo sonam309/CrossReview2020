@@ -19,8 +19,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -44,6 +46,7 @@ import com.crossreview.Activity.MainActivity;
 import com.crossreview.BuildConfig;
 import com.crossreview.Interface.awsUploadCallback;
 import com.crossreview.Model.CompanyNameModel;
+import com.crossreview.R;
 import com.google.gson.JsonObject;
 import com.shockwave.pdfium.PdfDocument;
 import com.shockwave.pdfium.PdfiumCore;
@@ -69,6 +72,7 @@ public class Utility {
     private static TransferUtility sTransferUtility;
     private static AmazonS3Client sS3Client;
     private static AWSCredentialsProvider sMobileClient;
+
 
 
 
@@ -113,6 +117,49 @@ public class Utility {
             }
         }
         return true;
+    }
+
+    public static void setError(TextView textView, EditText editText,Context context){
+
+        textView.setTextColor(context.getResources().getColor(R.color.error_red));
+        editText.setBackground(context.getResources().getDrawable(R.drawable.error_bg));
+    }
+
+    public static void removeError(TextView textView,EditText editText,Context context){
+
+        textView.setTextColor(context.getResources().getColor(R.color.black));
+        editText.setBackground(context.getResources().getDrawable(R.drawable.square_white_bg));
+    }
+
+
+    public static String convertHeightToInches(Number height) {
+        try {
+            String[] some_array = MainActivity.context.getResources().getStringArray(R.array.height_arr);
+            for (String val : some_array) {
+                if (val.startsWith(height.toString())) {
+                    return val.substring(val.indexOf(" ") + 1);
+                }
+            }
+        } catch (Exception e) {
+            return "";
+        }
+        return "";
+    }
+
+
+    public static String convertWeightToLbs(Number weight) {
+        try {
+            String[] some_array = MainActivity.context.getResources().getStringArray(R.array.weight_arr);
+            for (String val : some_array) {
+                String val1 = val.substring(0, val.indexOf("kg"));
+                if (Double.parseDouble(val1) == weight.doubleValue()) {
+                    return val.substring(val.indexOf(" ") + 1);
+                }
+            }
+        } catch (Exception e) {
+            return "";
+        }
+        return "";
     }
 
 
@@ -404,6 +451,8 @@ public class Utility {
 //    public static void loadImage(ImageView imageView, Context context, String profilePic) {
 //        Glide.with(context).load(KeyClass.BASE_URL.substring(0,KeyClass.BASE_URL.length()-1)+profilePic).into(imageView);
 //    }
+
+
 
 
 }

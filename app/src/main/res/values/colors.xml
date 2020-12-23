@@ -24,5 +24,8 @@
     <color name="blue">#085b9b</color>
     <color name="text_grey">#dbdbdb</color>
     <color name="transparentcolor">@android:color/transparent</color>
+    <color name="error_red">#ff0000</color>
+    <color name="suggestion_red">#dc3545</color>
+
 
 </resources>

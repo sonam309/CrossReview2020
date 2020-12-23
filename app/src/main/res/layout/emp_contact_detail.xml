@@ -31,9 +31,20 @@
             android:imeOptions="actionNext"
             android:maxLength="50"
             android:padding="@dimen/dp8"
+            android:maxLines="2"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:id="@+id/txt_address_tv_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/empAdd"
+            android:textColor="@color/error_red"
+            android:textSize="@dimen/text_size_12"
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -44,6 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp5"
         android:orientation="vertical"
+        android:visibility="gone"
         android:paddingLeft="@dimen/dp20"
         android:paddingRight="@dimen/dp20">
 
@@ -72,68 +84,115 @@
 
     </LinearLayout>
 
-
     <LinearLayout
-        android:id="@+id/txt_state_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:layout_margin="@dimen/dp5"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/dp20"
-        android:paddingRight="@dimen/dp20">
-
-        <TextView
-            android:id="@+id/txt_state_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp5"
-            android:text="@string/State"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_16" />
-
-        <EditText
-            android:id="@+id/txt_state_et"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/square_white_bg"
-            android:hint="@string/state"
-            android:imeOptions="actionNext"
-            android:maxLength="20"
-            android:padding="@dimen/dp8"
-            android:visibility="visible"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_16" />
-
-        <Spinner
-            android:id="@+id/txt_state_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp35"
-            android:autofillHints="@string/state"
-            android:prompt="@string/state"
-            android:visibility="gone"
-            android:spinnerMode="dropdown"
-            android:background="@drawable/square_white_bg"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_16" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_margin="@dimen/dp5"
         android:paddingLeft="@dimen/dp20"
         android:paddingRight="@dimen/dp20"
-        android:layout_marginTop="@dimen/dp5"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginRight="@dimen/dp10"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/txt_zipcode_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:text="@string/Zipcode"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <EditText
+                android:id="@+id/txt_zipcode_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/square_white_bg"
+                android:hint="@string/zipcode"
+                android:imeOptions="actionNext"
+                android:maxLength="6"
+                android:padding="@dimen/dp8"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/txt_zipcode_tv_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:text="@string/empzip"
+                android:textColor="@color/error_red"
+                android:textSize="@dimen/text_size_12"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/txt_state_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_state_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:text="@string/State"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <EditText
+                android:id="@+id/txt_state_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/square_white_bg"
+                android:hint="@string/state"
+                android:imeOptions="actionNext"
+                android:maxLength="20"
+                android:padding="@dimen/dp8"
+                android:visibility="visible"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <Spinner
+                android:id="@+id/txt_state_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp35"
+                android:autofillHints="@string/state"
+                android:prompt="@string/state"
+                android:visibility="gone"
+                android:spinnerMode="dropdown"
+                android:background="@drawable/square_white_bg"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/txt_state_tv_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:text="@string/empState"
+                android:textColor="@color/error_red"
+                android:textSize="@dimen/text_size_12"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             >
             <TextView
@@ -169,45 +228,28 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16" />
 
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="@dimen/dp10"
-            android:orientation="vertical"
-            >
-
             <TextView
-                android:id="@+id/txt_zipcode_tv"
+                android:id="@+id/txt_city_tv_error"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp5"
-                android:text="@string/Zipcode"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_16" />
+                android:text="@string/empcity"
+                android:textColor="@color/error_red"
+                android:textSize="@dimen/text_size_12"
+                android:visibility="gone" />
 
-            <EditText
-                android:id="@+id/txt_zipcode_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/square_white_bg"
-                android:hint="@string/zipcode"
-                android:imeOptions="actionNext"
-                android:maxLength="6"
-                android:padding="@dimen/dp8"
-                android:inputType="number"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_16" />
 
 
         </LinearLayout>
 
+
+
+
     </LinearLayout>
+
+
+
+
+
 
 </LinearLayout>

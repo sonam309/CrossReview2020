@@ -1,0 +1,317 @@
+[
+  {
+    "CourseName": "--Select--"
+  },
+  {
+    "CourseName": "Master of Science (BOTANY)"
+  },
+  {
+    "CourseName": "Diploma in Medical (D.M)"
+  },
+  {
+    "CourseName": "Executive Fellow Program In Management (E.F.P.M)"
+  },
+  {
+    "CourseName": "Executive Management Programme (E.M.P)"
+  },
+  {
+    "CourseName": "Fellow Programme in Management (F.P.M)"
+  },
+  {
+    "CourseName": "FACULTY DEVELOPMENT PROGRAMME (FDP)"
+  },
+  {
+    "CourseName": "Executive Fellow Programme in Management (FELLOWSHIP)"
+  },
+  {
+    "CourseName": "FELLOW PROGRAMME IN MANAGEMENT (FELLOWSHIP)"
+  },
+  {
+    "CourseName": "FELLOW PROGRAMME IN MANAGEMENT (FPM)"
+  },
+  {
+    "CourseName": "Master of Law (LL.M)"
+  },
+  {
+    "CourseName": "Master of Arts (M.A)"
+  },
+  {
+    "CourseName": "Master of Arts (M.A. (SWDS)"
+  },
+  {
+    "CourseName": "Master of Arts in Management (M.A.M)"
+  },
+  {
+    "CourseName": "Master of Arts in Personal Management (M.A.P.M)"
+  },
+  {
+    "CourseName": "Master of Arts (M.A.S.L.P)"
+  },
+  {
+    "CourseName": "Master of Audiology & Speech Language Pathology (M.A.S.L.P)"
+  },
+  {
+    "CourseName": "Master of Arts in Theatre & Television (M.A.T.T)"
+  },
+  {
+    "CourseName": "Master of Architecture (M.Arch)"
+  },
+  {
+    "CourseName": "Master of Business Administration (M.B.A)"
+  },
+  {
+    "CourseName": "Master of Business Economics (M.B.E)"
+  },
+  {
+    "CourseName": "Master of Business Laws (M.B.L)"
+  },
+  {
+    "CourseName": "Master of Business Management (M.B.M)"
+  },
+  {
+    "CourseName": "Master of Business Studies (M.B.S)"
+  },
+  {
+    "CourseName": "Master of Computer Applications (M.C.A)"
+  },
+  {
+    "CourseName": "Master of Communication & Journalism (M.C.J)"
+  },
+  {
+    "CourseName": "Master of Comparative Laws (M.C.L)"
+  },
+  {
+    "CourseName": "Master of Computer Management (M.C.M)"
+  },
+  {
+    "CourseName": "Master of Corporate Secretaryship (M.C.S)"
+  },
+  {
+    "CourseName": "Master of Chirurgical (M.Ch)"
+  },
+  {
+    "CourseName": "Master of Commerce (M.Com)"
+  },
+  {
+    "CourseName": "Doctor of Medicine (M.D)"
+  },
+  {
+    "CourseName": "Sports Medicine (M.D)"
+  },
+  {
+    "CourseName": "Management Development Programme (M.D.P)"
+  },
+  {
+    "CourseName": "Master of Dental Surgery (M.D.S)"
+  },
+  {
+    "CourseName": "Master of Design (M.Des)"
+  },
+  {
+    "CourseName": "Master of Engineering (M.E)"
+  },
+  {
+    "CourseName": "Master of Education (M.Ed)"
+  },
+  {
+    "CourseName": "Master of education in Artificial Intelligence (M.Ed AI)"
+  },
+  {
+    "CourseName": "Master of Fine Arts (M.F.A)"
+  },
+  {
+    "CourseName": "Master of Finance & Control (M.F.C)"
+  },
+  {
+    "CourseName": "Master of Film Management (M.F.M)"
+  },
+  {
+    "CourseName": "Master of Financial Services (M.F.S)"
+  },
+  {
+    "CourseName": "Master of Fishery Science (M.F.Sc)"
+  },
+  {
+    "CourseName": "Master of Fishery Sciences (M.F.Sc)"
+  },
+  {
+    "CourseName": "Master of Foreign Trade (M.F.T)"
+  },
+  {
+    "CourseName": "Master of Hospital Administration (M.H.A)"
+  },
+  {
+    "CourseName": "Master of Hospitality & Hotel Management (M.H.H.M)"
+  },
+  {
+    "CourseName": "Master of Hospitality Management (M.H.M)"
+  },
+  {
+    "CourseName": "Master of Human Resource Management (M.H.R.M)"
+  },
+  {
+    "CourseName": "Master Of Health Science (M.H.Sc)"
+  },
+  {
+    "CourseName": "Masters of Hospitality and Tourism Management (M.H.T.M)"
+  },
+  {
+    "CourseName": "Master of International Business (M.I.B)"
+  },
+  {
+    "CourseName": "Master of Information Management (M.I.M)"
+  },
+  {
+    "CourseName": "Master of Journalism (M.J)"
+  },
+  {
+    "CourseName": "Master of Laws (M.L)"
+  },
+  {
+    "CourseName": "Master of Library and Information Science (M.L.I.Sc)"
+  },
+  {
+    "CourseName": "Master of Labour Management (M.L.M)"
+  },
+  {
+    "CourseName": "Master of Library Science (M.L.Sc)"
+  },
+  {
+    "CourseName": "Master of Marketing Management (M.M.M)"
+  },
+  {
+    "CourseName": "Master of Management Program (M.M.P)"
+  },
+  {
+    "CourseName": "Master of Management Studies (M.M.S)"
+  },
+  {
+    "CourseName": "Master of Occupational Theraphy (M.O.T)"
+  },
+  {
+    "CourseName": "Master of Performing Arts (M.P.A)"
+  },
+  {
+    "CourseName": "Master of Psychiatric Epidemiology (M.P.E)"
+  },
+  {
+    "CourseName": "Master Of Physical Education (M.P.Ed)"
+  },
+  {
+    "CourseName": "Master of Public Health (M.P.H)"
+  },
+  {
+    "CourseName": "Masters Programme in International Business (M.P.I.B)"
+  },
+  {
+    "CourseName": "Master of Performance Management (M.P.M)"
+  },
+  {
+    "CourseName": "Diploma in Prosthetics & Orthotics (M.P.O)"
+  },
+  {
+    "CourseName": "Masters in Public Systems Management (M.P.S.M)"
+  },
+  {
+    "CourseName": "Master of Physiotheraphy (M.P.T)"
+  },
+  {
+    "CourseName": "Master of Pharmacy (M.Pharma)"
+  },
+  {
+    "CourseName": "Master of Philosophy (M.Phil)"
+  },
+  {
+    "CourseName": "Master of Rehabilitation Science (M.R.Sc)"
+  },
+  {
+    "CourseName": "M.S. in Library and Information Science (M.S)"
+  },
+  {
+    "CourseName": "Master of Science (M.S)"
+  },
+  {
+    "CourseName": "Master of Social Dynamics (M.S.D)"
+  },
+  {
+    "CourseName": "Masters Programme In Sports Physiotheraphy (M.S.P.T)"
+  },
+  {
+    "CourseName": "Master of Social Work (M.S.W)"
+  },
+  {
+    "CourseName": "Master of Science (M.Sc)"
+  },
+  {
+    "CourseName": "Master of Tourism Administrations (M.T.A)"
+  },
+  {
+    "CourseName": "Master of Tourism Management (M.T.M)"
+  },
+  {
+    "CourseName": "Master of Technology (M.Tech)"
+  },
+  {
+    "CourseName": "Master of Veterinary Science (M.V.Sc)"
+  },
+  {
+    "CourseName": "Doctor of Medicine Unani (Mahir e Tibb)"
+  },
+  {
+    "CourseName": "Master of Business Administration (MBA)"
+  },
+  {
+    "CourseName": "MANAGEMENT DEVELOPMENT PROGRAMEE (MDP)"
+  },
+  {
+    "CourseName": "Master of Industrial Relation and Personal Management (MIR and PM)"
+  },
+  {
+    "CourseName": "Master of Personnel Management (MPM)"
+  },
+  {
+    "CourseName": "Master of Personal Management and Industrial Relation (MPM and IR)"
+  },
+  {
+    "CourseName": "Post Graduate Diploma (P Diplomo)"
+  },
+  {
+    "CourseName": "Post Graduate Diploma (P.G.D.D.R.M)"
+  },
+  {
+    "CourseName": "Post Graduate Diploma (P.G.D.D.T.(MD:P&N)"
+  },
+  {
+    "CourseName": "Post Graduate Diploma (P.G.D.E.I)"
+  },
+  {
+    "CourseName": "Post Graduate Diploma (P.G.D.R.P)"
+  },
+  {
+    "CourseName": "Post Graduate Diploma (P.G.D.S.E.(MR)"
+  },
+  {
+    "CourseName": "Post Graduate Programme (P.G.P)"
+  },
+  {
+    "CourseName": "Post Graduate (PG)"
+  },
+  {
+    "CourseName": "Post Graduate Diploma (PG Diploma)"
+  },
+  {
+    "CourseName": "Post Graduate Programme (PG Programme)"
+  },
+  {
+    "CourseName": "Post Graduate Diploma (PGD)"
+  },
+  {
+    "CourseName": "POST GRADUATE PROGRAME FOR EXECUTIVES (PGEXP)"
+  },
+  {
+    "CourseName": "POST-GRADUATE PROGRAMME IN MANAGEMENT (PGP)"
+  },
+  {
+    "CourseName": "POST GRADUATE PROGRAMME IN AGRIBUSINESS MANAGEMENT (PGP-ABM)"
+  }
+]

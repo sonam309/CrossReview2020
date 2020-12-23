@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgcolor"
@@ -36,6 +37,16 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_16" />
 
+        <TextView
+            android:id="@+id/txt_address_tv_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/permanent_add_error"
+            android:textColor="@color/error_red"
+            android:textSize="@dimen/text_size_12"
+            android:visibility="gone" />
+
     </LinearLayout>
 
 
@@ -48,30 +59,32 @@
         android:paddingLeft="@dimen/dp20"
         android:paddingRight="@dimen/dp20">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp5"
             android:layout_weight="1"
+            android:layout_marginRight="@dimen/dp5"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_city_tv"
+                android:id="@+id/txt_pincode_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp5"
-                android:text="@string/City"
+                android:text="@string/Zipcode"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16" />
 
             <EditText
-                android:id="@+id/txt_city_et"
+                android:id="@+id/txt_pincode_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/square_white_bg"
-                android:hint="@string/city"
+                android:hint="@string/zipcode"
                 android:imeOptions="actionNext"
-                android:maxLength="20"
+                android:inputType="number"
+                android:maxLength="6"
                 android:padding="@dimen/dp8"
                 android:singleLine="true"
                 android:textColor="@color/black"
@@ -82,8 +95,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp5"
             android:layout_weight="1"
+            android:layout_marginLeft="@dimen/dp5"
             android:orientation="vertical">
 
             <TextView
@@ -124,8 +137,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp5"
             android:layout_weight="1"
+            android:layout_marginRight="5dp"
             android:orientation="vertical">
 
             <TextView
@@ -232,28 +245,56 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_pincode_tv"
+                android:id="@+id/txt_city_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp5"
-                android:text="@string/Zipcode"
+                android:text="@string/City"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16" />
 
             <EditText
-                android:id="@+id/txt_pincode_et"
+                android:id="@+id/txt_city_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/square_white_bg"
-                android:hint="@string/zipcode"
+                android:hint="@string/city"
                 android:imeOptions="actionNext"
-                android:maxLength="6"
-                android:inputType="number"
+                android:maxLength="20"
                 android:padding="@dimen/dp8"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16" />
         </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingRight="@dimen/dp20">
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            app:buttonTint="@color/appcolor" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="-10dp"
+            android:text="@string/sameAddress"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+
+
     </LinearLayout>
 
 
@@ -288,6 +329,17 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_16" />
 
+        <TextView
+            android:id="@+id/txt_local_address_tv_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="@string/local_add_error"
+            android:textColor="@color/error_red"
+            android:textSize="@dimen/text_size_12"
+            android:visibility="gone" />
+
+
     </LinearLayout>
 
 
@@ -308,22 +360,23 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_local_city_tv"
+                android:id="@+id/txt_local_pincode_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp5"
-                android:text="@string/City"
+                android:text="@string/Zipcode"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16" />
 
             <EditText
-                android:id="@+id/txt_local_city_et"
+                android:id="@+id/txt_local_pincode_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/square_white_bg"
-                android:hint="@string/city"
+                android:hint="@string/zipcode"
                 android:imeOptions="actionNext"
-                android:maxLength="20"
+                android:inputType="number"
+                android:maxLength="6"
                 android:padding="@dimen/dp8"
                 android:singleLine="true"
                 android:textColor="@color/black"
@@ -376,8 +429,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp5"
             android:layout_weight="1"
+            android:layout_marginRight="@dimen/dp5"
             android:orientation="vertical">
 
             <TextView
@@ -484,28 +537,28 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_local_pincode_tv"
+                android:id="@+id/txt_local_city_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp5"
-                android:text="@string/Zipcode"
+                android:text="@string/City"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16" />
 
             <EditText
-                android:id="@+id/txt_local_pincode_et"
+                android:id="@+id/txt_local_city_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/square_white_bg"
-                android:hint="@string/zipcode"
+                android:hint="@string/city"
                 android:imeOptions="actionNext"
-                android:maxLength="6"
-                android:inputType="number"
+                android:maxLength="20"
                 android:padding="@dimen/dp8"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16" />
         </LinearLayout>
+
     </LinearLayout>
 
 

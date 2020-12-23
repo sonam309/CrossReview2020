@@ -10,6 +10,7 @@ import com.crossreview.Model.ClsSaveEmployeeDetailModel;
 import com.crossreview.Model.PoliceVarificataionDetailsModel;
 import com.crossreview.Utilites.KeyClass;
 import com.crossreview.Utilites.PrefrenceShared;
+import com.crossreview.Utilites.Utility;
 import com.crossreview.network.ApiClient;
 import com.google.gson.JsonObject;
 
@@ -27,11 +28,12 @@ public class PoliceVarificataionsViewModel extends ViewModel {
 
         String token = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.TOKEN);
 
-
+        Utility.showLoader();
         ApiClient.getBaseApiMethods().policeVarificataions(token,jsonObject).enqueue(new Callback<PoliceVarificataionDetailsModel>() {
             @Override
             public void onResponse(Call<PoliceVarificataionDetailsModel> call, Response<PoliceVarificataionDetailsModel> response) {
 
+                Utility.hideLoader();
                 if(response.isSuccessful()){
 
                     PoliceVarificataionDetailsModel model=response.body();
@@ -47,6 +49,7 @@ public class PoliceVarificataionsViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<PoliceVarificataionDetailsModel> call, Throwable t) {
+                Utility.hideLoader();
                 Log.e("pppppppppp",t.getMessage());
             }
         });

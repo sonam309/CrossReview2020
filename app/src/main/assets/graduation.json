@@ -1,0 +1,269 @@
+[
+  {
+    "CourseName": "--Select--"
+  },
+  {
+    "CourseName": "BachelorofArts(B.A)"
+  },
+  {
+    "CourseName": "BachelorofAyurvedicMedicineandSurgery(B.A.M.S)"
+  },
+  {
+    "CourseName": "BachelorofAppliedSciences(B.A.S)"
+  },
+  {
+    "CourseName": "BachelorofArts(B.A.S.L.P)"
+  },
+  {
+    "CourseName": "BachelorofAudiologyandSpeechLanguagePathology(B.A.S.L.P)"
+  },
+  {
+    "CourseName": "BachelorofArchitecture(B.Arch)"
+  },
+  {
+    "CourseName": "BachelorofBusinessAdministration(B.B.A)"
+  },
+  {
+    "CourseName": "BachelorofBusinessAdministration(B.B.A)"
+  },
+  {
+    "CourseName": "BachelorofLaw(LL.B)"
+  },
+  {
+    "CourseName": "BachelorofBusinessManagement(B.B.M)"
+  },
+  {
+    "CourseName": "BachelorofBusinessStudies(B.B.S)"
+  },
+  {
+    "CourseName": "BachelorofComputerApplications(B.C.A)"
+  },
+  {
+    "CourseName": "BachelorofCommunicationJournalism(B.C.J)"
+  },
+  {
+    "CourseName": "BachelorofComputerScience(B.C.S)"
+  },
+  {
+    "CourseName": "BachelorofCommerce(B.Com)"
+  },
+  {
+    "CourseName": "BachelorofDivinity(B.D)"
+  },
+  {
+    "CourseName": "BachelorofDentalSurgery(B.D.S)"
+  },
+  {
+    "CourseName": "BasicDevelopmentTherapy(B.D.T)"
+  },
+  {
+    "CourseName": "BachelorofDesign(B.Des)"
+  },
+  {
+    "CourseName": "BachelorofEngineering(B.E)"
+  },
+  {
+    "CourseName": "BachelorofElectronicScience(B.E.S)"
+  },
+  {
+    "CourseName": "BachelorofEducation(B.Ed)"
+  },
+  {
+    "CourseName": "BachelorofeducationinArtificialIntelligence(B.EdAI)"
+  },
+  {
+    "CourseName": "BachelorofEducation(B.EdQ)"
+  },
+  {
+    "CourseName": "BachelorofElementaryEducation(B.EI.ED)"
+  },
+  {
+    "CourseName": "BachelorofElementaryEducation(B.EL.Ed)"
+  },
+  {
+    "CourseName": "BachelorofFineArts(B.F.A)"
+  },
+  {
+    "CourseName": "BachelorofFinancialInvestmentandAnalysis(B.F.I.A)"
+  },
+  {
+    "CourseName": "BachelorofFisherySciences(B.F.S)"
+  },
+  {
+    "CourseName": "BachelorofFashionTechnology(B.F.Tech)"
+  },
+  {
+    "CourseName": "BachelorofGeneralLaw(B.G.L)"
+  },
+  {
+    "CourseName": "BehavioralHealthcareEducation(B.H.Ed)"
+  },
+  {
+    "CourseName": "BachelorofHotelManagement(B.H.M)"
+  },
+  {
+    "CourseName": "BachelorHotelManagementandCateringTechnology(B.H.M.C.T)"
+  },
+  {
+    "CourseName": "BachelorofHomeopathicMedicine&Surgery(B.H.M.S)"
+  },
+  {
+    "CourseName": "BachelorofHospitalityandTourismManagement(B.H.T.M)"
+  },
+  {
+    "CourseName": "BachelorofInformationSystemsManagement(B.I.S.M)"
+  },
+  {
+    "CourseName": "BachelorofLaws(B.L)"
+  },
+  {
+    "CourseName": "BachelorofLibraryandInformationScience(B.L.I.S)"
+  },
+  {
+    "CourseName": "BachelorofLabourManagement(B.L.M)"
+  },
+  {
+    "CourseName": "BachelorLibraryScience(B.L.Sc)"
+  },
+  {
+    "CourseName": "BachelorofLiterature(B.Lit)"
+  },
+  {
+    "CourseName": "BachelorofMedicalLaboratoryTechnology(B.M.L.T)"
+  },
+  {
+    "CourseName": "BachelorofMentalRetardation(B.M.R)"
+  },
+  {
+    "CourseName": "BachelorofMedicalRecordScience(B.M.R.Sc)"
+  },
+  {
+    "CourseName": "BachelorinMobilityScience(B.M.Sc)"
+  },
+  {
+    "CourseName": "BachelorofMobilityScience(B.M.Sc)"
+  },
+  {
+    "CourseName": "BachelorofMedicalTechnology(B.M.T)"
+  },
+  {
+    "CourseName": "BachelorofNaturopathyandYogicSciences(B.N.Y.Sc)"
+  },
+  {
+    "CourseName": "BachelorofOccupationalTherapy(B.O.T)"
+  },
+  {
+    "CourseName": "BachelorofOccupationalTherapy(B.O.Th)"
+  },
+  {
+    "CourseName": "BachelorofOptometryandVisionScience(B.Optom)"
+  },
+  {
+    "CourseName": "BachelorofPhysicalEducation(B.P.E)"
+  },
+  {
+    "CourseName": "BachelorOfPhysicalEducation(B.P.Ed)"
+  },
+  {
+    "CourseName": "BachelorinProstheticsandOrthotics(B.P.O)"
+  },
+  {
+    "CourseName": "BachelorofPublicRelations(B.P.R)"
+  },
+  {
+    "CourseName": "BachelorofPhysiotherapy(B.P.T)"
+  },
+  {
+    "CourseName": "BachelorofPharmacy(B.Pharma)"
+  },
+  {
+    "CourseName": "BachelorofRehabilitationTherapy(B.R.T)"
+  },
+  {
+    "CourseName": "BachelorofScience(B.S)"
+  },
+  {
+    "CourseName": "BachelorinScienceEducation(B.S.E)"
+  },
+  {
+    "CourseName": "BachelorofSpeechLanguage&Audiology(B.S.L.A)"
+  },
+  {
+    "CourseName": "BachelorofSocioLegalSciences((B.S.L)"
+  },
+  {
+    "CourseName": "BachelorofLaws(LL.B)"
+  },
+  {
+    "CourseName": "BachelorofSiddhaMedicalSciences(B.S.M.S)"
+  },
+  {
+    "CourseName": "BachelorOfSocialWork(B.S.W)"
+  },
+  {
+    "CourseName": "BachelorofScience(B.Sc)"
+  },
+  {
+    "CourseName": "BachelorofEducation(B.Ed)"
+  },
+  {
+    "CourseName": "BachelorofScienceinEducation(B.Sc.Ed)"
+  },
+  {
+    "CourseName": "BachelorofTourismAdministration(B.T.A)"
+  },
+  {
+    "CourseName": "BasicTrainingCertificate(B.T.C)"
+  },
+  {
+    "CourseName": "BachelorofTechnology(B.Tech)"
+  },
+  {
+    "CourseName": "BachelorsofTechnology(B.Tech)"
+  },
+  {
+    "CourseName": "BachelorofUnaniMedicine&Surgery(B.U.M.S)"
+  },
+  {
+    "CourseName": "BachelorofVeterinaryScience(B.V.Sc)"
+  },
+  {
+    "CourseName": "BachelorofMedicine"
+  },
+  {
+    "CourseName": "BachelorofJournalismandMassCommunication(BJMC)"
+  },
+  {
+    "CourseName": "DiplomainSpecialEducation(D.S.E)"
+  },
+  {
+    "CourseName": "BachelorofUnaniMedicine&Surgery(KamileToboJarahat)"
+  },
+  {
+    "CourseName": "BachelorofLaw(LL.B)"
+  },
+  {
+    "CourseName": "BachelorofMedicineBachelorofSurgery(M.B.B.S)"
+  },
+  {
+    "CourseName": "MasterofJournalismandMassCommunication(MJMC)"
+  },
+  {
+    "CourseName": "DoctorofPhilosophy(Ph.D)"
+  },
+  {
+    "CourseName": "ClinicalPsychology(Cl.Psy)"
+  },
+  {
+    "CourseName": "UnderGraduateBasicTraining(U.G.B.T)"
+  },
+  {
+    "CourseName": "UnderGraduateTraining(U.G.T)"
+  },
+  {
+    "CourseName": "UnderGraduateTeacherTraining(U.G.T.T)"
+  },
+  {
+    "CourseName": "UnderGraduate(UG)"
+  }
+]

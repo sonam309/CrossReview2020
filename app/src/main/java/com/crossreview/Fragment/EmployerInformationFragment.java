@@ -43,10 +43,10 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 
 
-public class EmployerInformationFragment extends Fragment implements View.OnClickListener, View.OnTouchListener, Observer<CompanyNameModel>, CompoundButton.OnCheckedChangeListener {
+public class EmployerInformationFragment extends Fragment implements View.OnClickListener, View.OnTouchListener, Observer<CompanyNameModel>, CompoundButton.OnCheckedChangeListener, TextWatcher {
     private View mview;
     private Context mctx;
-    private LinearLayout mainll;
+    private LinearLayout mainll,llmain;
     private TextView countinue_btn;
     private MaterialCheckBox checkbox;
     private EditText txt_designation_et, txt_phone_et, txt_email_et, txt_name_et;
@@ -58,18 +58,19 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
     private EmployerDataViewModel saveEmployerDataViewModel;
     private String empName, empEmail, empContact, empOrgName, empDesignation, orgNameId, token;
     private ProgressDialog progressDialog;
+    private TextView txt_name_tv_error, txt_email_tv_error, txt_phone_tv_error, txt_org_tv_error, txt_designation_tv_error, checkbox_error;
 
 
+    public EmployerInformationFragment() {
 
-public EmployerInformationFragment(){
 
+    }
 
-}
+    public static EmployerInformationFragment newInstance() {
 
-public static EmployerInformationFragment newInstance(){
+        return new EmployerInformationFragment();
+    }
 
-    return new EmployerInformationFragment();
-}
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +107,7 @@ public static EmployerInformationFragment newInstance(){
 
         //LinearLayout
         mainll = mview.findViewById(R.id.mainll);
+        llmain = mview.findViewById(R.id.llmain);
 
         //Button
         countinue_btn = mview.findViewById(R.id.countinue_btn);
@@ -119,6 +121,14 @@ public static EmployerInformationFragment newInstance(){
         txt_phone_et = mview.findViewById(R.id.txt_phone_et);
         txt_email_et = mview.findViewById(R.id.txt_email_et);
         txt_name_et = mview.findViewById(R.id.txt_name_et);
+
+        //TextView
+        txt_name_tv_error = mview.findViewById(R.id.txt_name_tv_error);
+        txt_email_tv_error = mview.findViewById(R.id.txt_email_tv_error);
+        txt_phone_tv_error = mview.findViewById(R.id.txt_phone_tv_error);
+        txt_org_tv_error = mview.findViewById(R.id.txt_org_tv_error);
+        txt_designation_tv_error = mview.findViewById(R.id.txt_designation_tv_error);
+        checkbox_error = mview.findViewById(R.id.checkbox_error);
 
 
     }
@@ -141,9 +151,19 @@ public static EmployerInformationFragment newInstance(){
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setProgress(0);
 
+        checkbox.setOnCheckedChangeListener(this);
+
+
+        txt_name_et.addTextChangedListener(this);
+        txt_email_et.addTextChangedListener(this);
+        txt_phone_et.addTextChangedListener(this);
+        txt_orgName_Autocomplete.addTextChangedListener(this);
+        txt_designation_et.addTextChangedListener(this);
+
 
         countinue_btn.setOnClickListener(this);
         mainll.setOnTouchListener(this);
+        llmain.setOnTouchListener(this);
         onadapterItemClick();
 
 
@@ -196,6 +216,7 @@ public static EmployerInformationFragment newInstance(){
         switch (view.getId()) {
 
             case R.id.mainll:
+            case R.id.llmain:
 
                 Utility.hideKeyboard(view);
 
@@ -233,10 +254,8 @@ public static EmployerInformationFragment newInstance(){
             PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.TOKEN, token);
 
 
-
-                ((MainActivity) getActivity()).replaceFragment(new EmployeeDetailsFragment(), false, KeyClass.FRAGMENT_EMPLOYEE_DETAIL,
-                        KeyClass.FRAGMENT_EMPLOYEE_DETAIL);
-
+            ((MainActivity) getActivity()).replaceFragment(new EmployeeDetailsFragment(), false, KeyClass.FRAGMENT_EMPLOYEE_DETAIL,
+                    KeyClass.FRAGMENT_EMPLOYEE_DETAIL);
 
 
         }
@@ -275,74 +294,77 @@ public static EmployerInformationFragment newInstance(){
 
         if (empName.isEmpty()) {
 
-            Toast.makeText(mctx, "Please enter Employer Name", Toast.LENGTH_LONG).show();
-            txt_name_et.requestFocus();
-            return;
-        } else {
-            txt_name_et.clearFocus();
-        }
-        if (empEmail.isEmpty()) {
-            if (!(Utility.isValidMail(empEmail))) {
+            if (empEmail.isEmpty()) {
 
-                Toast.makeText(mctx, "Please enter Valid EmailId", Toast.LENGTH_LONG).show();
+                if (empContact.isEmpty()) {
+
+                    if (empOrgName == null) {
+
+
+                        if (empDesignation.isEmpty()) {
+
+
+                            if (checkbox.isChecked()) {
+
+                                checkbox_error.setVisibility(View.GONE);
+
+
+                            } else {
+
+                                checkbox_error.setVisibility(View.VISIBLE);
+                            }
+
+                            txt_designation_tv_error.setVisibility(View.VISIBLE);
+                            txt_designation_et.requestFocus();
+
+                        } else {
+
+//                            txt_designation_tv_error.setVisibility(View.GONE);
+                            txt_designation_et.clearFocus();
+                        }
+
+                        txt_org_tv_error.setVisibility(View.VISIBLE);
+                        txt_orgName_Autocomplete.requestFocus();
+
+
+                    } else {
+
+                        txt_orgName_Autocomplete.clearFocus();
+//                        txt_org_tv_error.setVisibility(View.GONE);
+                    }
+
+                    txt_phone_tv_error.setVisibility(View.VISIBLE);
+                    txt_phone_et.requestFocus();
+
+                } else {
+
+                    txt_phone_et.clearFocus();
+//                    txt_phone_tv_error.setVisibility(View.GONE);
+                }
+
+                txt_email_tv_error.setVisibility(View.VISIBLE);
                 txt_email_et.requestFocus();
 
             } else {
 
+//                txt_email_tv_error.setVisibility(View.GONE);
                 txt_email_et.clearFocus();
             }
 
-            Toast.makeText(mctx, "Please enter Employer Email", Toast.LENGTH_LONG).show();
-            txt_email_et.requestFocus();
-            return;
+            txt_name_tv_error.setVisibility(View.VISIBLE);
+            txt_name_et.requestFocus();
+
 
         } else {
 
-            txt_email_et.clearFocus();
-        }
-        if (empContact.isEmpty()) {
-            if (Utility.isValidMobile(empContact)) {
 
-                Toast.makeText(mctx, "Please enter valid Contact Number", Toast.LENGTH_LONG).show();
-                txt_phone_et.requestFocus();
-            } else {
-                txt_phone_et.clearFocus();
-            }
+            txt_name_et.clearFocus();
 
-            Toast.makeText(mctx, "Please enter Contact Number", Toast.LENGTH_LONG).show();
-            txt_phone_et.requestFocus();
-            return;
-        } else {
 
-            txt_phone_et.clearFocus();
-        }
-        if (empOrgName.isEmpty()) {
-
-            Toast.makeText(mctx, "Please Select Organzation Name", Toast.LENGTH_SHORT).show();
-            txt_orgName_Autocomplete.requestFocus();
-            return;
-        } else {
-
-            txt_orgName_Autocomplete.clearFocus();
-        }
-        if (empDesignation.isEmpty()) {
-
-            Toast.makeText(mctx, "Please enter Designation", Toast.LENGTH_LONG).show();
-            txt_designation_et.requestFocus();
-            return;
-        } else {
-
-            txt_designation_et.clearFocus();
-        }
-        if (!checkbox.isChecked()) {
-
-            Toast.makeText(mctx, "Please accept Terms & conditions", Toast.LENGTH_LONG).show();
-            return;
+            saveEmployerDataViewModel.saveEmpData(empName, empEmail, empContact, orgNameId, empDesignation, getActivity());
 
         }
 
-
-        saveEmployerDataViewModel.saveEmpData(empName, empEmail, empContact, orgNameId, empDesignation, getActivity());
 
 
 
@@ -373,7 +395,56 @@ public static EmployerInformationFragment newInstance(){
             txt_phone_et.clearFocus();
             txt_orgName_Autocomplete.clearFocus();
             txt_designation_et.clearFocus();
+
+            checkbox_error.setVisibility(View.GONE);
+        } else {
+
+            checkbox_error.setVisibility(View.VISIBLE);
+
         }
+
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        if (txt_name_et.getText().length() > 0) {
+
+            txt_name_tv_error.setVisibility(View.GONE);
+
+        }
+        if (txt_email_et.getText().length() > 0) {
+
+            txt_email_tv_error.setVisibility(View.GONE);
+
+        }
+        if (txt_phone_et.getText().length() > 0) {
+
+            txt_phone_tv_error.setVisibility(View.GONE);
+
+        }
+        if (empOrgName != null) {
+
+            txt_org_tv_error.setVisibility(View.GONE);
+
+        }
+        if (txt_designation_et.getText().length() > 0) {
+
+            txt_designation_tv_error.setVisibility(View.GONE);
+
+        }
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
 
     }
 }

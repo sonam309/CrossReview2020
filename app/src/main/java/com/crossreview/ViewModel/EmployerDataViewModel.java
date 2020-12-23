@@ -11,6 +11,7 @@ import com.crossreview.Model.ClsEmployerResponseModel;
 import com.crossreview.Model.CompanyNameModel;
 import com.crossreview.Utilites.KeyClass;
 import com.crossreview.Utilites.PrefrenceShared;
+import com.crossreview.Utilites.Utility;
 import com.crossreview.network.ApiClient;
 import com.google.gson.JsonObject;
 
@@ -36,14 +37,18 @@ public class EmployerDataViewModel extends ViewModel {
         data.add("data",jsonObject);
 
 
-
+        Utility.showLoader();
         ApiClient.getBaseApiMethods().employerData(data).enqueue(new Callback<ClsEmployerResponseModel>() {
+
+
             @Override
             public void onResponse(Call<ClsEmployerResponseModel> call, Response<ClsEmployerResponseModel> response) {
 
+                Utility.hideLoader();
                 if(response.isSuccessful()){
                     ClsEmployerResponseModel model= response.body();
                     if(response.body()!=null){
+
 
                         EmployerData.postValue(model);
 
@@ -59,7 +64,10 @@ public class EmployerDataViewModel extends ViewModel {
             @Override
             public void onFailure(Call<ClsEmployerResponseModel> call, Throwable t) {
 
+                Utility.hideLoader();
 //                Toast.makeText(context, "Email Id must be Unique", Toast.LENGTH_SHORT).show();
+
+
             }
         });
 
