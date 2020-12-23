@@ -22,6 +22,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,7 +60,7 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
     private String empName, empEmail, empContact, empOrgName, empDesignation, orgNameId, token;
     private ProgressDialog progressDialog;
     private TextView txt_name_tv_error, txt_email_tv_error, txt_phone_tv_error, txt_org_tv_error, txt_designation_tv_error, checkbox_error;
-
+    private ProgressBar progressLoading;
 
     public EmployerInformationFragment() {
 
@@ -129,6 +130,8 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
         txt_org_tv_error = mview.findViewById(R.id.txt_org_tv_error);
         txt_designation_tv_error = mview.findViewById(R.id.txt_designation_tv_error);
         checkbox_error = mview.findViewById(R.id.checkbox_error);
+
+        progressLoading = mview.findViewById(R.id.progressLoading);
 
 
     }
@@ -277,7 +280,7 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
                         }
                     });
 
-                    companyNameViewModel.ComNamefun(autoCompleteTextView.getText().toString());
+                    companyNameViewModel.ComNamefun(autoCompleteTextView.getText().toString(),progressLoading);
                 }
 
             }, 1000);

@@ -196,6 +196,9 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_16" />
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <AutoCompleteTextView
                     android:id="@+id/orgName_Autocomplete"
                     android:layout_width="match_parent"
@@ -203,10 +206,25 @@
                     android:background="@drawable/square_white_bg"
                     android:hint="@string/orgName"
                     android:imeOptions="actionNext"
-                    android:padding="@dimen/dp8"
+                    android:padding="@dimen/dp10"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_16" />
+
+
+                    <ProgressBar
+                        android:id="@+id/progressLoading"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:indeterminateTint="@color/appcolor"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="@dimen/dp10"
+                        android:visibility="gone"
+                        android:layout_alignTop="@+id/orgName_Autocomplete"
+                        android:layout_alignRight="@+id/orgName_Autocomplete"
+                        android:layout_centerVertical="true" />
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/txt_org_tv_error"

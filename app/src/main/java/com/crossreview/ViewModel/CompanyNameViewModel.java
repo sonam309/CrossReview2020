@@ -1,5 +1,8 @@
 package com.crossreview.ViewModel;
 
+import android.view.View;
+import android.widget.ProgressBar;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -16,14 +19,16 @@ public class CompanyNameViewModel extends ViewModel {
     public MutableLiveData<CompanyNameModel>companyName= new MutableLiveData<>();
 
 
-    public void ComNamefun(String CompanyName){
+    public void ComNamefun(String CompanyName, ProgressBar progressBar){
 
-        Utility.showLoader();
+//        Utility.showLoader();
+        progressBar.setVisibility(View.VISIBLE);
             ApiClient.getBaseApiMethods().companyName(CompanyName).enqueue(new Callback<CompanyNameModel>() {
                 @Override
                 public void onResponse(Call<CompanyNameModel> call, Response<CompanyNameModel> response) {
 
-                    Utility.hideLoader();
+//                    Utility.hideLoader();
+                    progressBar.setVisibility(View.GONE);
                     if(response.isSuccessful()){
                         CompanyNameModel model= response.body();
                         if(response.body()!=null){
@@ -37,7 +42,8 @@ public class CompanyNameViewModel extends ViewModel {
                 @Override
                 public void onFailure(Call<CompanyNameModel> call, Throwable t) {
 
-                    Utility.hideLoader();
+//                    Utility.hideLoader();
+                    progressBar.setVisibility(View.GONE);
                 }
             });
     }

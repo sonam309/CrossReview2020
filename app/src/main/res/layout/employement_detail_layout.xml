@@ -28,8 +28,8 @@
         android:orientation="vertical"
         android:paddingLeft="@dimen/dp20"
         android:paddingTop="@dimen/dp20"
-        android:visibility="visible"
-        android:paddingRight="@dimen/dp20">
+        android:paddingRight="@dimen/dp20"
+        android:visibility="visible">
 
         <TextView
 
@@ -87,11 +87,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp5"
-        android:visibility="visible"
         android:orientation="vertical"
         android:paddingLeft="@dimen/dp20"
         android:paddingTop="@dimen/dp20"
-        android:paddingRight="@dimen/dp20">
+        android:paddingRight="@dimen/dp20"
+        android:visibility="visible">
 
         <TextView
             android:layout_width="match_parent"
@@ -129,10 +129,8 @@
                 android:textSize="@dimen/text_size_16" />
 
 
-
-
-
         </RelativeLayout>
+
         <TextView
             android:id="@+id/txt_dor_tv_error"
             android:layout_width="match_parent"
@@ -153,8 +151,8 @@
         android:orientation="vertical"
         android:paddingLeft="@dimen/dp20"
         android:paddingTop="@dimen/dp20"
-        android:visibility="visible"
-        android:paddingRight="@dimen/dp20">
+        android:paddingRight="@dimen/dp20"
+        android:visibility="visible">
 
         <TextView
             android:layout_width="match_parent"
@@ -199,9 +197,9 @@
         android:layout_margin="@dimen/dp5"
         android:orientation="vertical"
         android:paddingLeft="@dimen/dp20"
-        android:visibility="visible"
         android:paddingTop="@dimen/dp20"
-        android:paddingRight="@dimen/dp20">
+        android:paddingRight="@dimen/dp20"
+        android:visibility="visible">
 
         <TextView
             android:layout_width="match_parent"
@@ -297,24 +295,44 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16" />
 
-            <AutoCompleteTextView
-                android:id="@+id/txt_orgName_Autocomplete"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/square_white_bg"
-                android:hint="@string/orgName"
-                android:imeOptions="actionNext"
-                android:padding="@dimen/dp8"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_16"
-                android:visibility="visible" />
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/txt_orgName_Autocomplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/square_white_bg"
+                    android:hint="@string/orgName"
+                    android:imeOptions="actionNext"
+                    android:padding="@dimen/dp10"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_16"
+                    android:visibility="visible" />
+
+                <ProgressBar
+                    android:id="@+id/progressLoading"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/txt_orgName_Autocomplete"
+                    android:layout_alignRight="@+id/txt_orgName_Autocomplete"
+                    android:layout_centerVertical="true"
+                    android:indeterminateTint="@color/appcolor"
+                    android:paddingRight="@dimen/dp10"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
 
             <TextView
+                android:id="@+id/autotextcomplte"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/autotextcomplte"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/txt_org_name_tv_error"
@@ -400,15 +418,16 @@
                     android:id="@+id/txt_remuneration_rl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dp5"
-                    android:layout_weight="1"
-                    android:background="@drawable/square_white_bg"
-                    android:padding="@dimen/dp5">
+                    android:layout_weight="1">
 
                     <Spinner
                         android:id="@+id/ctc_in_lac_spinner"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="@dimen/dp35"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/square_white_bg"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_16" />
 
                     <ImageView
                         android:layout_width="@dimen/dp15"
@@ -426,14 +445,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp5"
-                    android:layout_weight="1"
-                    android:background="@drawable/square_white_bg"
-                    android:padding="@dimen/dp5">
+                    android:layout_weight="1">
 
                     <Spinner
                         android:id="@+id/ctc_in_thous_spinner"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="@dimen/dp35"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/square_white_bg"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_16" />
 
                     <ImageView
                         android:layout_width="@dimen/dp15"
@@ -605,28 +626,29 @@
         android:layout_marginRight="@dimen/dp8"
         android:paddingLeft="@dimen/dp20"
         android:paddingRight="@dimen/dp20">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="-10dp"
-            android:padding="@dimen/dp10"
-            android:text="@string/attachment"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_16"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="-10dp"
+                android:padding="@dimen/dp10"
+                android:text="@string/attachment"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txt_profile_tv_Suggesstion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/docformat"
                 android:layout_marginTop="-10dp"
+                android:text="@string/docformat"
                 android:textColor="@color/suggestion_red"
                 android:textSize="@dimen/text_size_10"
                 android:visibility="visible" />
@@ -669,38 +691,38 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/uploadBtn"
-                android:layout_width="@dimen/dp100"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="@dimen/dp5"
-                android:background="@color/grey"
-                android:gravity="center"
-                android:padding="@dimen/dp8"
-                android:text="@string/Chosefile"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_14" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/upload_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
-                android:padding="@dimen/dp10"
-                android:visibility="gone"
-                android:text="@string/upload"
-                android:textColor="@color/appcolor"
-                android:textSize="@dimen/text_size_14" />
+                <TextView
+                    android:id="@+id/uploadBtn"
+                    android:layout_width="@dimen/dp100"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/dp5"
+                    android:background="@color/grey"
+                    android:gravity="center"
+                    android:padding="@dimen/dp8"
+                    android:text="@string/Chosefile"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/upload_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:padding="@dimen/dp10"
+                    android:text="@string/upload"
+                    android:textColor="@color/appcolor"
+                    android:textSize="@dimen/text_size_14"
+                    android:visibility="gone" />
 
 
-        </LinearLayout>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txt_upload_tv_error"

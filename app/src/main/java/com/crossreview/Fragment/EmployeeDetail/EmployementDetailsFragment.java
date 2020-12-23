@@ -11,7 +11,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -29,6 +28,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -52,13 +52,9 @@ import com.crossreview.ViewModel.EmployeeDetailsViewModel;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
-import okhttp3.internal.Util;
 
 
 public class EmployementDetailsFragment extends BasicClass implements View.OnClickListener, View.OnTouchListener, Observer<ClsSaveEmployeeDetailModel>, AdapterView.OnItemSelectedListener, awsUploadCallback, TextWatcher {
@@ -88,6 +84,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
             txt_reason_of_leaving_tv_error, txt_ctc_tv_error, txt_reporting_person_tv_error, txt_reporting_person_designataion_tv_error,
             txt_upload_tv_error;
     private int count = 1;
+    private ProgressBar progressLoading;
 
 
     @Override
@@ -185,15 +182,15 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
             case R.id.date_of_joining_rl:
 
-                selectdate = true;
-                openDatePickerDialog();
+
+                openDatePickerDialogDoj();
 
                 break;
 
             case R.id.date_of_relieving_rl:
 
-                selectdate = false;
-                openDatePickerDialog();
+
+                openDatePickerDialogDor();
 
                 break;
 
@@ -323,6 +320,9 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
         txt_reporting_person_tv_error = view.findViewById(R.id.txt_reporting_person_tv_error);
         txt_reporting_person_designataion_tv_error = view.findViewById(R.id.txt_reporting_person_designataion_tv_error);
         txt_upload_tv_error = view.findViewById(R.id.txt_upload_tv_error);
+
+
+        progressLoading = view.findViewById(R.id.progressLoading);
 
 
         AutoCompleteTextView txt_orgName_Autocomplete = view.findViewById(R.id.txt_orgName_Autocomplete);
@@ -502,7 +502,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
     }
 
 
-    private void openDatePickerDialog() {
+    private void openDatePickerDialogDoj() {
         // Get Current Date
         final Calendar calendar = Calendar.getInstance();
         if (dates != null) {
@@ -523,27 +523,16 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                         Calendar calendarSelected = Calendar.getInstance();
 
                         calendarSelected.set(year, monthOfYear, dayOfMonth);
-//                        if (calendarSelected.getTime().after(new Date())) {
-//
-//                            return;
-//                        }
+
+
+
+                        tempDate.setTimeInMillis(calendarSelected.getTimeInMillis());
                         dates = calendarSelected.getTime();
-//                        if (Dob == true) {
-//
-//                            tv_txt_dob.setText(Utility.getStringFromDate(dates, KeyClass.DATE_MM_dd_yyyy));
-//                            Dob = false;
-//                        }
 
-                        if (selectdate == true) {
-                            txt_joining_date.setText(Utility.getStringFromDate(dates, KeyClass.DATE_MM_dd_yyyy));
-                            txt_doj_tv_error.setVisibility(View.GONE);
-                            selectdate = false;
-                        } else {
 
-                            txt_relieving_date.setText(Utility.getStringFromDate(dates, KeyClass.DATE_MM_dd_yyyy));
-                            txt_dor_tv_error.setVisibility(View.GONE);
-                            selectdate = true;
-                        }
+                        txt_joining_date.setText(Utility.getStringFromDate(dates, KeyClass.DATE_MM_dd_yyyy));
+                        txt_doj_tv_error.setVisibility(View.GONE);
+
 
                     }
                 }, mYear, mMonth, mDay);
@@ -559,6 +548,53 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
 
     }
+
+    private void openDatePickerDialogDor() {
+        // Get Current Date
+        final Calendar calendar = Calendar.getInstance();
+        if (dates != null) {
+            calendar.setTime(dates);
+
+        }
+
+        int mYear = (calendar.get(Calendar.YEAR));
+        int mMonth = calendar.get(Calendar.MONTH);
+        int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        final DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        Calendar calendarSelected = Calendar.getInstance();
+
+                        calendarSelected.set(year, monthOfYear, dayOfMonth);
+
+                        dates = calendarSelected.getTime();
+
+
+                        txt_relieving_date.setText(Utility.getStringFromDate(dates, KeyClass.DATE_MM_dd_yyyy));
+                        txt_dor_tv_error.setVisibility(View.GONE);
+
+
+                    }
+                }, mYear, mMonth, mDay);
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.set(Calendar.MONTH, mMonth + 3);
+        calendar1.set(Calendar.DAY_OF_MONTH, mDay);
+        calendar1.set(Calendar.YEAR, mYear - 60);
+        long minDate = (tempDate.getTimeInMillis());
+        datePickerDialog.getDatePicker().setMinDate(minDate);
+        datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
+
+
+        datePickerDialog.show();
+
+
+    }
+
+    Calendar tempDate = Calendar.getInstance();
 
 
     @Override
@@ -800,7 +836,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                         }
                     });
 
-                    companyNameViewModel.ComNamefun(autoCompleteTextView.getText().toString());
+                    companyNameViewModel.ComNamefun(autoCompleteTextView.getText().toString(), progressLoading);
 
 
                 }
