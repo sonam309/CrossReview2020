@@ -36,6 +36,9 @@ public class EmployerDataViewModel extends ViewModel {
         JsonObject data= new JsonObject();
         data.add("data",jsonObject);
 
+        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployerInformation,data.toString());
+
+
 
         Utility.showLoader();
         ApiClient.getBaseApiMethods().employerData(data).enqueue(new Callback<ClsEmployerResponseModel>() {
@@ -57,7 +60,7 @@ public class EmployerDataViewModel extends ViewModel {
 
                 }else {
 
-                    Toast.makeText(context, "Email Id must be Unique", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Email Id must be Unique", Toast.LENGTH_SHORT).show();
                 }
             }
 

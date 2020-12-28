@@ -66,12 +66,14 @@ public class Utility {
     private static final String TAG = Utility.class.getSimpleName();
     private static Handler handler = new Handler();
     private static final long DELAY = 1500; // milliseconds
-    public static ProgressDialog loading_dialog;
     private static TransferUtility transferUtility;
     private Context context;
     private static TransferUtility sTransferUtility;
     private static AmazonS3Client sS3Client;
     private static AWSCredentialsProvider sMobileClient;
+    public static ProgressDialog loading_dialog;
+
+
 
 
 
@@ -238,7 +240,8 @@ public class Utility {
             loading_dialog = null;
         }
         if (loading_dialog == null) {
-            loading_dialog = new ProgressDialog(MainActivity.context);
+            loading_dialog = new ProgressDialog(MainActivity.context,R.style.MyAlertDialogStyle);
+            loading_dialog.setMessage("Please Wait...");
             loading_dialog.show();
             loading_dialog.setCancelable(false);
         }

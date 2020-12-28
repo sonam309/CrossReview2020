@@ -52,6 +52,10 @@ import com.crossreview.ViewModel.EmployeeDetailsViewModel;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -326,8 +330,14 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
 
         AutoCompleteTextView txt_orgName_Autocomplete = view.findViewById(R.id.txt_orgName_Autocomplete);
+
+
         viewOnclick();
         setSpinnerAdapter();
+        getDataFromPrefrence();
+
+
+
         final CompanyNameModel[] model = new CompanyNameModel[1];
         txt_orgName_Autocomplete.addTextChangedListener(new TextWatcher() {
             @Override
@@ -385,6 +395,50 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
         });
     }
 
+    private void getDataFromPrefrence(){
+
+        String jsonData= PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployementDetails);
+
+        if(jsonData!=null){
+
+
+            try {
+                JSONObject object= new JSONObject(jsonData);
+                JSONObject data= object.getJSONObject("data");
+                JSONArray array= data.getJSONArray("experience");
+
+                for(int i=0; i<array.length();i++){
+
+                    JSONObject experienceData= array.getJSONObject(i);
+
+                   txt_joining_date.setText(experienceData.getString(Constant.Employer_D_O_Joining));
+                   txt_relieving_date.setText(experienceData.getString(Constant.Employer_D_O_Relieving));
+                   txt_designation_et.setText(experienceData.getString(Constant.Employer_Designataion));
+                   txt_job_role_et.setText(experienceData.getString(Constant.Employer_Job_role));
+                   autotextcomplte.setText(experienceData.getString(Constant.Employer_Organizataion_id));
+                   txt_reason_of_leaving_et.setText(experienceData.getString(Constant.Employer_Reason_Of_Leaving));
+                   // spinner Employer_ctc_lac
+                    //spinner Employer_ctc_thous
+                    txt_reporting_person_et.setText(experienceData.getString(Constant.Employer_Reporting_Persona_name));
+                    txt_reporting_person_designataion_et.setText(experienceData.getString(Constant.Employer_Reporting_person_designantion));
+
+
+//                    experienceData.add(Constant.UploadDocument, document);
+
+                }
+
+
+
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+    }
 
     private void viewOnclick() {
 
@@ -1118,6 +1172,8 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
             data.add(Constant.data, experience);
 
             employeeDetailsViewModel.saveEmployeeDetail(data);
+
+            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployementDetails,data.toString());
 
         }
 

@@ -14,7 +14,12 @@
         <!-- Customize your theme here. -->
     </style>
 
-
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="colorAccent">@color/appcolor</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 
     <style name="DialogDim" parent="@android:style/Theme.Dialog">
         <item name="android:layout_width">match_parent</item>

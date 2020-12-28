@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -32,6 +33,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.crossreview.Activity.MainActivity;
 import com.crossreview.Fragment.BasicClass;
 import com.crossreview.Fragment.EmployerInformationFragment;
@@ -93,14 +95,15 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     private Boolean selectdate = false, Dob = false;
     private ScrollView scrollview;
     private Spinner txt_gender_spinner;
-    private String genstr[] = {"Select Gender", "Male", "Female", "Trangender"};
-    private String Strgen, stateStr;
+    private String[] genstr = {"Select Gender", "Male", "Female", "Trangender"};
+    private String Strgen = "", stateStr;
     private ArrayList<StateSpinnerModel> stateModel;
     private ArrayList<String> cityModel;
     private String selectStateId;
     private TextView txt_name_tv_error, txt_fathers_name_tv_error, txt_gender_tv_error, txt_dob_tv_error, txt_address_tv_error,
             txt_state_tv_error, txt_city_tv_error, txt_zipcode_tv_error, txt_doj_tv_error, txt_doi_tv_error, txt_empId_tv_error,
             txt_profile_tv_error;
+    private  ArrayAdapter adapter;
 
     public EmployeeDetailsFragment() {
 
@@ -309,8 +312,9 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
     private void viewSetup() {
 
-
         spinnerAdapter();
+
+        getDataFromPrefrence();
 
 
         //getString
@@ -363,6 +367,59 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
     }
 
+    public void getDataFromPrefrence() {
+
+
+        String jsonData = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeDetails);
+        if (jsonData != null) {
+
+            try {
+                JSONObject object = new JSONObject(jsonData);
+                JSONObject data = object.getJSONObject("data");
+
+//                JSONArray array = object.getJSONArray("data");
+
+//                for (int i = 0; i < object.length(); i++) {
+
+//                    JSONObject jsonObject= array.getJSONObject(i);
+
+
+
+                String compareValue = data.getString(Constant.EmployeeGender);
+
+                if (compareValue != null) {
+                    int spinnerPosition = adapter.getPosition(compareValue);
+                    txt_gender_spinner.setSelection(spinnerPosition);
+                }
+                txt_name_et.setText(data.getString(Constant.EmployeeName));
+                txt_fathers_name_et.setText(data.getString(Constant.EmployeeFathersName));
+                tv_txt_dob.setText(data.getString(Constant.EmployeeDob));
+                txt_address1_et.setText(data.getString(Constant.EmployeeAddress));
+                txt_zipcode_et.setText(data.getString(Constant.EmployeeZip));
+                txt_state_et.setText(data.getString(Constant.EmployeeState));
+                txt_city_et.setText(data.getString(Constant.Employeecity));
+                tv_txt_doj.setText(data.getString(Constant.EmployeeDoj));
+                tv_txt_interview_date.setText(data.getString(Constant.EmployeeDoi));
+                txt_employee_id_et.setText(data.getString(Constant.EmployeeId));
+                Glide.with(mctx)
+                        .load(data.getString(Constant.EmployeeProfilePic))
+                        .into(profile_iv);
+                profile_iv.setVisibility(View.VISIBLE);
+
+
+//                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+
+                Log.e("Profile pic errror", e.getMessage());
+            }
+
+        }
+
+    }
+
     private void AddressfromZipcoded(String zip) {
         ApiClient.getBaseApiMethods().zipcode("http://postalpincode.in/api/pincode/" + zip).enqueue(new Callback<StateCityModel>() {
             @Override
@@ -395,7 +452,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     private void spinnerAdapter() {
 
         //ArrayAdapter1
-        ArrayAdapter adapter = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, genstr);
+         adapter = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, genstr);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
@@ -675,7 +732,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         jsonObject.addProperty(Constant.EmployeeFathersName, fathers_name);
         jsonObject.addProperty(Constant.EmployeeGender, Strgen);
         jsonObject.addProperty(Constant.EmployeeDob, dob);
-        jsonObject.addProperty(Constant.EmployeeAddress, address);
+        jsonObject.addProperty(Constant.EmployeeAddress, address1);
         jsonObject.addProperty(Constant.Employeecity, city);
         jsonObject.addProperty(Constant.EmployeeState, state);
         jsonObject.addProperty(Constant.EmployeeZip, zipcode);
@@ -693,9 +750,11 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         data.add(Constant.data, jsonObject);
 
 
-        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.Data, data.toString());
 
         employeeDetailsViewModel.saveEmployeeDetail(data);
+
+        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployeeDetails, data.toString());
+
 
 
     }

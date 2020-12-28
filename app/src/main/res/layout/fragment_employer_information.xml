@@ -208,6 +208,7 @@
                     android:imeOptions="actionNext"
                     android:padding="@dimen/dp10"
                     android:singleLine="true"
+                    android:layout_centerVertical="true"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_16" />
 

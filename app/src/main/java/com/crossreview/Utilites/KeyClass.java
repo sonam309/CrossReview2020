@@ -2,7 +2,7 @@ package com.crossreview.Utilites;
 
 public final class KeyClass {
 
-//    public static final String BASE_URL = "https://31dfa538e4fe.ngrok.io";
+    //    public static final String BASE_URL = "https://31dfa538e4fe.ngrok.io";
     public static final String BASE_URL = "http://18.221.192.243:4500/";
 //    public static final String BASE_URL = "http://10.0.0.79:4500/";
 
@@ -22,9 +22,9 @@ public final class KeyClass {
     public static final String FRAGMENT_CHECKOUT = "Checkout fragment";
     public static final String FRAGMENT_SPLASH = "Splash fragment";
     public static final String FRAGMENT_APP_INFO_SWIPE = "App info swipe fragment";
-    public static final String FRAGMENT_THANK_YOU="thank you fragment";
+    public static final String FRAGMENT_THANK_YOU = "thank you fragment";
 
-    public static final String BEARER_TOCKEN="Bearer ";
+    public static final String BEARER_TOCKEN = "Bearer ";
 
 
     //
@@ -32,15 +32,19 @@ public final class KeyClass {
     public static final String IMAGE = "image";
     public static final String TOKEN = "acess token";
     public static final String Data = "Data";
-    public static final String AUTH_TOKEN="Auth token";
-    public static final String EmpChildCount="Child count";
-    public static final String EduChildCount="Child count";
-    public static final String Email="Email";
-    public static final String FatherName="FatherName";
-    public static final String SaveData="save data";
+    public static final String AUTH_TOKEN = "Auth token";
+    public static final String EmpChildCount = "Child count";
+    public static final String EduChildCount = "Child count";
+    public static final String Email = "Email";
+    public static final String FatherName = "FatherName";
+    public static final String SaveData = "save data";
 
 
+    //save Json Data
 
+    public static final String EmployerInformation = "EmployerInformation";
+    public static final String EmployeeDetails = "EmployeeDetails";
+    public static final String EmployementDetails = "EmployementDetails";
 
 
     //pattern & formats

@@ -40,14 +40,18 @@ import com.crossreview.ViewModel.EmployerDataViewModel;
 import com.google.android.material.checkbox.MaterialCheckBox;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.security.Key;
 import java.util.ArrayList;
 
 
 public class EmployerInformationFragment extends Fragment implements View.OnClickListener, View.OnTouchListener, Observer<CompanyNameModel>, CompoundButton.OnCheckedChangeListener, TextWatcher {
     private View mview;
     private Context mctx;
-    private LinearLayout mainll,llmain;
+    private LinearLayout mainll, llmain;
     private TextView countinue_btn;
     private MaterialCheckBox checkbox;
     private EditText txt_designation_et, txt_phone_et, txt_email_et, txt_name_et;
@@ -148,6 +152,27 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
 
     private void viewSetup() {
 
+        String jsonData = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployerInformation);
+
+        if (jsonData != null) {
+
+            try {
+                JSONObject object = new JSONObject(jsonData);
+
+                if (object != null && !object.equals("")) {
+
+                    txt_name_et.setText(object.getString("Employer_Email"));
+                    txt_email_et.setText(object.getString("Employer_Name"));
+                    txt_phone_et.setText("Employer_Contact");
+                    txt_orgName_Autocomplete.setText("Organization_Id");
+                    txt_designation_et.setText("Employer_Desigination");
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
         progressDialog = new ProgressDialog(mctx);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Loading...");
@@ -280,7 +305,7 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
                         }
                     });
 
-                    companyNameViewModel.ComNamefun(autoCompleteTextView.getText().toString(),progressLoading);
+                    companyNameViewModel.ComNamefun(autoCompleteTextView.getText().toString(), progressLoading);
                 }
 
             }, 1000);
@@ -367,9 +392,6 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
             saveEmployerDataViewModel.saveEmpData(empName, empEmail, empContact, orgNameId, empDesignation, getActivity());
 
         }
-
-
-
 
 
     }
