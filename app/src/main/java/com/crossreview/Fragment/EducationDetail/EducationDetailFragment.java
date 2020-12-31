@@ -59,6 +59,7 @@ import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -77,7 +78,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
     private EditText txt_education_et, txt_course_et, txt_specialization_et, txt_passout_year_et, txt_grade_et, txt_Marks_et;
     private RadioGroup course_type_rg;
     private RadioButton radioButton;
-    private String courseType="Full Time";
+    private String courseType = "Full Time";
     private ImageView doc_file, iv_delete, delete_iv;
     private TextView uploadBtn, doc_name, txt_university_tv;
     private Handler handler = new Handler();
@@ -94,6 +95,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
     private String courseStr[] = {"--Select--", ""};
     private String gradeStr[] = {"--Select--", "CGPA", "Percentage"};
     private String educationStr, strCourse, strPassoutYear, strGrade;
+    private ImageView course_drop_ic;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -295,6 +297,8 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         txt_passout_year_spinner = view.findViewById(R.id.txt_passout_year_spinner);
         txt_grade_spinner = view.findViewById(R.id.txt_grade_spinner);
 
+        course_drop_ic=view.findViewById(R.id.course_drop_ic);
+
 
         //AutoTextComplete
 
@@ -331,6 +335,31 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         });
 
         modelSetup(txt_university_et);
+
+
+        getDataFromPrefrence();
+
+
+    }
+
+    public void getDataFromPrefrence() {
+
+        String jsonData = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EducationDetail);
+
+        if (jsonData != null) {
+
+
+            try {
+
+                JSONObject object = new JSONObject(jsonData);
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
 
 
     }
@@ -787,17 +816,14 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
                                     if (educationStr.equalsIgnoreCase("--Select--")) {
 
 
-
                                         txt_education_tv_error.setVisibility(View.VISIBLE);
 
 
                                     }
 
 
-
                                     txt_course_tv_error.setVisibility(View.VISIBLE);
                                 }
-
 
 
                                 txt_specilizataion_tv_error.setVisibility(View.VISIBLE);
@@ -816,7 +842,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
                     }
 
                     txt_grade_tv_error.setVisibility(View.VISIBLE);
-                }else {
+                } else {
 
                     if (txt_Marks_et.getText().toString().isEmpty()) {
 
@@ -834,9 +860,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
 
                 txt_upload_doc_tv_error.setVisibility(View.VISIBLE);
-            }
-
-            else {
+            } else {
 
                 String getChildCount = String.valueOf(i);
 
@@ -865,6 +889,8 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
             data.add(Constant.data, experience);
 
             employeeDetailsViewModel.saveEmployeeDetail(data);
+
+            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EducationDetail, data.toString());
         }
 
 
@@ -894,6 +920,8 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
                     ArrayList<String> phd = getPhdData("phd.json");
                     ArrayAdapter<String> phdAdapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, phd);
                     txt_course_spinner.setAdapter(phdAdapter);
+                    txt_course_spinner.setEnabled(true);
+                    course_drop_ic.setVisibility(View.VISIBLE);
 
                 } else if (i == 2) {
                     //show masters data
@@ -901,17 +929,42 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
                     ArrayList<String> masters = getPhdData("master.json");
                     ArrayAdapter<String> mastersAdapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, masters);
                     txt_course_spinner.setAdapter(mastersAdapter);
+                    txt_course_spinner.setEnabled(true);
+                    course_drop_ic.setVisibility(View.VISIBLE);
 
                 } else if (i == 3) {
                     //show graduation data
                     ArrayList<String> graduation = getPhdData("graduation.json");
                     ArrayAdapter<String> graduationAdapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, graduation);
                     txt_course_spinner.setAdapter(graduationAdapter);
+                    txt_course_spinner.setEnabled(true);
+                    course_drop_ic.setVisibility(View.VISIBLE);
+
+
+                } else if (i == 4) {
+
+                    String inter[] = {"12th"};
+                    ArrayAdapter<String> intermidiate = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, inter);
+                    txt_course_spinner.setEnabled(false);
+                    txt_course_spinner.setAdapter(intermidiate);
+                    course_drop_ic.setVisibility(View.GONE);
+
+
+                } else if (i == 5) {
+
+                    String matrix[] = {"10th"};
+                    ArrayAdapter<String> matrixadapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, matrix);
+                    txt_course_spinner.setAdapter(matrixadapter);
+                    txt_course_spinner.setEnabled(false);
+                    course_drop_ic.setVisibility(View.GONE);
+
 
                 } else {
 
                     ArrayAdapter<String> course = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, courseStr);
                     txt_course_spinner.setAdapter(course);
+                    txt_course_spinner.setEnabled(true);
+                    course_drop_ic.setVisibility(View.VISIBLE);
 
                 }
 

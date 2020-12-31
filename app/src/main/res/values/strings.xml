@@ -225,7 +225,7 @@
     <string name="Designation">Designation</string>
     <string name="upload_error">*Please Upload Atleast 1 Document.</string>
     <string name="attachment">Attach Document</string>
-    <string name="docformat">"(document should be .pdf or .doc format. Max Size upto 10MB) "</string>
+    <string name="docformat">"(Document should be .png, .jpg, .jpeg, .pdf or .doc format. Max Size upto 10MB) "</string>
     <string name="education_error">*Please Select Education.</string>
     <string name="course_error">*Please Enter Course Name.</string>
     <string name="specilizataion_error">*Please Enter Specialization.</string>
@@ -251,97 +251,97 @@
 
 
     <string-array name="height_arr">
-<!--        <item>30cm   1\'</item>-->
-<!--        <item>31cm   1\'</item>-->
-<!--        <item>32cm   1\' 1\"</item>-->
-<!--        <item>33cm   1\' 1\"</item>-->
-<!--        <item>34cm   1\' 1\"</item>-->
-<!--        <item>35cm   1\' 2\"</item>-->
-<!--        <item>36cm   1\' 2\"</item>-->
-<!--        <item>37cm   1\' 3\"</item>-->
-<!--        <item>38cm   1\' 3\"</item>-->
-<!--        <item>39cm   1\' 3\"</item>-->
-<!--        <item>40cm   1\' 4\"</item>-->
-<!--        <item>41cm   1\' 4\"</item>-->
-<!--        <item>42cm   1\' 5\"</item>-->
-<!--        <item>43cm   1\' 5\"</item>-->
-<!--        <item>44cm   1\' 5\"</item>-->
-<!--        <item>45cm   1\' 6\"</item>-->
-<!--        <item>46cm   1\' 6\"</item>-->
-<!--        <item>47cm   1\' 7\"</item>-->
-<!--        <item>48cm   1\' 7\"</item>-->
-<!--        <item>49cm   1\' 7\"</item>-->
-<!--        <item>50cm   1\' 8\"</item>-->
-<!--        <item>51cm   1\' 8\"</item>-->
-<!--        <item>52cm   1\' 8\"</item>-->
-<!--        <item>53cm   1\' 9\"</item>-->
-<!--        <item>54cm   1\' 9\"</item>-->
-<!--        <item>55cm   1\' 10\"</item>-->
-<!--        <item>56cm   1\' 10\"</item>-->
-<!--        <item>57cm   1\' 10\"</item>-->
-<!--        <item>58cm   1\' 11\"</item>-->
-<!--        <item>59cm   1\' 11\"</item>-->
-<!--        <item>60cm   2\' 0\"</item>-->
-<!--        <item>61cm   2\' 0\"</item>-->
-<!--        <item>62cm   2\' 0\"</item>-->
-<!--        <item>63cm   2\' 1\"</item>-->
-<!--        <item>64cm   2\' 1\"</item>-->
-<!--        <item>65cm   2\' 2\"</item>-->
-<!--        <item>66cm   2\' 2\"</item>-->
-<!--        <item>67cm   2\' 2\"</item>-->
-<!--        <item>68cm   2\' 3\"</item>-->
-<!--        <item>69cm   2\' 3\"</item>-->
-<!--        <item>70cm   2\' 4\"</item>-->
-<!--        <item>71cm   2\' 4\"</item>-->
-<!--        <item>72cm   2\' 4\"</item>-->
-<!--        <item>73cm   2\' 5\"</item>-->
-<!--        <item>74cm   2\' 5\"</item>-->
-<!--        <item>75cm   2\' 6\"</item>-->
-<!--        <item>76cm   2\' 6\"</item>-->
-<!--        <item>77cm   2\' 6\"</item>-->
-<!--        <item>78cm   2\' 7\"</item>-->
-<!--        <item>79cm   2\' 7\"</item>-->
-<!--        <item>80cm   2\' 7\"</item>-->
-<!--        <item>81cm   2\' 8\"</item>-->
-<!--        <item>82cm   2\' 8\"</item>-->
-<!--        <item>83cm   2\' 9\"</item>-->
-<!--        <item>84cm   2\' 9\"</item>-->
-<!--        <item>85cm   2\' 9\"</item>-->
-<!--        <item>86cm   2\' 10\"</item>-->
-<!--        <item>87cm   2\' 10\"</item>-->
-<!--        <item>88cm   2\' 11\"</item>-->
-<!--        <item>89cm   2\' 11\"</item>-->
-<!--        <item>90cm   2\' 11\"</item>-->
-<!--        <item>91cm   3\' 0\"</item>-->
-<!--        <item>92cm   3\' 0\"</item>-->
-<!--        <item>93cm   3\' 1\"</item>-->
-<!--        <item>94cm   3\' 1\"</item>-->
-<!--        <item>95cm   3\' 1\"</item>-->
-<!--        <item>96cm   3\' 2\"</item>-->
-<!--        <item>97cm   3\' 2\"</item>-->
-<!--        <item>98cm   3\' 3\"</item>-->
-<!--        <item>99cm   3\' 3\"</item>-->
-<!--        <item>100cm   3\' 3\"</item>-->
-<!--        <item>101cm   3\' 4\"</item>-->
-<!--        <item>102cm   3\' 4\"</item>-->
-<!--        <item>103cm   3\' 5\"</item>-->
-<!--        <item>104cm   3\' 5\"</item>-->
-<!--        <item>105cm   3\' 5\"</item>-->
-<!--        <item>106cm   3\' 6\"</item>-->
-<!--        <item>107cm   3\' 6\"</item>-->
-<!--        <item>108cm   3\' 7\"</item>-->
-<!--        <item>109cm   3\' 7\"</item>-->
-<!--        <item>110cm   3\' 7\"</item>-->
-<!--        <item>111cm   3\' 8\"</item>-->
-<!--        <item>112cm   3\' 8\"</item>-->
-<!--        <item>113cm   3\' 8\"</item>-->
-<!--        <item>114cm   3\' 9\"</item>-->
-<!--        <item>115cm   3\' 9\"</item>-->
-<!--        <item>116cm   3\' 10\"</item>-->
-<!--        <item>117cm   3\' 10\"</item>-->
-<!--        <item>118cm   3\' 10\"</item>-->
-<!--        <item>119cm   3\' 11\"</item>-->
-<!--        <item>120cm   3\' 11\"</item>-->
+        <!--        <item>30cm   1\'</item>-->
+        <!--        <item>31cm   1\'</item>-->
+        <!--        <item>32cm   1\' 1\"</item>-->
+        <!--        <item>33cm   1\' 1\"</item>-->
+        <!--        <item>34cm   1\' 1\"</item>-->
+        <!--        <item>35cm   1\' 2\"</item>-->
+        <!--        <item>36cm   1\' 2\"</item>-->
+        <!--        <item>37cm   1\' 3\"</item>-->
+        <!--        <item>38cm   1\' 3\"</item>-->
+        <!--        <item>39cm   1\' 3\"</item>-->
+        <!--        <item>40cm   1\' 4\"</item>-->
+        <!--        <item>41cm   1\' 4\"</item>-->
+        <!--        <item>42cm   1\' 5\"</item>-->
+        <!--        <item>43cm   1\' 5\"</item>-->
+        <!--        <item>44cm   1\' 5\"</item>-->
+        <!--        <item>45cm   1\' 6\"</item>-->
+        <!--        <item>46cm   1\' 6\"</item>-->
+        <!--        <item>47cm   1\' 7\"</item>-->
+        <!--        <item>48cm   1\' 7\"</item>-->
+        <!--        <item>49cm   1\' 7\"</item>-->
+        <!--        <item>50cm   1\' 8\"</item>-->
+        <!--        <item>51cm   1\' 8\"</item>-->
+        <!--        <item>52cm   1\' 8\"</item>-->
+        <!--        <item>53cm   1\' 9\"</item>-->
+        <!--        <item>54cm   1\' 9\"</item>-->
+        <!--        <item>55cm   1\' 10\"</item>-->
+        <!--        <item>56cm   1\' 10\"</item>-->
+        <!--        <item>57cm   1\' 10\"</item>-->
+        <!--        <item>58cm   1\' 11\"</item>-->
+        <!--        <item>59cm   1\' 11\"</item>-->
+        <!--        <item>60cm   2\' 0\"</item>-->
+        <!--        <item>61cm   2\' 0\"</item>-->
+        <!--        <item>62cm   2\' 0\"</item>-->
+        <!--        <item>63cm   2\' 1\"</item>-->
+        <!--        <item>64cm   2\' 1\"</item>-->
+        <!--        <item>65cm   2\' 2\"</item>-->
+        <!--        <item>66cm   2\' 2\"</item>-->
+        <!--        <item>67cm   2\' 2\"</item>-->
+        <!--        <item>68cm   2\' 3\"</item>-->
+        <!--        <item>69cm   2\' 3\"</item>-->
+        <!--        <item>70cm   2\' 4\"</item>-->
+        <!--        <item>71cm   2\' 4\"</item>-->
+        <!--        <item>72cm   2\' 4\"</item>-->
+        <!--        <item>73cm   2\' 5\"</item>-->
+        <!--        <item>74cm   2\' 5\"</item>-->
+        <!--        <item>75cm   2\' 6\"</item>-->
+        <!--        <item>76cm   2\' 6\"</item>-->
+        <!--        <item>77cm   2\' 6\"</item>-->
+        <!--        <item>78cm   2\' 7\"</item>-->
+        <!--        <item>79cm   2\' 7\"</item>-->
+        <!--        <item>80cm   2\' 7\"</item>-->
+        <!--        <item>81cm   2\' 8\"</item>-->
+        <!--        <item>82cm   2\' 8\"</item>-->
+        <!--        <item>83cm   2\' 9\"</item>-->
+        <!--        <item>84cm   2\' 9\"</item>-->
+        <!--        <item>85cm   2\' 9\"</item>-->
+        <!--        <item>86cm   2\' 10\"</item>-->
+        <!--        <item>87cm   2\' 10\"</item>-->
+        <!--        <item>88cm   2\' 11\"</item>-->
+        <!--        <item>89cm   2\' 11\"</item>-->
+        <!--        <item>90cm   2\' 11\"</item>-->
+        <!--        <item>91cm   3\' 0\"</item>-->
+        <!--        <item>92cm   3\' 0\"</item>-->
+        <!--        <item>93cm   3\' 1\"</item>-->
+        <!--        <item>94cm   3\' 1\"</item>-->
+        <!--        <item>95cm   3\' 1\"</item>-->
+        <!--        <item>96cm   3\' 2\"</item>-->
+        <!--        <item>97cm   3\' 2\"</item>-->
+        <!--        <item>98cm   3\' 3\"</item>-->
+        <!--        <item>99cm   3\' 3\"</item>-->
+        <!--        <item>100cm   3\' 3\"</item>-->
+        <!--        <item>101cm   3\' 4\"</item>-->
+        <!--        <item>102cm   3\' 4\"</item>-->
+        <!--        <item>103cm   3\' 5\"</item>-->
+        <!--        <item>104cm   3\' 5\"</item>-->
+        <!--        <item>105cm   3\' 5\"</item>-->
+        <!--        <item>106cm   3\' 6\"</item>-->
+        <!--        <item>107cm   3\' 6\"</item>-->
+        <!--        <item>108cm   3\' 7\"</item>-->
+        <!--        <item>109cm   3\' 7\"</item>-->
+        <!--        <item>110cm   3\' 7\"</item>-->
+        <!--        <item>111cm   3\' 8\"</item>-->
+        <!--        <item>112cm   3\' 8\"</item>-->
+        <!--        <item>113cm   3\' 8\"</item>-->
+        <!--        <item>114cm   3\' 9\"</item>-->
+        <!--        <item>115cm   3\' 9\"</item>-->
+        <!--        <item>116cm   3\' 10\"</item>-->
+        <!--        <item>117cm   3\' 10\"</item>-->
+        <!--        <item>118cm   3\' 10\"</item>-->
+        <!--        <item>119cm   3\' 11\"</item>-->
+        <!--        <item>120cm   3\' 11\"</item>-->
         <item>121cm   4\' 0\"</item>
         <item>122cm   4\' 0\"</item>
         <item>123cm   4\' 0\"</item>
@@ -880,6 +880,7 @@
         <item>212kg   467</item>
         <item>213kg   470</item>
         <item>214kg   472</item>
+        <item>215kg   474</item>
         <item>215kg   474</item>
         <item>216kg   476</item>
         <item>217kg   478</item>

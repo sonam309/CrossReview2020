@@ -69,12 +69,8 @@ import static com.crossreview.Utilites.Constant.EmployeeProfilePic;
 
 
 public class EmployeeDetailsFragment extends BasicClass implements View.OnClickListener, View.OnTouchListener, Observer<ClsSaveEmployeeDetailModel>, TextView.OnEditorActionListener, awsUploadCallback, AdapterView.OnItemSelectedListener, TextWatcher {
-    final Calendar calendar = Calendar.getInstance();
-//        if (dates != null) {
-//            calendar.setTime(dates);
-//
-//        }
 
+    final Calendar calendar = Calendar.getInstance();
     int mYear = (calendar.get(Calendar.YEAR));
     int mMonth = calendar.get(Calendar.MONTH);
     int mDay = calendar.get(Calendar.DAY_OF_MONTH);
@@ -103,7 +99,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     private TextView txt_name_tv_error, txt_fathers_name_tv_error, txt_gender_tv_error, txt_dob_tv_error, txt_address_tv_error,
             txt_state_tv_error, txt_city_tv_error, txt_zipcode_tv_error, txt_doj_tv_error, txt_doi_tv_error, txt_empId_tv_error,
             txt_profile_tv_error;
-    private  ArrayAdapter adapter;
+    private ArrayAdapter adapter;
 
     public EmployeeDetailsFragment() {
 
@@ -384,7 +380,6 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 //                    JSONObject jsonObject= array.getJSONObject(i);
 
 
-
                 String compareValue = data.getString(Constant.EmployeeGender);
 
                 if (compareValue != null) {
@@ -452,7 +447,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     private void spinnerAdapter() {
 
         //ArrayAdapter1
-         adapter = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, genstr);
+        adapter = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, genstr);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
@@ -750,11 +745,9 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         data.add(Constant.data, jsonObject);
 
 
-
         employeeDetailsViewModel.saveEmployeeDetail(data);
 
         PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployeeDetails, data.toString());
-
 
 
     }

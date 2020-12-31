@@ -34,6 +34,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.crossreview.Activity.MainActivity;
 import com.crossreview.Fragment.BasicClass;
 import com.crossreview.Fragment.EducationDetail.EducationStatusFragment;
@@ -89,6 +90,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
             txt_upload_tv_error;
     private int count = 1;
     private ProgressBar progressLoading;
+    private ArrayAdapter ctcInLacAdapter, ctcInthousAdapter;
 
 
     @Override
@@ -337,7 +339,6 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
         getDataFromPrefrence();
 
 
-
         final CompanyNameModel[] model = new CompanyNameModel[1];
         txt_orgName_Autocomplete.addTextChangedListener(new TextWatcher() {
             @Override
@@ -353,6 +354,8 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
             @Override
             public void afterTextChanged(Editable s) {
                 final ArrayAdapter<CompanyNameModel>[] adapter = new ArrayAdapter[]{new ArrayAdapter<>(MainActivity.context, R.layout.autocomplte_textview_layout, new ArrayList<CompanyNameModel>())};
+
+//             txt_orgName_Autocomplete.setThreshold(1);
                 txt_orgName_Autocomplete.setAdapter(adapter[0]);
                 model[0] = null;
                 if (model[0] == null) {
@@ -373,7 +376,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
             public void onChanged(CompanyNameModel companyNameModel) {
                 companyNameModelArrayAdapter = new ArrayAdapter<>(MainActivity.context, R.layout.autocomplte_textview_layout, companyNameModel.getData());
                 txt_orgName_Autocomplete.setAdapter(companyNameModelArrayAdapter);
-                txt_orgName_Autocomplete.showDropDown();
+//                txt_orgName_Autocomplete.showDropDown();
 //                txt_orgName_Autocomplete.setText(OrgName);
 
 
@@ -395,40 +398,83 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
         });
     }
 
-    private void getDataFromPrefrence(){
 
-        String jsonData= PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployementDetails);
+    private void getDataFromPrefrence() {
 
-        if(jsonData!=null){
+        String jsonData = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployementDetails);
+
+        if (jsonData != null) {
 
 
             try {
-                JSONObject object= new JSONObject(jsonData);
-                JSONObject data= object.getJSONObject("data");
-                JSONArray array= data.getJSONArray("experience");
+                JSONObject object = new JSONObject(jsonData);
+                JSONObject data = object.getJSONObject("data");
+                JSONArray array = data.getJSONArray("experience");
 
-                for(int i=0; i<array.length();i++){
+                for (int i = 0; i < array.length(); i++) {
 
-                    JSONObject experienceData= array.getJSONObject(i);
+                    JSONObject experienceData = array.getJSONObject(i);
 
-                   txt_joining_date.setText(experienceData.getString(Constant.Employer_D_O_Joining));
-                   txt_relieving_date.setText(experienceData.getString(Constant.Employer_D_O_Relieving));
-                   txt_designation_et.setText(experienceData.getString(Constant.Employer_Designataion));
-                   txt_job_role_et.setText(experienceData.getString(Constant.Employer_Job_role));
-                   autotextcomplte.setText(experienceData.getString(Constant.Employer_Organizataion_id));
-                   txt_reason_of_leaving_et.setText(experienceData.getString(Constant.Employer_Reason_Of_Leaving));
-                   // spinner Employer_ctc_lac
+                    txt_joining_date.setText(experienceData.getString(Constant.Employer_D_O_Joining));
+                    txt_relieving_date.setText(experienceData.getString(Constant.Employer_D_O_Relieving));
+                    txt_designation_et.setText(experienceData.getString(Constant.Employer_Designataion));
+                    txt_job_role_et.setText(experienceData.getString(Constant.Employer_Job_role));
+
+//                    if(companyNameViewModel.companyName.getValue().getData().get(i).getOrganizationId()==experienceData.getString(Constant.Employer_Organizataion_id)){
+//
+//                        autotextcomplte.setText(companyNameViewModel.companyName.getValue().getData().get(i).getOrganizationName());
+//                    }
+
+                    txt_reason_of_leaving_et.setText(experienceData.getString(Constant.Employer_Reason_Of_Leaving));
+
+                    // spinner Employer_ctc_lac
+                    String compareValue_lac = (experienceData.getString(Constant.Employer_ctc_lac));
+//
+                    if (compareValue_lac != null) {
+                        int spinnerPosition = ctcInLacAdapter.getPosition(compareValue_lac);
+                        ctc_in_lac_spinner.setSelection(spinnerPosition);
+                    }
                     //spinner Employer_ctc_thous
+
+                    String compareValue_thous = (experienceData.getString(Constant.Employer_ctc_thous));
+
+                    if (compareValue_thous != null) {
+                        int spinnerPosition = ctcInthousAdapter.getPosition(compareValue_thous);
+                        ctc_in_thous_spinner.setSelection(spinnerPosition);
+                    }
+
+
                     txt_reporting_person_et.setText(experienceData.getString(Constant.Employer_Reporting_Persona_name));
                     txt_reporting_person_designataion_et.setText(experienceData.getString(Constant.Employer_Reporting_person_designantion));
 
 
 //                    experienceData.add(Constant.UploadDocument, document);
 
+                    JSONArray doc=experienceData.getJSONArray("document");
+                    for(int j=0;j<doc.length();j++){
+
+                        JSONObject document= doc.getJSONObject(j);
+
+//                        JSONArray doc_name= document.getJSONArray("Document_URL");
+//                        for(int k=0;k<doc_name.length();k++){
+//
+//                            JSONObject url=doc_name.getJSONObject(k);
+//
+////                            Glide.with(mctx)
+////                                    .load(url)
+////                                    .into(doc_file);
+//
+//                        }
+
+
+//                        Glide.with(getContext())
+//                                .load(document.getString(Constant.Document_URL))
+//                                .into(doc_file);
+
+
+                    }
+
                 }
-
-
-
 
 
             } catch (JSONException e) {
@@ -577,7 +623,6 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                         Calendar calendarSelected = Calendar.getInstance();
 
                         calendarSelected.set(year, monthOfYear, dayOfMonth);
-
 
 
                         tempDate.setTimeInMillis(calendarSelected.getTimeInMillis());
@@ -858,10 +903,10 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
 
         }
-        ArrayAdapter ctcInLacAdapter = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, lacCtc);
+        ctcInLacAdapter = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, lacCtc);
         ctcInLacAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        ArrayAdapter ctcInthousAdapter = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, thousCtc);
+        ctcInthousAdapter = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, thousCtc);
         ctcInthousAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
@@ -1026,11 +1071,13 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
             String thou = ctcthos.getSelectedItem().toString();
             String fileName = "";
             ArrayList<String> docFile = new ArrayList<String>();
+
             JsonArray document = new JsonArray();
+
             for (int i = 0; i < upload_doc.getChildCount(); i++) {
 
                 fileName = doc_name.getText().toString();
-                docFile.add(fileName);
+//                docFile.add(fileName);
 
                 JsonObject object = new JsonObject();
                 object.addProperty(Constant.Document_Type, "Image");
@@ -1173,7 +1220,8 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
             employeeDetailsViewModel.saveEmployeeDetail(data);
 
-            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployementDetails,data.toString());
+
+            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployementDetails, data.toString());
 
         }
 

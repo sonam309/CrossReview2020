@@ -165,6 +165,7 @@
             <ImageView
                 android:layout_width="@dimen/dp10"
                 android:layout_height="@dimen/dp10"
+                android:id="@+id/course_drop_ic"
                 android:src="@drawable/ic_down_arrow"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
@@ -606,7 +607,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/docformat"
                 android:layout_below="@id/txt_upload_document_tv"
-                android:textColor="@color/suggestion_red"
+                android:textColor="@color/appcolor"
+                android:textStyle="bold"
                 android:textSize="@dimen/text_size_10"
                 android:visibility="visible" />
 

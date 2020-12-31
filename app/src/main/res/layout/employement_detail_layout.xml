@@ -523,7 +523,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -649,7 +649,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-10dp"
                 android:text="@string/docformat"
-                android:textColor="@color/suggestion_red"
+                android:textColor="@color/appcolor"
+                android:textStyle="bold"
                 android:textSize="@dimen/text_size_10"
                 android:visibility="visible" />
 
