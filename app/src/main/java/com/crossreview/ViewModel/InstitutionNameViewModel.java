@@ -1,5 +1,8 @@
 package com.crossreview.ViewModel;
 
+import android.view.View;
+import android.widget.ProgressBar;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -14,22 +17,22 @@ import retrofit2.Response;
 
 public class InstitutionNameViewModel extends ViewModel {
 
-    public MutableLiveData<InstitutionNameModel> instituteName= new MutableLiveData<>();
+    public MutableLiveData<InstitutionNameModel> instituteName = new MutableLiveData<>();
 
 
-    public void InstituteNamefun(String InstituteName){
+    public void InstituteNamefun(String InstituteName, ProgressBar progressBar) {
 
 
-        Utility.showLoader();
+        progressBar.setVisibility(View.VISIBLE);
         ApiClient.getBaseApiMethods().institution(InstituteName).enqueue(new Callback<InstitutionNameModel>() {
             @Override
             public void onResponse(Call<InstitutionNameModel> call, Response<InstitutionNameModel> response) {
 
-                Utility.hideLoader();
+                progressBar.setVisibility(View.GONE);
 
-                if(response.isSuccessful()){
-                    InstitutionNameModel model= response.body();
-                    if(response.body()!=null){
+                if (response.isSuccessful()) {
+                    InstitutionNameModel model = response.body();
+                    if (response.body() != null) {
 
                         instituteName.postValue(model);
                     }

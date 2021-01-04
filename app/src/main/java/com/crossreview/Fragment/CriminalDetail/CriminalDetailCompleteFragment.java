@@ -50,9 +50,11 @@ import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.Key;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -85,8 +87,10 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             txt_local_city_tv, txt_local_post_office_tv, txt_local_police_station_tv, txt_local_district_tv, txt_local_state_tv, txt_mothers_name_tv_error,
             txt_language_tv_error, txt_address_tv_error, txt_city_tv, txt_local_pincode_tv, txt_aadhar_num_tv_error, txt_relative_tv_error,
             txt_relative_add_tv_error, txt_height_tv, txt_weight_tv, txt_complexion_tv_error, txt_identification_mark_tv_error;
-    private int count=0;
-    String str=""; int strOldlen=0;
+    private int count = 0;
+    String str = "";
+    int strOldlen = 0;
+    private ArrayAdapter<String> pobAdapter, languageAdapter, heightAdapter, weightAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -263,6 +267,116 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
         spinnerAdapterSetup();
         setupHeightSpinner();
         setupWeightSpinner();
+        getDatafromPrefrence();
+
+
+    }
+
+    public void getDatafromPrefrence() {
+
+        String jsonData = (PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.CriminalDetails));
+
+        if (jsonData != null) {
+
+            try {
+                JSONObject object = new JSONObject(jsonData);
+                JSONObject data = object.getJSONObject("data");
+
+
+                txt_mothers_name_et.setText(data.getString(Constant.MothersName));
+
+
+                String com_PlaceofBirth = (data.getString(Constant.PlaceOfBirth));
+                if (com_PlaceofBirth != null) {
+
+                    int POB = pobAdapter.getPosition(com_PlaceofBirth);
+                    txt_POB_spinner.setSelection(POB);
+                }
+
+                String com_Lnguage = (data.getString(Constant.LanguageSpoken));
+                if (com_Lnguage != null) {
+
+                    int Lan = languageAdapter.getPosition(com_Lnguage);
+                    txt_language_spinner.setSelection(Lan);
+                }
+
+
+                JSONObject address = data.getJSONObject("address");
+                JSONObject permanentadd = address.getJSONObject("permanent_address");
+
+
+                txt_permanent_address_et.setText(permanentadd.getString(Constant.PermanentAddress));
+                txt_pincode_et.setText(permanentadd.getString(Constant.Zipcode));
+                txt_post_office_et.setText(permanentadd.getString(Constant.PostOffice));
+                txt_police_station_et.setText(permanentadd.getString(Constant.PoliceStation));
+                txt_district_et.setText(permanentadd.getString(Constant.District));
+                txt_state_et.setText(permanentadd.getString(Constant.State));
+                txt_city_et.setText(permanentadd.getString(Constant.City));
+
+                // check local and permanent add are same
+
+                JSONObject localadd = address.getJSONObject("local_address");
+
+
+                txt_Local_address_et.setText(localadd.getString(Constant.LocalAddress));
+                txt_local_pincode_et.setText(localadd.getString(Constant.Zipcode));
+                txt_local_post_office_et.setText(localadd.getString(Constant.PostOffice));
+                txt_local_police_station_et.setText(localadd.getString(Constant.PoliceStation));
+                txt_local_district_et.setText(localadd.getString(Constant.District));
+                txt_local_state_et.setText(localadd.getString(Constant.State));
+                txt_local_city_et.setText(localadd.getString(Constant.City));
+
+
+                txt_aadhar_num_et.setText(data.getString(Constant.AadharNumber));
+                txt_Dl_num_et.setText(data.getString(Constant.DrivingliecenceNum));
+                txt_voter_id_et.setText(data.getString(Constant.VotarId));
+                txt_passport_num_et.setText(data.getString(Constant.PassportNum));
+
+                JSONArray relative = data.getJSONArray("relatives");
+
+                for (int i = 0; i < relative.length(); i++) {
+
+                    JSONObject rel = relative.getJSONObject(i);
+
+                    txt_name_of_local_F_R_et.setText(rel.getString(Constant.Relative_name));
+                    txt_address_et.setText(rel.getString(Constant.Relative_address));
+
+                }
+
+                String com_height = (data.getString(Constant.Height));
+
+                if (com_height != null) {
+
+                    int heightspnr = heightAdapter.getPosition(com_height);
+                    txt_height_spinner.setSelection(heightspnr);
+
+                }
+
+                String com_weight = (data.getString(Constant.Weight));
+                if (com_weight != null) {
+
+                    int weightSpnr = weightAdapter.getPosition(com_weight);
+                    txt_weight_spinner.setSelection(weightSpnr);
+                }
+
+                txt_Complexion_et.setText(data.getString(Constant.Complexion));
+                txt_identification_mark_et.setText(data.getString(Constant.IdentificationMark));
+
+                if (PrefrenceShared.getInstance().getPreferenceData().getValueBooleanFromKey(Constant.Same_address)) {
+
+                    checkbox_address.setChecked(true);
+
+                } else {
+                    checkbox_address.setChecked(false);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
 
     }
 
@@ -274,6 +388,8 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
 
+                    PrefrenceShared.getInstance().getPreferenceData().setValueBoolean(Constant.Same_address, b);
+
                     txt_Local_address_et.setText(txt_permanent_address_et.getText().toString());
                     txt_local_pincode_et.setText(txt_pincode_et.getText().toString());
                     txt_local_post_office_et.setText(txt_post_office_et.getText().toString());
@@ -281,6 +397,7 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
                     txt_local_district_et.setText(txt_district_et.getText().toString());
                     txt_local_state_et.setText(txt_state_et.getText().toString());
                     txt_local_city_et.setText(txt_city_et.getText().toString());
+
 
                 } else {
 
@@ -352,8 +469,6 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
 
-
-
             }
 
             @Override
@@ -363,62 +478,62 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
                 int strLen = str.length();
 
 
-                if(strOldlen<strLen) {
+                if (strOldlen < strLen) {
 
                     if (strLen > 0) {
                         if (strLen == 4 || strLen == 9) {
 
-                            str=str+" ";
+                            str = str + " ";
 
                             txt_aadhar_num_et.setText(str);
                             txt_aadhar_num_et.setSelection(txt_aadhar_num_et.getText().length());
 
-                        }else{
+                        } else {
 
-                            if(strLen==5){
-                                if(!str.contains(" ")){
-                                    String tempStr=str.substring(0,strLen-1);
-                                    tempStr +=" "+str.substring(strLen-1,strLen);
+                            if (strLen == 5) {
+                                if (!str.contains(" ")) {
+                                    String tempStr = str.substring(0, strLen - 1);
+                                    tempStr += " " + str.substring(strLen - 1, strLen);
                                     txt_aadhar_num_et.setText(tempStr);
                                     txt_aadhar_num_et.setSelection(txt_aadhar_num_et.getText().length());
                                 }
                             }
-                            if(strLen==10){
-                                if(str.lastIndexOf(" ")!=9){
-                                    String tempStr=str.substring(0,strLen-1);
-                                    tempStr +=" "+str.substring(strLen-1,strLen);
+                            if (strLen == 10) {
+                                if (str.lastIndexOf(" ") != 9) {
+                                    String tempStr = str.substring(0, strLen - 1);
+                                    tempStr += " " + str.substring(strLen - 1, strLen);
                                     txt_aadhar_num_et.setText(tempStr);
                                     txt_aadhar_num_et.setSelection(txt_aadhar_num_et.getText().length());
                                 }
                             }
                             strOldlen = strLen;
                         }
-                    }else{
+                    } else {
                         return;
                     }
 
-                }else{
+                } else {
                     strOldlen = strLen;
 
 
 //                    Log.i("MainActivity ","keyDel is Pressed ::: strLen : "+strLen+"\n old Str Len : "+strOldlen);
 
 
+                }
             }
-        }
-    });
+        });
 
 
-}
+    }
 
     private void spinnerAdapterSetup() {
 
         ArrayList<String> POB = getData("IndianStates.json");
-        ArrayAdapter<String> pobAdapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, POB);
+        pobAdapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, POB);
         txt_POB_spinner.setAdapter(pobAdapter);
 
         ArrayList<String> language = getLanguage("language.json");
-        ArrayAdapter<String> languageAdapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, language);
+        languageAdapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, language);
         txt_language_spinner.setAdapter(languageAdapter);
 
 
@@ -434,7 +549,7 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             heightArr[i - 120] = i + "cm" + " "
                     + " (" + Utility.convertHeightToInches(i) + ")";
         }
-        ArrayAdapter<String> heightAdapter = new ArrayAdapter<>
+        heightAdapter = new ArrayAdapter<>
                 (MainActivity.context, android.R.layout.simple_spinner_item,
                         heightArr);
         heightAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -458,7 +573,7 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
         for (int i = 271; i <= 498; i++) {
             weightArr[i - 1] = i - 135 + "kg" + " " + " (" + Utility.convertWeightToLbs(i - 135) + "lbs)";
         }
-        ArrayAdapter<String> weightAdapter = new ArrayAdapter<>
+        weightAdapter = new ArrayAdapter<>
                 (mctx, android.R.layout.simple_spinner_item,
                         weightArr);
         weightAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -814,10 +929,10 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             //json object to add all info of data in data json object
             JsonObject details = new JsonObject();
             details.addProperty(Constant.MothersName, txt_mothers_name_et.getText().toString());
-            details.addProperty(Constant.PlaceOfBirth, txt_birth_place_et.getText().toString());
-            details.addProperty(Constant.LanguageSpoken, txt_language_et.getText().toString());
-            details.addProperty(Constant.Height, txt_height_et.getText().toString());
-            details.addProperty(Constant.Weight, txt_weight_et.getText().toString());
+            details.addProperty(Constant.PlaceOfBirth, birthPlaceStr);
+            details.addProperty(Constant.LanguageSpoken, language);
+            details.addProperty(Constant.Height, heightstr);
+            details.addProperty(Constant.Weight, weightstr);
             details.addProperty(Constant.Complexion, txt_Complexion_et.getText().toString());
             details.addProperty(Constant.IdentificationMark, txt_identification_mark_et.getText().toString());
             details.addProperty(Constant.AadharNumber, txt_aadhar_num_et.getText().toString());
@@ -836,6 +951,8 @@ public class CriminalDetailCompleteFragment extends Fragment implements View.OnC
             PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.SaveData, data.toString());
 
             policeVarificataionsViewModel.saveCriminalBgDetails(data);
+
+            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.CriminalDetails, data.toString());
 
         }
 

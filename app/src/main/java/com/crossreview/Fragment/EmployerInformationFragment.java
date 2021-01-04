@@ -58,7 +58,7 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
     private String heading;
     private AutoCompleteTextView txt_orgName_Autocomplete;
     private CompanyNameViewModel companyNameViewModel;
-    private ArrayAdapter<CompanyNameModel.Data> companyNameModelArrayAdapter;
+    private ArrayAdapter<CompanyNameModel.orgList> companyNameModelArrayAdapter;
     private Handler handler = new Handler();
     private EmployerDataViewModel saveEmployerDataViewModel;
     private String empName, empEmail, empContact, empOrgName, empDesignation, orgNameId, token;
@@ -265,7 +265,7 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
     public void onChanged(CompanyNameModel companyNameModel) {
 
 
-        companyNameModelArrayAdapter = new ArrayAdapter<>(MainActivity.context, R.layout.support_simple_spinner_dropdown_item, companyNameModel.getData());
+        companyNameModelArrayAdapter = new ArrayAdapter<>(MainActivity.context, R.layout.support_simple_spinner_dropdown_item, companyNameModel.getData().getOrgList());
         txt_orgName_Autocomplete.setAdapter(companyNameModelArrayAdapter);
         txt_orgName_Autocomplete.showDropDown();
 
@@ -402,7 +402,7 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                CompanyNameModel.Data data = companyNameModelArrayAdapter.getItem(i);
+                CompanyNameModel.orgList data = companyNameModelArrayAdapter.getItem(i);
 
                 orgNameId = data.getOrganizationId();
                 empOrgName = data.getOrganizationName();

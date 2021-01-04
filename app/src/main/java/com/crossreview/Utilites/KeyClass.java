@@ -2,9 +2,9 @@ package com.crossreview.Utilites;
 
 public final class KeyClass {
 
-    //    public static final String BASE_URL = "https://31dfa538e4fe.ngrok.io";
-    public static final String BASE_URL = "http://18.221.192.243:4500/";
-//    public static final String BASE_URL = "http://10.0.0.79:4500/";
+    //Live
+//    public static final String BASE_URL = "http://18.221.192.243:4500/";
+    public static final String BASE_URL = "https://5952b126ddc6.ngrok.io";
 
 
     public static final String FRAGMENT_WELCOME = "Welcome fragment";
@@ -23,8 +23,13 @@ public final class KeyClass {
     public static final String FRAGMENT_SPLASH = "Splash fragment";
     public static final String FRAGMENT_APP_INFO_SWIPE = "App info swipe fragment";
     public static final String FRAGMENT_THANK_YOU = "thank you fragment";
+    public static final String FRAGMENT_Document = "Document fragment";
+
+
 
     public static final String BEARER_TOCKEN = "Bearer ";
+
+    public static final String DOCUMENT_URL="Document url";
 
 
     //
@@ -46,6 +51,7 @@ public final class KeyClass {
     public static final String EmployeeDetails = "EmployeeDetails";
     public static final String EmployementDetails = "EmployementDetails";
     public static final String EducationDetail = "EducationDetail";
+    public static final String CriminalDetails = "CriminalDetails";
 
 
     //pattern & formats

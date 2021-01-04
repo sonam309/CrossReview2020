@@ -32,7 +32,6 @@ public class CompanyNameViewModel extends ViewModel {
                     if(response.isSuccessful()){
                         CompanyNameModel model= response.body();
                         if(response.body()!=null){
-
                                 companyName.postValue(model);
                         }
 

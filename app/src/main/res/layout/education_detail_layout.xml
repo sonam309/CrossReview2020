@@ -284,19 +284,37 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             <AutoCompleteTextView
                 android:id="@+id/txt_university_et"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/square_white_bg"
                 android:hint="@string/orgName"
                 android:imeOptions="actionNext"
                 android:padding="@dimen/dp8"
                 android:singleLine="true"
+                android:layout_centerVertical="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16"
                 android:visibility="visible" />
+
+                <ProgressBar
+                    android:id="@+id/progressLoading"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/txt_orgName_Autocomplete"
+                    android:layout_alignRight="@+id/txt_university_et"
+                    android:layout_centerVertical="true"
+                    android:indeterminateTint="@color/appcolor"
+                    android:paddingRight="@dimen/dp10"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/txt_university_tv"

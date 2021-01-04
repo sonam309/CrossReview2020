@@ -106,5 +106,7 @@ public class Constant {
     public static final String Select_height="0 cm";
     public static final String Select_weight="0 kg";
 
+    public static final String Same_address="Same_address";
+
 
 }

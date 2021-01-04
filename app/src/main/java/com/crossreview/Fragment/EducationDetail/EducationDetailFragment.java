@@ -28,6 +28,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -38,8 +39,10 @@ import android.widget.Toast;
 import com.crossreview.Activity.MainActivity;
 import com.crossreview.Fragment.BasicClass;
 import com.crossreview.Fragment.CriminalDetail.CriminalBackgroundStatusFragment;
+import com.crossreview.Fragment.DocumentFragment;
 import com.crossreview.Fragment.EmployeeDetail.EmployeeDetailsFragment;
 import com.crossreview.Fragment.EmployeeDetail.EmployementDetailsFragment;
+import com.crossreview.Fragment.PreviewFragment;
 import com.crossreview.Interface.awsUploadCallback;
 import com.crossreview.Model.ClsSaveEmployeeDetailModel;
 import com.crossreview.Model.CompanyNameModel;
@@ -96,6 +99,10 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
     private String gradeStr[] = {"--Select--", "CGPA", "Percentage"};
     private String educationStr, strCourse, strPassoutYear, strGrade;
     private ImageView course_drop_ic;
+    private ArrayAdapter adapter, grade;
+    private ArrayAdapter<String> phdAdapter;
+    private ArrayAdapter<String> Yearadapter;
+    private ProgressBar progressLoading;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -242,8 +249,9 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
         getIds(view);
         onClicks(view);
-        uploadDocument();
         spinnerAdapterSetup();
+        uploadDocument();
+        getDataFromPrefrence();
 
 
         education_dynamic_view.addView(view);
@@ -271,6 +279,8 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         education_detail_ll = view.findViewById(R.id.education_detail_ll);
         marks_ll = view.findViewById(R.id.marks_ll);
 
+        progressLoading = view.findViewById(R.id.progressLoading);
+
 
         //Radio Group
         course_type_rg = view.findViewById(R.id.course_type_rg);
@@ -297,7 +307,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         txt_passout_year_spinner = view.findViewById(R.id.txt_passout_year_spinner);
         txt_grade_spinner = view.findViewById(R.id.txt_grade_spinner);
 
-        course_drop_ic=view.findViewById(R.id.course_drop_ic);
+        course_drop_ic = view.findViewById(R.id.course_drop_ic);
 
 
         //AutoTextComplete
@@ -337,9 +347,6 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         modelSetup(txt_university_et);
 
 
-        getDataFromPrefrence();
-
-
     }
 
     public void getDataFromPrefrence() {
@@ -352,6 +359,56 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
             try {
 
                 JSONObject object = new JSONObject(jsonData);
+                JSONObject data = object.getJSONObject("data");
+                JSONArray array = data.getJSONArray("education");
+
+                for (int i = 0; i < array.length(); i++) {
+
+                    JSONObject education = array.getJSONObject(i);
+
+                    String compareValue_education = (education.getString(Constant.Education_type));
+
+                    if (compareValue_education != null) {
+                        int educationSpinner = adapter.getPosition(compareValue_education);
+                        txt_education_spinner.setSelection(educationSpinner);
+                    }
+
+//                jsonObject.addProperty(Constant.Course, strCourse);
+
+                    String compareValue_course = (education.getString(Constant.Course));
+
+//                    if (compareValue_course != null) {
+//
+//                        int coursespinner = phdAdapter.getPosition(compareValue_course);
+//                        txt_course_spinner.setSelection(coursespinner);
+//                    }
+
+                    txt_specialization_et.setText(education.getString(Constant.Specialization));
+
+                    //                jsonObject.addProperty(Constant.InstitutionName, instituteName);
+//                jsonObject.addProperty(Constant.CourseType, courseType);
+                    // univercity name
+                    // Course type
+
+                    String compareValue_passoutYear = (education.getString(Constant.PassOutYear));
+                    if (compareValue_passoutYear != null) {
+
+                        int passoutYearSpnr = Yearadapter.getPosition(compareValue_passoutYear);
+                        txt_passout_year_spinner.setSelection(passoutYearSpnr);
+                    }
+
+                    String compareValue_grade = (education.getString(Constant.Grade));
+                    if (compareValue_grade != null) {
+
+                        int gradeSpnr = grade.getPosition(compareValue_grade);
+                        txt_grade_spinner.setSelection(gradeSpnr);
+                    }
+
+                    txt_Marks_et.setText(education.getString(Constant.Marks));
+
+                }
+
+//                jsonObject.add(Constant.UploadDocument, document);
 
 
             } catch (JSONException e) {
@@ -409,7 +466,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
                         }
                     });
 
-                    institutionNameViewModel.InstituteNamefun(autoCompleteTextView.getText().toString());
+                    institutionNameViewModel.InstituteNamefun(autoCompleteTextView.getText().toString(), progressLoading);
                 }
 
             }, 1000);
@@ -493,7 +550,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
     public void spinnerAdapterSetup() {
 
         //ArrayAdapter
-        ArrayAdapter adapter = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, eduStr);
+        adapter = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, eduStr);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
@@ -507,11 +564,11 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         for (int i = thisYear; i >= 1980; i--) {
             years.add(Integer.toString(i));
         }
-        ArrayAdapter<String> Yearadapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, years);
+        Yearadapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, years);
 
         txt_passout_year_spinner.setAdapter(Yearadapter);
 
-        ArrayAdapter grade = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, gradeStr);
+        grade = new ArrayAdapter(mctx, android.R.layout.simple_spinner_item, gradeStr);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
@@ -542,6 +599,26 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
             }
         });
 
+        doc_file.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (path_of_pic.contains("pdf")){
+
+
+                    DocumentFragment documentFragment= new DocumentFragment();
+                    Bundle args= new Bundle();
+                    args.putString(KeyClass.DOCUMENT_URL,path_of_pic);
+                    documentFragment.setArguments(args);
+
+                    ((MainActivity) getActivity()).replaceFragment(documentFragment, true, KeyClass.FRAGMENT_Document, KeyClass.FRAGMENT_Document);
+
+
+                }
+
+            }
+        });
+
     }
 
 
@@ -553,6 +630,11 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         delete_iv.setVisibility(View.VISIBLE);
         doc_name.setText("file" + count++);
         txt_upload_doc_tv_error.setVisibility(View.GONE);
+        if(filename.contains("pdf")){
+
+            doc_file.setImageResource(R.drawable.pdf);
+
+        }
 
         uploadDocument();
 
@@ -714,19 +796,19 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
 
         } else if (requestCode == START_ACTIVITY_GALLERY_CODE && resultCode == -1) {
-            String pathOfPic = "";
-            pathOfPic = Utility.getPathOfSelectedImage(data.getData());
+            //String pathOfPic = "";
+//            path_of_pic = Utility.getPathOfSelectedImage(data.getData());
             Uri selectedImage = data.getData();
-            pathOfPic = FilePath.getPath(getActivity(), selectedImage);
+            path_of_pic = FilePath.getPath(getActivity(), selectedImage);
 
-            Utility.uploadImageAwsToServer(pathOfPic, this);
-            if (pathOfPic.contains("pdf")) {
+            Utility.uploadImageAwsToServer(path_of_pic, this);
+            if (path_of_pic.contains("pdf")) {
 
 
-                new DownloadPdfAndShowInImageView(getActivity(), "document", doc_file).execute(pathOfPic, "document");
+                new DownloadPdfAndShowInImageView(getActivity(), "document", doc_file).execute(path_of_pic, "document");
             }
             try {
-                doc_file.setImageURI(Uri.parse(pathOfPic));
+                doc_file.setImageURI(Uri.parse(path_of_pic));
 
 
             } catch (Exception ex) {
@@ -785,81 +867,85 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
 
             String fileName = "";
-            ArrayList<String> docFile = new ArrayList<String>();
+//            ArrayList<String> docFile = new ArrayList<String>();
             JsonArray document = new JsonArray();
 
             for (int j = 0; j < upload_doc_ll.getChildCount(); j++) {
 
                 fileName = doc_name.getText().toString();
-                docFile.add(fileName);
+//                docFile.add(fileName);
 
                 JsonObject object = new JsonObject();
                 object.addProperty(Constant.Document_Type, "Image");
                 object.addProperty(Constant.Document_Name, fileName);
-                object.addProperty(Constant.Document_URL, docFile.toString());
+                object.addProperty(Constant.Document_URL, path_of_pic);
 
                 document.add(object);
 
             }
-            if (photoFile == null) {
 
-                if (strGrade.equalsIgnoreCase("--select--")) {
+            if (educationStr.equalsIgnoreCase("--Select--")) {
 
-                    if (strPassoutYear.equalsIgnoreCase("--select--")) {
+                if (strCourse.equalsIgnoreCase("--select--")) {
+
+
+                    if (txt_specialization_et.getText().toString().isEmpty()) {
+
 
                         if (txt_university_tv.getText().toString().isEmpty()) {
 
-                            if (txt_specialization_et.getText().toString().isEmpty()) {
+                            if (strPassoutYear.equalsIgnoreCase("--select--")) {
 
-                                if (strCourse.equalsIgnoreCase("--select--")) {
+                                if (strGrade.equalsIgnoreCase("--select--")) {
 
-                                    if (educationStr.equalsIgnoreCase("--Select--")) {
-
-
-                                        txt_education_tv_error.setVisibility(View.VISIBLE);
+                                    if (path_of_pic == null && path_of_pic != "") {
 
 
+                                        txt_upload_doc_tv_error.setVisibility(View.VISIBLE);
                                     }
 
 
-                                    txt_course_tv_error.setVisibility(View.VISIBLE);
+                                    txt_grade_tv_error.setVisibility(View.VISIBLE);
+                                } else {
+
+                                    if (txt_Marks_et.getText().toString().isEmpty()) {
+
+
+                                        txt_Marks_tv_error.setVisibility(View.VISIBLE);
+                                        txt_Marks_et.requestFocus();
+
+
+                                    } else {
+
+                                        txt_Marks_et.clearFocus();
+                                    }
+
                                 }
 
+                                txt_passoutyear_tv_error.setVisibility(View.VISIBLE);
 
-                                txt_specilizataion_tv_error.setVisibility(View.VISIBLE);
-                                txt_specialization_et.requestFocus();
-                            } else {
-
-                                txt_specialization_et.clearFocus();
                             }
+
 
                             txt_university_tv_error.setVisibility(View.VISIBLE);
                         }
 
 
-                        txt_passoutyear_tv_error.setVisibility(View.VISIBLE);
-
-                    }
-
-                    txt_grade_tv_error.setVisibility(View.VISIBLE);
-                } else {
-
-                    if (txt_Marks_et.getText().toString().isEmpty()) {
-
-
-                        txt_Marks_tv_error.setVisibility(View.VISIBLE);
-                        txt_Marks_et.requestFocus();
-
-
+                        txt_specilizataion_tv_error.setVisibility(View.VISIBLE);
+                        txt_specialization_et.requestFocus();
                     } else {
 
-                        txt_Marks_et.clearFocus();
+                        txt_specialization_et.clearFocus();
                     }
 
+
+                    txt_course_tv_error.setVisibility(View.VISIBLE);
                 }
 
 
-                txt_upload_doc_tv_error.setVisibility(View.VISIBLE);
+                txt_education_tv_error.setVisibility(View.VISIBLE);
+
+
             } else {
 
                 String getChildCount = String.valueOf(i);
@@ -874,31 +960,32 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
                 jsonObject.addProperty(Constant.CourseType, courseType);
                 jsonObject.addProperty(Constant.PassOutYear, strPassoutYear);
                 jsonObject.addProperty(Constant.Grade, strGrade);
+                jsonObject.addProperty(Constant.Marks, txt_Marks_et.getText().toString());
                 jsonObject.add(Constant.UploadDocument, document);
                 jsonObject.addProperty(Constant.to_varify, to_varify);
 
 
                 jsonArray.add(jsonObject);
+
+
+                JsonObject experience = new JsonObject();
+                experience.add(Constant.education, jsonArray);
+
+                JsonObject data = new JsonObject();
+                data.add(Constant.data, experience);
+
+                employeeDetailsViewModel.saveEmployeeDetail(data);
+
+                PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EducationDetail, data.toString());
             }
-
-
-            JsonObject experience = new JsonObject();
-            experience.add(Constant.education, jsonArray);
-
-            JsonObject data = new JsonObject();
-            data.add(Constant.data, experience);
-
-            employeeDetailsViewModel.saveEmployeeDetail(data);
-
-            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EducationDetail, data.toString());
         }
-
 
     }
 
 
     @Override
     public void onChanged(ClsSaveEmployeeDetailModel clsSaveEmployeeDetailModel) {
+
 
         ((MainActivity) getActivity()).replaceFragment(new CriminalBackgroundStatusFragment(), true, KeyClass.FRAGMENT_CRIMINAL_STATUS,
                 KeyClass.FRAGMENT_CRIMINAL_STATUS);
@@ -918,7 +1005,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
                     //show phd data
 
                     ArrayList<String> phd = getPhdData("phd.json");
-                    ArrayAdapter<String> phdAdapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, phd);
+                    phdAdapter = new ArrayAdapter<String>(mctx, android.R.layout.simple_spinner_item, phd);
                     txt_course_spinner.setAdapter(phdAdapter);
                     txt_course_spinner.setEnabled(true);
                     course_drop_ic.setVisibility(View.VISIBLE);
@@ -931,6 +1018,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
                     txt_course_spinner.setAdapter(mastersAdapter);
                     txt_course_spinner.setEnabled(true);
                     course_drop_ic.setVisibility(View.VISIBLE);
+
 
                 } else if (i == 3) {
                     //show graduation data

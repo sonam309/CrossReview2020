@@ -83,7 +83,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
     private CompanyNameViewModel companyNameViewModel;
     private EditText txt_job_role_et, txt_designation_et, txt_reporting_person_et, txt_reporting_person_designataion_et, txt_reason_of_leaving_et;
     private Handler handler = new Handler();
-    private ArrayAdapter<CompanyNameModel.Data> companyNameModelArrayAdapter;
+    private ArrayAdapter<CompanyNameModel.orgList> companyNameModelArrayAdapter;
     private ProgressDialog progressDialog;
     private TextView txt_doj_tv_error, txt_dor_tv_error, txt_designataion_tv_error, txt_jobRole_tv_error, txt_org_name_tv_error,
             txt_reason_of_leaving_tv_error, txt_ctc_tv_error, txt_reporting_person_tv_error, txt_reporting_person_designataion_tv_error,
@@ -339,7 +339,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
         getDataFromPrefrence();
 
 
-        final CompanyNameModel[] model = new CompanyNameModel[1];
+        final String[] model = new String[1];
         txt_orgName_Autocomplete.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -365,6 +365,8 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                 }
             }
         });
+
+
         uploadDocuments();
 
 
@@ -374,9 +376,9 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
         companyNameViewModel.companyName.observe(getViewLifecycleOwner(), new Observer<CompanyNameModel>() {
             @Override
             public void onChanged(CompanyNameModel companyNameModel) {
-                companyNameModelArrayAdapter = new ArrayAdapter<>(MainActivity.context, R.layout.autocomplte_textview_layout, companyNameModel.getData());
+                companyNameModelArrayAdapter = new ArrayAdapter<>(MainActivity.context, R.layout.autocomplte_textview_layout, companyNameModel.getData().getOrgList());
                 txt_orgName_Autocomplete.setAdapter(companyNameModelArrayAdapter);
-//                txt_orgName_Autocomplete.showDropDown();
+                txt_orgName_Autocomplete.showDropDown();
 //                txt_orgName_Autocomplete.setText(OrgName);
 
 
@@ -386,13 +388,16 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                CompanyNameModel.Data data = (CompanyNameModel.Data) companyNameModelArrayAdapter.getItem(i);
+                CompanyNameModel.orgList data = (CompanyNameModel.orgList) companyNameModelArrayAdapter.getItem(i);
 
                 orgNameId = data.getOrganizationId();
                 OrgName = data.getOrganizationName();
 
                 txt_org_name_tv_error.setVisibility(View.GONE);
                 autotextcomplte.setText(orgNameId);
+
+                model[0] = data.getOrganizationName();
+
 
             }
         });
