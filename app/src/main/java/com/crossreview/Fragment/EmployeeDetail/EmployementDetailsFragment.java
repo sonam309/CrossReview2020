@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.crossreview.Activity.MainActivity;
 import com.crossreview.Fragment.BasicClass;
+import com.crossreview.Fragment.DocumentFragment;
 import com.crossreview.Fragment.EducationDetail.EducationStatusFragment;
 import com.crossreview.Interface.awsUploadCallback;
 import com.crossreview.Model.ClsSaveEmployeeDetailModel;
@@ -83,7 +84,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
     private CompanyNameViewModel companyNameViewModel;
     private EditText txt_job_role_et, txt_designation_et, txt_reporting_person_et, txt_reporting_person_designataion_et, txt_reason_of_leaving_et;
     private Handler handler = new Handler();
-    private ArrayAdapter<CompanyNameModel.orgList> companyNameModelArrayAdapter;
+    private ArrayAdapter<CompanyNameModel.Data> companyNameModelArrayAdapter;
     private ProgressDialog progressDialog;
     private TextView txt_doj_tv_error, txt_dor_tv_error, txt_designataion_tv_error, txt_jobRole_tv_error, txt_org_name_tv_error,
             txt_reason_of_leaving_tv_error, txt_ctc_tv_error, txt_reporting_person_tv_error, txt_reporting_person_designataion_tv_error,
@@ -91,6 +92,8 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
     private int count = 1;
     private ProgressBar progressLoading;
     private ArrayAdapter ctcInLacAdapter, ctcInthousAdapter;
+    private String picUrl = "";
+    private String temp = "";
 
 
     @Override
@@ -349,20 +352,37 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+                temp = s.toString().trim();
+
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+
+                if (txt_orgName_Autocomplete.isPerformingCompletion()) {
+                    // An item has been selected from the list. Ignore.
+                    return;
+                }
+
+
                 final ArrayAdapter<CompanyNameModel>[] adapter = new ArrayAdapter[]{new ArrayAdapter<>(MainActivity.context, R.layout.autocomplte_textview_layout, new ArrayList<CompanyNameModel>())};
 
 //             txt_orgName_Autocomplete.setThreshold(1);
                 txt_orgName_Autocomplete.setAdapter(adapter[0]);
-                model[0] = null;
-                if (model[0] == null) {
+//                model[0] = null;
+//                if (model[0] == null) {
+//                    setTimer(txt_orgName_Autocomplete);
+//                } else {
+//                    txt_orgName_Autocomplete.setAdapter(adapter[0]);
+//                }
+
+                if (model[0] == null || !model[0].equalsIgnoreCase(temp)) {
                     setTimer(txt_orgName_Autocomplete);
                 } else {
                     txt_orgName_Autocomplete.setAdapter(adapter[0]);
                 }
+
             }
         });
 
@@ -376,7 +396,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
         companyNameViewModel.companyName.observe(getViewLifecycleOwner(), new Observer<CompanyNameModel>() {
             @Override
             public void onChanged(CompanyNameModel companyNameModel) {
-                companyNameModelArrayAdapter = new ArrayAdapter<>(MainActivity.context, R.layout.autocomplte_textview_layout, companyNameModel.getData().getOrgList());
+                companyNameModelArrayAdapter = new ArrayAdapter<>(MainActivity.context, R.layout.autocomplte_textview_layout, companyNameModel.getData());
                 txt_orgName_Autocomplete.setAdapter(companyNameModelArrayAdapter);
                 txt_orgName_Autocomplete.showDropDown();
 //                txt_orgName_Autocomplete.setText(OrgName);
@@ -388,15 +408,16 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                CompanyNameModel.orgList data = (CompanyNameModel.orgList) companyNameModelArrayAdapter.getItem(i);
+                CompanyNameModel.Data data = (CompanyNameModel.Data) companyNameModelArrayAdapter.getItem(i);
+
+
+                model[0] = data.getOrganizationName();
 
                 orgNameId = data.getOrganizationId();
                 OrgName = data.getOrganizationName();
 
                 txt_org_name_tv_error.setVisibility(View.GONE);
                 autotextcomplte.setText(orgNameId);
-
-                model[0] = data.getOrganizationName();
 
 
             }
@@ -424,11 +445,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                     txt_relieving_date.setText(experienceData.getString(Constant.Employer_D_O_Relieving));
                     txt_designation_et.setText(experienceData.getString(Constant.Employer_Designataion));
                     txt_job_role_et.setText(experienceData.getString(Constant.Employer_Job_role));
-
-//                    if(companyNameViewModel.companyName.getValue().getData().get(i).getOrganizationId()==experienceData.getString(Constant.Employer_Organizataion_id)){
-//
-//                        autotextcomplte.setText(companyNameViewModel.companyName.getValue().getData().get(i).getOrganizationName());
-//                    }
+                    autotextcomplte.setText(experienceData.getString(Constant.Emp_org_name));
 
                     txt_reason_of_leaving_et.setText(experienceData.getString(Constant.Employer_Reason_Of_Leaving));
 
@@ -455,10 +472,10 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
 //                    experienceData.add(Constant.UploadDocument, document);
 
-                    JSONArray doc=experienceData.getJSONArray("document");
-                    for(int j=0;j<doc.length();j++){
+                    JSONArray doc = experienceData.getJSONArray("document");
+                    for (int j = 0; j < doc.length(); j++) {
 
-                        JSONObject document= doc.getJSONObject(j);
+                        JSONObject document = doc.getJSONObject(j);
 
 //                        JSONArray doc_name= document.getJSONArray("Document_URL");
 //                        for(int k=0;k<doc_name.length();k++){
@@ -599,6 +616,26 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
             public void onClick(View view) {
 
                 upload_doc.removeView(uploadDoc);
+
+            }
+        });
+
+        doc_file.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (path_of_pic.contains("pdf")) {
+
+//
+                    DocumentFragment documentFragment = new DocumentFragment();
+                    Bundle args = new Bundle();
+                    args.putString(KeyClass.DOCUMENT_URL, picUrl);
+                    documentFragment.setArguments(args);
+
+                    ((MainActivity) getActivity()).replaceFragment(documentFragment, true, KeyClass.FRAGMENT_Document, KeyClass.FRAGMENT_Document);
+
+
+                }
 
             }
         });
@@ -1030,9 +1067,18 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
         doc_file.setVisibility(View.VISIBLE);
         doc_name.setVisibility(View.VISIBLE);
         delete_iv.setVisibility(View.VISIBLE);
-        doc_name.setText("file" + count++);
+//        doc_name.setText("file" + count++);
 
         txt_upload_tv_error.setVisibility(View.GONE);
+
+        if (filename.contains("pdf")) {
+
+
+            picUrl = filename;
+
+            doc_file.setImageResource(R.drawable.pdf);
+
+        }
         uploadDocuments();
 
     }
@@ -1075,7 +1121,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
             String lac = ctcLac.getSelectedItem().toString();
             String thou = ctcthos.getSelectedItem().toString();
             String fileName = "";
-            ArrayList<String> docFile = new ArrayList<String>();
+//            ArrayList<String> docFile = new ArrayList<String>();
 
             JsonArray document = new JsonArray();
 
@@ -1087,7 +1133,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                 JsonObject object = new JsonObject();
                 object.addProperty(Constant.Document_Type, "Image");
                 object.addProperty(Constant.Document_Name, fileName);
-                object.addProperty(Constant.Document_URL, docFile.toString());
+                object.addProperty(Constant.Document_URL, path_of_pic);
 
                 document.add(object);
 
@@ -1121,7 +1167,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                                             if (reportingPersonDesignation.getText().toString().isEmpty()) {
 
 
-                                                if (docFile.size() == 1) {
+                                                if (path_of_pic == null && path_of_pic != "") {
 
                                                     txt_upload_tv_error.setVisibility(View.VISIBLE);
 
@@ -1207,6 +1253,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                 jsonObject.addProperty(Constant.Employer_Designataion, designataion.getText().toString());
                 jsonObject.addProperty(Constant.Employer_Job_role, jobRole.getText().toString());
                 jsonObject.addProperty(Constant.Employer_Organizataion_id, organizationId);
+                jsonObject.addProperty(Constant.Emp_org_name, OrgName);
                 jsonObject.addProperty(Constant.Employer_Reason_Of_Leaving, reasonOfLeaving.getText().toString());
                 jsonObject.addProperty(Constant.Employer_ctc_lac, lac);
                 jsonObject.addProperty(Constant.Employer_ctc_thous, thou);

@@ -131,6 +131,8 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
             // Inflate the layout for this fragment
             mview = inflater.inflate(R.layout.fragment_employee_details, container, false);
 
+
+
         }
         return mview;
     }
@@ -139,10 +141,11 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
         parseJson();
         bindView();
-//        onResultReceived();
         viewSetup();
+        getDataFromPrefrence();
 
 
     }
@@ -310,8 +313,6 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
         spinnerAdapter();
 
-        getDataFromPrefrence();
-
 
         //getString
         heading = txt_heading.getText().toString();
@@ -396,10 +397,11 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
                 tv_txt_doj.setText(data.getString(Constant.EmployeeDoj));
                 tv_txt_interview_date.setText(data.getString(Constant.EmployeeDoi));
                 txt_employee_id_et.setText(data.getString(Constant.EmployeeId));
+
+
                 Glide.with(mctx)
                         .load(data.getString(Constant.EmployeeProfilePic))
                         .into(profile_iv);
-                profile_iv.setVisibility(View.VISIBLE);
 
 
 //                }

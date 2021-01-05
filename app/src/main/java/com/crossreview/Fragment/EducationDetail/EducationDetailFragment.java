@@ -83,7 +83,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
     private RadioButton radioButton;
     private String courseType = "Full Time";
     private ImageView doc_file, iv_delete, delete_iv;
-    private TextView uploadBtn, doc_name, txt_university_tv;
+    private TextView uploadBtn, doc_name, txt_university_tv, marks_tv;
     private Handler handler = new Handler();
     private InstitutionNameViewModel institutionNameViewModel;
     private ArrayAdapter<InstitutionNameModel.data> institutearrayAdapter;
@@ -103,6 +103,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
     private ArrayAdapter<String> phdAdapter;
     private ArrayAdapter<String> Yearadapter;
     private ProgressBar progressLoading;
+    private String picUrl = "";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -120,6 +121,8 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
             // Inflate the layout for this fragment
             mview = inflater.inflate(R.layout.fragment_education_detail, container, false);
 
+            bindView();
+            viewSetup();
 
         }
         return mview;
@@ -129,8 +132,6 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        bindView();
-        viewSetup();
 
     }
 
@@ -268,6 +269,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         txt_passout_year_et = view.findViewById(R.id.txt_passout_year_et);
         txt_grade_et = view.findViewById(R.id.txt_grade_et);
         txt_Marks_et = view.findViewById(R.id.txt_Marks_et);
+        marks_tv = view.findViewById(R.id.marks_tv);
 
         //Relative layout
         txt_university_rl = view.findViewById(R.id.txt_university_rl);
@@ -603,12 +605,12 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
             @Override
             public void onClick(View v) {
 
-                if (path_of_pic.contains("pdf")){
+                if (path_of_pic.contains("pdf")) {
 
-
-                    DocumentFragment documentFragment= new DocumentFragment();
-                    Bundle args= new Bundle();
-                    args.putString(KeyClass.DOCUMENT_URL,path_of_pic);
+//
+                    DocumentFragment documentFragment = new DocumentFragment();
+                    Bundle args = new Bundle();
+                    args.putString(KeyClass.DOCUMENT_URL, picUrl);
                     documentFragment.setArguments(args);
 
                     ((MainActivity) getActivity()).replaceFragment(documentFragment, true, KeyClass.FRAGMENT_Document, KeyClass.FRAGMENT_Document);
@@ -628,9 +630,12 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         doc_file.setVisibility(View.VISIBLE);
         doc_name.setVisibility(View.VISIBLE);
         delete_iv.setVisibility(View.VISIBLE);
-        doc_name.setText("file" + count++);
+//        doc_name.setText("file" + count++);
         txt_upload_doc_tv_error.setVisibility(View.GONE);
-        if(filename.contains("pdf")){
+        if (filename.contains("pdf")) {
+
+
+            picUrl = filename;
 
             doc_file.setImageResource(R.drawable.pdf);
 
@@ -650,6 +655,9 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
 
         iv_delete = addEdu.findViewById(R.id.iv_delete);
+        TextView txt_tile_name = addEdu.findViewById(R.id.txt_tile_name);
+
+        txt_tile_name.setText("Education Details");
 
 
         if (addEducationTile.getChildCount() < 1) {
@@ -658,11 +666,26 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         } else {
 
             iv_delete.setVisibility(View.VISIBLE);
+
         }
+
+        iv_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                addEducationTile.removeView(addEdu);
+
+
+            }
+        });
+
 
         addEducationTile.addView(addEdu);
 
+
     }
+
 
     public void addTileValidataion() {
 
@@ -1081,9 +1104,17 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
                 if (i == 0) {
                     marks_ll.setVisibility(View.GONE);
-                } else {
+                } else if (i == 1) {
 
                     marks_ll.setVisibility(View.VISIBLE);
+                    marks_tv.setText("CGPA*");
+                    txt_Marks_et.setHint("Enter CGPA");
+
+                } else if (i == 2) {
+
+                    marks_ll.setVisibility(View.VISIBLE);
+                    marks_tv.setText("Marks*");
+                    txt_Marks_et.setHint("Enter Marks");
 
                 }
                 strGrade = txt_grade_spinner.getSelectedItem().toString();

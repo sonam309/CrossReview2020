@@ -56,6 +56,7 @@ public class Constant {
     public static final String Exit_formalities_compeleted = "exit_formalities_compeleted";
     public static final String Performance_review = "performance_review";
     public static final String Rehire_elegibility = "rehire_elegibility";
+    public static final String Emp_org_name="Orgname";
 
     //education Details
 

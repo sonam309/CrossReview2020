@@ -58,13 +58,14 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
     private String heading;
     private AutoCompleteTextView txt_orgName_Autocomplete;
     private CompanyNameViewModel companyNameViewModel;
-    private ArrayAdapter<CompanyNameModel.orgList> companyNameModelArrayAdapter;
+    private ArrayAdapter<CompanyNameModel.Data> companyNameModelArrayAdapter;
     private Handler handler = new Handler();
     private EmployerDataViewModel saveEmployerDataViewModel;
-    private String empName, empEmail, empContact, empOrgName, empDesignation, orgNameId, token;
+    private String empName, empEmail, empContact, empOrgName, empDesignation, orgNameId, token, emailId_org;
     private ProgressDialog progressDialog;
     private TextView txt_name_tv_error, txt_email_tv_error, txt_phone_tv_error, txt_org_tv_error, txt_designation_tv_error, checkbox_error;
     private ProgressBar progressLoading;
+    private boolean flag_org = true;
 
     public EmployerInformationFragment() {
 
@@ -150,6 +151,8 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
 
     }
 
+    private String temp = "";
+
     private void viewSetup() {
 
         String jsonData = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployerInformation);
@@ -192,10 +195,11 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
         countinue_btn.setOnClickListener(this);
         mainll.setOnTouchListener(this);
         llmain.setOnTouchListener(this);
-        onadapterItemClick();
+        //onadapterItemClick();
+
+        final String[] model = new String[1];
 
 
-        final CompanyNameModel[] model = new CompanyNameModel[1];
         txt_orgName_Autocomplete.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -205,18 +209,47 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+                temp = s.toString().trim();
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+
+                if (txt_orgName_Autocomplete.isPerformingCompletion()) {
+                    // An item has been selected from the list. Ignore.
+                    return;
+                }
+
                 final ArrayAdapter<CompanyNameModel>[] adapter = new ArrayAdapter[]{new ArrayAdapter<>(MainActivity.context, R.layout.support_simple_spinner_dropdown_item, new ArrayList<CompanyNameModel>())};
                 txt_orgName_Autocomplete.setAdapter(adapter[0]);
-                model[0] = null;
-                if (model[0] == null) {
+                //model[0] = null;
+//                if (model[0] == null) {
+//                    setTimer(txt_orgName_Autocomplete);
+//                } else {
+//                    txt_orgName_Autocomplete.setAdapter(adapter[0]);
+//                }
+                if (model[0] == null || !model[0].equalsIgnoreCase(temp)) {
                     setTimer(txt_orgName_Autocomplete);
                 } else {
                     txt_orgName_Autocomplete.setAdapter(adapter[0]);
                 }
+
+
+            }
+        });
+
+        txt_orgName_Autocomplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                CompanyNameModel.Data data = companyNameModelArrayAdapter.getItem(i);
+
+                model[0] = data.getOrganizationName();
+
+                orgNameId = data.getOrganizationId();
+                empOrgName = data.getOrganizationName();
+                emailId_org = data.getOrganizationEmail();
             }
         });
 
@@ -265,7 +298,7 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
     public void onChanged(CompanyNameModel companyNameModel) {
 
 
-        companyNameModelArrayAdapter = new ArrayAdapter<>(MainActivity.context, R.layout.support_simple_spinner_dropdown_item, companyNameModel.getData().getOrgList());
+        companyNameModelArrayAdapter = new ArrayAdapter<>(MainActivity.context, R.layout.support_simple_spinner_dropdown_item, companyNameModel.getData());
         txt_orgName_Autocomplete.setAdapter(companyNameModelArrayAdapter);
         txt_orgName_Autocomplete.showDropDown();
 
@@ -320,9 +353,20 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
         empContact = txt_phone_et.getText().toString();
         empDesignation = txt_designation_et.getText().toString();
 
+        String emailIdEmp = empEmail;
+
+        String segments[] = emailIdEmp.split("@");
+        String Emp = segments[segments.length - 1];
+
+
+        String emailIdOrg = emailId_org;
+        String segments2[] = emailIdOrg.split("@");
+        String Org = segments2[segments2.length - 1];
+
+
         if (empName.isEmpty()) {
 
-            if (empEmail.isEmpty()) {
+            if (empEmail.isEmpty() && Emp != Org) {
 
                 if (empContact.isEmpty()) {
 
@@ -337,9 +381,6 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
                                 checkbox_error.setVisibility(View.GONE);
 
 
-                            } else {
-
-                                checkbox_error.setVisibility(View.VISIBLE);
                             }
 
                             txt_designation_tv_error.setVisibility(View.VISIBLE);
@@ -398,16 +439,7 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
 
     public void onadapterItemClick() {
 
-        txt_orgName_Autocomplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                CompanyNameModel.orgList data = companyNameModelArrayAdapter.getItem(i);
-
-                orgNameId = data.getOrganizationId();
-                empOrgName = data.getOrganizationName();
-            }
-        });
     }
 
     @Override

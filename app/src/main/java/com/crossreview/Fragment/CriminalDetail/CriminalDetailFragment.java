@@ -62,7 +62,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class CriminalDetailCompleteFragment extends Fragment implements View.OnClickListener, Observer<PoliceVarificataionDetailsModel>, View.OnTouchListener, AdapterView.OnItemSelectedListener, TextWatcher {
+public class CriminalDetailFragment extends Fragment implements View.OnClickListener, Observer<PoliceVarificataionDetailsModel>, View.OnTouchListener, AdapterView.OnItemSelectedListener, TextWatcher {
 
     private View mview;
     private Context mctx;

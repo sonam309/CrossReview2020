@@ -12,21 +12,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.crossreview.Activity.MainActivity;
-import com.crossreview.Fragment.Authentication.LoginFragment;
-import com.crossreview.Fragment.CheckOutFragment;
-import com.crossreview.Fragment.CriminalDetail.CriminalBackgroundStatusFragment;
-import com.crossreview.Fragment.CriminalDetail.CriminalDetailCompleteFragment;
 import com.crossreview.Fragment.EducationDetail.EducationDetailFragment;
-import com.crossreview.Fragment.EducationDetail.EducationStatusFragment;
-import com.crossreview.Fragment.EmployeeDetail.EmployeeDetailsFragment;
-import com.crossreview.Fragment.EmployeeDetail.EmployeeStatusFragment;
 import com.crossreview.Fragment.EmployeeDetail.EmployementDetailsFragment;
 import com.crossreview.Fragment.EmployerInformationFragment;
-import com.crossreview.Fragment.PreviewFragment;
-import com.crossreview.Fragment.ThankYouFragment;
 import com.crossreview.R;
 import com.crossreview.Utilites.KeyClass;
-import com.crossreview.Utilites.PrefrenceShared;
 
 public class WelcomeFragment extends Fragment implements View.OnClickListener
 {
@@ -80,7 +70,7 @@ public class WelcomeFragment extends Fragment implements View.OnClickListener
             case R.id.varify_now_btn:
 
 
-                    ((MainActivity) getActivity()).replaceFragment(new EducationDetailFragment(), false, KeyClass.FRAGMENT_EMPLOYER_INFORMATION,
+                    ((MainActivity) getActivity()).replaceFragment(new EmployerInformationFragment(), false, KeyClass.FRAGMENT_EMPLOYER_INFORMATION,
                             KeyClass.FRAGMENT_EMPLOYER_INFORMATION);
 
 

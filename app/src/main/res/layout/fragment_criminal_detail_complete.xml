@@ -9,7 +9,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context=".Fragment.CriminalDetail.CriminalDetailCompleteFragment">
+    tools:context=".Fragment.CriminalDetail.CriminalDetailFragment">
 
 
     <TextView

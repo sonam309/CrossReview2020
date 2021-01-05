@@ -179,7 +179,7 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
 
         if (criminal_status) {
 
-            ((MainActivity) getActivity()).replaceFragment(new CriminalDetailCompleteFragment(), true, KeyClass.FRAGMENT_CRIMINAL_DETAILS,
+            ((MainActivity) getActivity()).replaceFragment(new CriminalDetailFragment(), true, KeyClass.FRAGMENT_CRIMINAL_DETAILS,
                     KeyClass.FRAGMENT_CRIMINAL_DETAILS);
 
         } else {
