@@ -53,6 +53,9 @@ public final class KeyClass {
     public static final String EmployementDetails = "EmployementDetails";
     public static final String EducationDetail = "EducationDetail";
     public static final String CriminalDetails = "CriminalDetails";
+    public static final String EmployeeStatus = "EmployeeStatus";
+    public static final String EducationStatus = "EducationStatus";
+
 
 
     //pattern & formats

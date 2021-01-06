@@ -104,6 +104,18 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
         emp_status_Rg.setOnCheckedChangeListener(this);
 
 
+//        if(PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeStatus).equalsIgnoreCase("True")){
+//
+//            int IdNew= emp_status_Rg.getCheckedRadioButtonId();
+//            radioButton=mview.findViewById(IdNew);
+//
+//            radioButton.isChecked();
+//
+//
+//
+//        }
+
+
     }
 
     @Override
@@ -148,6 +160,7 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
 
             empStatus = false;
         }
+
     }
 
 
@@ -167,6 +180,7 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
 
 
 
+
     }
 
     @Override
@@ -176,11 +190,19 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
 
             ((MainActivity) getActivity()).replaceFragment(new EmployementDetailsFragment(), true, KeyClass.FRAGMENT_EMPLOYEMENT_DETAILS,
                     KeyClass.FRAGMENT_EMPLOYEMENT_DETAILS);
+
+
+
+
         }else {
 
             ((MainActivity)getActivity()).replaceFragment(new EducationStatusFragment(),true,KeyClass.FRAGMENT_EDUCATION_STATUS,
                     KeyClass.FRAGMENT_EDUCATION_STATUS);
+
+
         }
+
+        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployeeStatus, String.valueOf(empStatus));
 
 
     }

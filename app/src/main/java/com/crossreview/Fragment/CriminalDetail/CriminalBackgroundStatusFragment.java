@@ -28,6 +28,7 @@ import com.crossreview.Model.ClsSaveEmployeeDetailModel;
 import com.crossreview.R;
 import com.crossreview.Utilites.Constant;
 import com.crossreview.Utilites.KeyClass;
+import com.crossreview.Utilites.PrefrenceShared;
 import com.crossreview.Utilites.Utility;
 import com.crossreview.ViewModel.EmployeeDetailsViewModel;
 import com.google.gson.JsonObject;
@@ -93,6 +94,24 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
     }
 
     private void viewSetup() {
+
+        if (PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeStatus).equalsIgnoreCase("true")) {
+
+            employment_Detail_rl.setVisibility(View.VISIBLE);
+
+        } else {
+
+            employment_Detail_rl.setVisibility(View.GONE);
+
+        }
+
+        if(PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EducationStatus).equalsIgnoreCase("Yes")){
+
+            education_detail_rl.setVisibility(View.VISIBLE);
+        }else {
+
+            education_detail_rl.setVisibility(View.GONE);
+        }
 
         employer_Detail_rl.setOnClickListener(this);
         employment_Detail_rl.setOnClickListener(this);

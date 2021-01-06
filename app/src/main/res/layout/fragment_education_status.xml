@@ -83,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="@string/employee_detail"
+                    android:text="@string/employement_details"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_16" />
 

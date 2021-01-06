@@ -60,7 +60,7 @@ public class EmployerDataViewModel extends ViewModel {
 
                 }else {
 
-//                    Toast.makeText(context, "Email Id must be Unique", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, response.message(), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -68,7 +68,7 @@ public class EmployerDataViewModel extends ViewModel {
             public void onFailure(Call<ClsEmployerResponseModel> call, Throwable t) {
 
                 Utility.hideLoader();
-//                Toast.makeText(context, "Email Id must be Unique", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
 
 
             }

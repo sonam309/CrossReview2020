@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.crossreview.Activity.MainActivity;
 import com.crossreview.Fragment.EducationDetail.EducationDetailFragment;
+import com.crossreview.Fragment.EducationDetail.EducationStatusFragment;
+import com.crossreview.Fragment.EmployeeDetail.EmployeeDetailsFragment;
+import com.crossreview.Fragment.EmployeeDetail.EmployeeStatusFragment;
 import com.crossreview.Fragment.EmployeeDetail.EmployementDetailsFragment;
 import com.crossreview.Fragment.EmployerInformationFragment;
 import com.crossreview.R;
@@ -70,7 +73,7 @@ public class WelcomeFragment extends Fragment implements View.OnClickListener
             case R.id.varify_now_btn:
 
 
-                    ((MainActivity) getActivity()).replaceFragment(new EmployerInformationFragment(), false, KeyClass.FRAGMENT_EMPLOYER_INFORMATION,
+                    ((MainActivity) getActivity()).replaceFragment(new EmployementDetailsFragment(), false, KeyClass.FRAGMENT_EMPLOYER_INFORMATION,
                             KeyClass.FRAGMENT_EMPLOYER_INFORMATION);
 
 

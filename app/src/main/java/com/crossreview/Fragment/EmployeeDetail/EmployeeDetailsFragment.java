@@ -76,8 +76,8 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     int mDay = calendar.get(Calendar.DAY_OF_MONTH);
     private View mview;
     private Context mctx;
-    private RelativeLayout employer_info_rl, txt_contact_deatil_rl, txt_other_detail_rl;
-    private TextView txt_heading, uploadBtn, tv_txt_doj, tv_txt_interview_date, tv_txt_dob, document_title;
+    private RelativeLayout  txt_contact_deatil_rl, txt_other_detail_rl;
+    private TextView txt_heading,  tv_txt_doj, tv_txt_interview_date, tv_txt_dob, document_title;
     private String heading;
     private LinearLayout emp_contact_detail, mainll, emp_other_detail, txt_doj_ll, txt_interview_date_ll, txt_employee_id_ll,
             emp_detail_mainll, txt_dob_ll;
@@ -85,7 +85,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     private EditText txt_name_et, txt_fathers_name_et, txt_gender_et, txt_address1_et, txt_address2_et, txt_state_et, txt_city_et,
             txt_zipcode_et, txt_employee_id_et;
     private EmployeeDetailsViewModel employeeDetailsViewModel;
-    private String name, fathers_name, gender, dob, address1, address2, address, state, city, zipcode, doj, doi, emp_id, data, profileUrl;
+    private String name, fathers_name,  dob, address1, address2,  state, city, zipcode, doj, doi, emp_id, data, profileUrl;
     private Date dates, date;
     private ImageView profile_iv;
     private Boolean selectdate = false, Dob = false;
@@ -95,7 +95,6 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     private String Strgen = "", stateStr;
     private ArrayList<StateSpinnerModel> stateModel;
     private ArrayList<String> cityModel;
-    private String selectStateId;
     private TextView txt_name_tv_error, txt_fathers_name_tv_error, txt_gender_tv_error, txt_dob_tv_error, txt_address_tv_error,
             txt_state_tv_error, txt_city_tv_error, txt_zipcode_tv_error, txt_doj_tv_error, txt_doi_tv_error, txt_empId_tv_error,
             txt_profile_tv_error;
@@ -118,7 +117,10 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
             data = getArguments().getString(KeyClass.Data);
         }
 
+
         viewModelsetup();
+
+
     }
 
 
@@ -140,7 +142,6 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
 
         parseJson();
         bindView();
@@ -244,7 +245,6 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     private void bindView() {
 
 
-        employer_info_rl = mview.findViewById(R.id.employer_info_rl);
         txt_contact_deatil_rl = mview.findViewById(R.id.txt_contact_deatil_rl);
         txt_other_detail_rl = mview.findViewById(R.id.txt_other_detail_rl);
 
@@ -318,7 +318,6 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         heading = txt_heading.getText().toString();
 
 
-        employer_info_rl.setOnClickListener(this);
         txt_contact_deatil_rl.setOnClickListener(this);
         txt_other_detail_rl.setOnClickListener(this);
         next_btn.setOnClickListener(this);
@@ -368,18 +367,11 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
 
         String jsonData = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeDetails);
-        if (jsonData != null) {
+        if (jsonData != null && !jsonData.equals("")) {
 
             try {
                 JSONObject object = new JSONObject(jsonData);
                 JSONObject data = object.getJSONObject("data");
-
-//                JSONArray array = object.getJSONArray("data");
-
-//                for (int i = 0; i < object.length(); i++) {
-
-//                    JSONObject jsonObject= array.getJSONObject(i);
-
 
                 String compareValue = data.getString(Constant.EmployeeGender);
 
@@ -412,6 +404,8 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
                 Log.e("Profile pic errror", e.getMessage());
             }
+
+            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployeeDetails,"");
 
         }
 
@@ -481,18 +475,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
         switch (view.getId()) {
 
-            case R.id.employer_info_rl:
 
-
-                Bundle bundle = new Bundle();
-                bundle.putString(KeyClass.Heading, heading);
-                EmployerInformationFragment empInfoFragment = new EmployerInformationFragment();
-                empInfoFragment.setArguments(bundle);
-
-                ((MainActivity) getActivity()).replaceFragment(empInfoFragment, false, KeyClass.FRAGMENT_EMPLOYER_INFORMATION,
-                        KeyClass.FRAGMENT_EMPLOYER_INFORMATION);
-
-                break;
 
             case R.id.txt_contact_deatil_rl:
 
@@ -594,11 +577,9 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
         name = txt_name_et.getText().toString();
         fathers_name = txt_fathers_name_et.getText().toString();
-//        gender = txt_gender_et.getText().toString();
         dob = tv_txt_dob.getText().toString();
         address1 = txt_address1_et.getText().toString();
         address2 = txt_address2_et.getText().toString();
-//        address = address1 + " " + address2;
         state = txt_state_et.getText().toString();
         city = txt_city_et.getText().toString();
         zipcode = txt_zipcode_et.getText().toString();

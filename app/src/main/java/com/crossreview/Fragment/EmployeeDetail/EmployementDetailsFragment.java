@@ -429,7 +429,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
         String jsonData = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployementDetails);
 
-        if (jsonData != null) {
+        if (jsonData != null && !jsonData.equals("")) {
 
 
             try {
@@ -477,21 +477,9 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
                         JSONObject document = doc.getJSONObject(j);
 
-//                        JSONArray doc_name= document.getJSONArray("Document_URL");
-//                        for(int k=0;k<doc_name.length();k++){
-//
-//                            JSONObject url=doc_name.getJSONObject(k);
-//
-////                            Glide.with(mctx)
-////                                    .load(url)
-////                                    .into(doc_file);
-//
-//                        }
-
-
-//                        Glide.with(getContext())
-//                                .load(document.getString(Constant.Document_URL))
-//                                .into(doc_file);
+                        Glide.with(getContext())
+                                .load(document.getString(Constant.Document_URL))
+                                .into(doc_file);
 
 
                     }
@@ -503,6 +491,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                 e.printStackTrace();
             }
 
+            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployementDetails, "");
 
         }
 
@@ -820,7 +809,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                                         if (txt_reporting_person_designataion_et.getText().toString().isEmpty()) {
 
 
-                                            if (doc_file != null) {
+                                            if (path_of_pic == null || path_of_pic.equals("")) {
 
                                                 txt_upload_tv_error.setVisibility(View.VISIBLE);
 
@@ -1167,7 +1156,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                                             if (reportingPersonDesignation.getText().toString().isEmpty()) {
 
 
-                                                if (path_of_pic == null && path_of_pic != "") {
+                                                if (path_of_pic == null || path_of_pic.equals("")) {
 
                                                     txt_upload_tv_error.setVisibility(View.VISIBLE);
 
@@ -1262,18 +1251,19 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                 jsonObject.addProperty(Constant.to_varify, to_varify);
                 jsonObject.add(Constant.UploadDocument, document);
                 jsonArray.add(jsonObject);
+
+                JsonObject experience = new JsonObject();
+                experience.add(Constant.experience, jsonArray);
+
+                JsonObject data = new JsonObject();
+                data.add(Constant.data, experience);
+
+                employeeDetailsViewModel.saveEmployeeDetail(data);
+
+
+                PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployementDetails, data.toString());
             }
 
-            JsonObject experience = new JsonObject();
-            experience.add(Constant.experience, jsonArray);
-
-            JsonObject data = new JsonObject();
-            data.add(Constant.data, experience);
-
-            employeeDetailsViewModel.saveEmployeeDetail(data);
-
-
-            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployementDetails, data.toString());
 
         }
 

@@ -37,38 +37,7 @@
             android:background="@color/bgcolor"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/employer_info_rl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp25"
-                android:layout_marginTop="@dimen/dp30"
-                android:layout_marginRight="@dimen/dp25"
-                android:layout_marginBottom="@dimen/dp30"
-                android:background="@drawable/square_white_bg"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/dp20"
-                android:paddingTop="@dimen/dp10"
-                android:paddingRight="@dimen/dp20"
-                android:paddingBottom="@dimen/dp10"
-                android:visibility="gone">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/employer_info"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_18" />
-
-                <ImageView
-                    android:layout_width="@dimen/dp15"
-                    android:layout_height="@dimen/dp15"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp10"
-                    android:src="@drawable/ic_edit" />
-            </RelativeLayout>
 
 
             <LinearLayout

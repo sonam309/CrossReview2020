@@ -226,6 +226,26 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
 
     private void viewSetup() {
 
+
+        if (PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeStatus).equalsIgnoreCase("true")) {
+
+            employment_Detail_rl.setVisibility(View.VISIBLE);
+
+        } else {
+
+            employment_Detail_rl.setVisibility(View.GONE);
+
+        }
+
+        if (PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EducationStatus).equalsIgnoreCase("Yes")) {
+
+            education_detail_rl.setVisibility(View.VISIBLE);
+
+        } else {
+
+            education_detail_rl.setVisibility(View.GONE);
+        }
+
         employee_Detail_rl.setOnClickListener(this);
         employment_Detail_rl.setOnClickListener(this);
         education_detail_rl.setOnClickListener(this);
@@ -276,7 +296,7 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
 
         String jsonData = (PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.CriminalDetails));
 
-        if (jsonData != null) {
+        if (jsonData != null && !jsonData.equals("")) {
 
             try {
                 JSONObject object = new JSONObject(jsonData);
@@ -376,6 +396,8 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
 
 
         }
+
+        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.CriminalDetails,"");
 
 
     }

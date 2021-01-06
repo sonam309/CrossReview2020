@@ -166,6 +166,17 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
     private void viewSetup() {
 
+        if (PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeStatus).equalsIgnoreCase("true")) {
+
+            employment_Detail_rl.setVisibility(View.VISIBLE);
+
+        } else {
+
+            employment_Detail_rl.setVisibility(View.GONE);
+
+        }
+
+
         employer_Detail_rl.setOnClickListener(this);
         employment_Detail_rl.setOnClickListener(this);
         next_btn.setOnClickListener(this);
@@ -355,7 +366,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
         String jsonData = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EducationDetail);
 
-        if (jsonData != null) {
+        if (jsonData != null && !jsonData.equals("")) {
 
 
             try {
@@ -420,13 +431,15 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
         }
 
+        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EducationDetail, "");
+
 
     }
 
     public void modelSetup(AutoCompleteTextView autoCompleteTextView) {
 
         institutionNameViewModel = new ViewModelProvider(this).get(InstitutionNameViewModel.class);
-        institutionNameViewModel.instituteName.observe(this, new Observer<InstitutionNameModel>() {
+        institutionNameViewModel.instituteName.observe(getViewLifecycleOwner(), new Observer<InstitutionNameModel>() {
             @Override
             public void onChanged(InstitutionNameModel institutionNameModel) {
 
