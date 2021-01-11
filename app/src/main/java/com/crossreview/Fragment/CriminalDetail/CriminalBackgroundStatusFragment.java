@@ -105,13 +105,6 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
 
         }
 
-        if(PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EducationStatus).equalsIgnoreCase("Yes")){
-
-            education_detail_rl.setVisibility(View.VISIBLE);
-        }else {
-
-            education_detail_rl.setVisibility(View.GONE);
-        }
 
         employer_Detail_rl.setOnClickListener(this);
         employment_Detail_rl.setOnClickListener(this);
@@ -142,8 +135,8 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
                 break;
             case R.id.education_detail_rl:
 
-                ((MainActivity) getActivity()).replaceFragment(new EducationDetailFragment(), true, KeyClass.FRAGMENT_EDUCATION_DETAIL,
-                        KeyClass.FRAGMENT_EDUCATION_DETAIL);
+                ((MainActivity) getActivity()).replaceFragment(new EducationDetailFragment(), true, KeyClass.FRAGMENT_EDUCATION_STATUS,
+                        KeyClass.FRAGMENT_EDUCATION_STATUS);
 
                 break;
 

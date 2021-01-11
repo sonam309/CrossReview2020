@@ -65,12 +65,7 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
     private ProgressDialog progressDialog;
     private TextView txt_name_tv_error, txt_email_tv_error, txt_phone_tv_error, txt_org_tv_error, txt_designation_tv_error, checkbox_error;
     private ProgressBar progressLoading;
-    private boolean flag_api = false;
-
-    public EmployerInformationFragment() {
-
-
-    }
+    private boolean flag_api = true;
 
     public static EmployerInformationFragment newInstance() {
 
@@ -367,82 +362,98 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
         }
 
 
-//        if (flag_api) {
+         flag_api=true;
 
-        if (empName.isEmpty()) {
+            if (empName.isEmpty()) {
 
-            txt_name_tv_error.setVisibility(View.VISIBLE);
-            txt_name_et.requestFocus();
-        } else {
-            txt_name_et.clearFocus();
-        }
-        if (empEmail.isEmpty() || !Emp .equals( Org)) {
+                txt_name_tv_error.setVisibility(View.VISIBLE);
+                txt_name_et.requestFocus();
 
-            if (!Emp.equals( Org)) {
+                flag_api=false;
+            } else {
 
-                txt_email_tv_error.setText("Please Enter Official EmailId");
+                txt_name_et.clearFocus();
+            }
+            if (empEmail.isEmpty() || !Emp.equals(Org)) {
+
+
+                flag_api=false;
+
+                if (!Emp.equals(Org)) {
+
+                    txt_email_tv_error.setText("Please Enter Official EmailId");
+                    txt_email_tv_error.setVisibility(View.VISIBLE);
+                    txt_email_et.requestFocus();
+                    return;
+
+                } else {
+
+                    txt_email_et.clearFocus();
+                    txt_email_tv_error.setVisibility(View.GONE);
+                }
+
                 txt_email_tv_error.setVisibility(View.VISIBLE);
                 txt_email_et.requestFocus();
-                return;
 
-            }else {
+            } else {
 
                 txt_email_et.clearFocus();
-                txt_email_tv_error.setVisibility(View.GONE);
             }
 
-            txt_email_tv_error.setVisibility(View.VISIBLE);
-            txt_email_et.requestFocus();
+            if (empContact.isEmpty()) {
 
-        } else {
+                flag_api=false;
+                txt_phone_tv_error.setVisibility(View.VISIBLE);
+                txt_phone_et.requestFocus();
 
-            txt_email_et.clearFocus();
+            } else {
+
+                txt_phone_et.clearFocus();
+
+            }
+            if (empOrgName == null) {
+
+                txt_org_tv_error.setVisibility(View.VISIBLE);
+                txt_orgName_Autocomplete.requestFocus();
+
+                flag_api=false;
+
+            } else {
+
+                txt_orgName_Autocomplete.clearFocus();
+            }
+
+            if (empDesignation.isEmpty()) {
+
+                txt_designation_tv_error.setVisibility(View.VISIBLE);
+                txt_designation_et.requestFocus();
+
+                flag_api=false;
+
+            } else {
+
+                txt_designation_et.clearFocus();
+            }
+
+            if (!checkbox.isChecked()) {
+
+                checkbox_error.setVisibility(View.VISIBLE);
+
+                flag_api=false;
+
+//            }
+
+
+
         }
+            if(flag_api) {
 
-        if (empContact.isEmpty()) {
+                saveEmployerDataViewModel.saveEmpData(empName, empEmail, empContact, orgNameId, empDesignation, getActivity());
 
-            txt_phone_tv_error.setVisibility(View.VISIBLE);
-            txt_phone_et.requestFocus();
-
-        } else {
-
-            txt_phone_et.clearFocus();
-
-        }
-        if (empOrgName == null) {
-
-            txt_org_tv_error.setVisibility(View.VISIBLE);
-            txt_orgName_Autocomplete.requestFocus();
-        } else {
-
-            txt_orgName_Autocomplete.clearFocus();
-        }
-
-        if (empDesignation.isEmpty()) {
-
-            txt_designation_tv_error.setVisibility(View.VISIBLE);
-            txt_designation_et.requestFocus();
-
-        } else {
-
-            txt_designation_et.clearFocus();
-        }
-
-        if (!checkbox.isChecked()) {
-
-            checkbox_error.setVisibility(View.VISIBLE);
-
-        }
-
-        saveEmployerDataViewModel.saveEmpData(empName, empEmail, empContact, orgNameId, empDesignation, getActivity());
-
-
+            }
     }
 
-    public void onadapterItemClick() {
 
-
-    }
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

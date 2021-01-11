@@ -73,7 +73,7 @@ public class WelcomeFragment extends Fragment implements View.OnClickListener
             case R.id.varify_now_btn:
 
 
-                    ((MainActivity) getActivity()).replaceFragment(new EmployementDetailsFragment(), false, KeyClass.FRAGMENT_EMPLOYER_INFORMATION,
+                    ((MainActivity) getActivity()).replaceFragment(new EmployerInformationFragment(), false, KeyClass.FRAGMENT_EMPLOYER_INFORMATION,
                             KeyClass.FRAGMENT_EMPLOYER_INFORMATION);
 
 

@@ -248,6 +248,7 @@
     <string name="relative_add_error">Please Enter Relative Address.</string>
     <string name="complexion_error">Please Enter Complexion.</string>
     <string name="identification_mark_error">Please Enter Identity Mark.</string>
+    <string name="educataion_status">Education Status</string>
 
 
     <string-array name="height_arr">

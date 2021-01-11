@@ -39,9 +39,10 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
     private CardView next_btn;
     private RadioGroup emp_status_Rg;
     private RadioButton radioButton;
-    private String emp_experience;
+    private String emp_experience="";
     private Boolean empStatus = true;
     private EmployeeDetailsViewModel employeeDetailsViewModel;
+    private int radioId;
 
 
     @Override
@@ -104,19 +105,34 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
         emp_status_Rg.setOnCheckedChangeListener(this);
 
 
-//        if(PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeStatus).equalsIgnoreCase("True")){
+//        boolean rb = PrefrenceShared.getInstance().getPreferenceData().getValueBooleanFromKey(Constant.EmployeeStatus);
 //
-//            int IdNew= emp_status_Rg.getCheckedRadioButtonId();
-//            radioButton=mview.findViewById(IdNew);
-//
-//            radioButton.isChecked();
+//        radioId = emp_status_Rg.getCheckedRadioButtonId();
+//        RadioButton b=(RadioButton)mview.findViewById(radioId);
 //
 //
+//            if (rb) {
 //
-//        }
+//                b.setChecked(true);
+//
+//            }
+
+        if (PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeStatus).equalsIgnoreCase("false")) {
+
+            if(radioButton!=null) {
+                radioId = emp_status_Rg.getCheckedRadioButtonId();
+        RadioButton b=(RadioButton)mview.findViewById(radioId);
+
+        b.setChecked(true);
 
 
-    }
+            }
+        }
+
+
+
+
+        }
 
     @Override
     public void onClick(View view) {
@@ -145,7 +161,7 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
 
-        int radioId = emp_status_Rg.getCheckedRadioButtonId();
+        radioId = emp_status_Rg.getCheckedRadioButtonId();
 
         radioButton = mview.findViewById(radioId);
 
@@ -161,24 +177,22 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
             empStatus = false;
         }
 
+
     }
 
 
-    public void saveEmplyeeExperiece(){
+    public void saveEmplyeeExperiece() {
 
-        JsonObject object= new JsonObject();
+        JsonObject object = new JsonObject();
         object.addProperty(Constant.EmployeeExperience, empStatus);
 
 //        JsonObject jsonObject= new JsonObject();
 //        jsonObject.add(Constant.data,object);
 
-        JsonObject data= new JsonObject();
-        data.add(Constant.data,object);
+        JsonObject data = new JsonObject();
+        data.add(Constant.data, object);
 
         employeeDetailsViewModel.saveEmployeeDetail(data);
-
-
-
 
 
     }
@@ -186,23 +200,21 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
     @Override
     public void onChanged(ClsSaveEmployeeDetailModel clsSaveEmployeeDetailModel) {
 
-        if(empStatus) {
+        if (empStatus) {
 
             ((MainActivity) getActivity()).replaceFragment(new EmployementDetailsFragment(), true, KeyClass.FRAGMENT_EMPLOYEMENT_DETAILS,
                     KeyClass.FRAGMENT_EMPLOYEMENT_DETAILS);
 
 
+        } else {
 
-
-        }else {
-
-            ((MainActivity)getActivity()).replaceFragment(new EducationStatusFragment(),true,KeyClass.FRAGMENT_EDUCATION_STATUS,
+            ((MainActivity) getActivity()).replaceFragment(new EducationStatusFragment(), true, KeyClass.FRAGMENT_EDUCATION_STATUS,
                     KeyClass.FRAGMENT_EDUCATION_STATUS);
 
 
         }
 
-        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployeeStatus, String.valueOf(empStatus));
+        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployeeStatus, (String.valueOf(empStatus)));
 
 
     }

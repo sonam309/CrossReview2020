@@ -66,7 +66,7 @@ import java.util.Date;
 public class EmployementDetailsFragment extends BasicClass implements View.OnClickListener, View.OnTouchListener, Observer<ClsSaveEmployeeDetailModel>, AdapterView.OnItemSelectedListener, awsUploadCallback, TextWatcher {
     private View mview;
     private Context mctx;
-    private RelativeLayout employer_Detail_rl, txt_org_deatil_rl, date_of_joining_rl, date_of_relieving_rl, employee_Detail_rl,
+    private RelativeLayout employer_Detail_rl, txt_org_deatil_rl, date_of_joining_rl, date_of_relieving_rl, employee_Detail_rl, employee_status_rl,
             txt_reporting_person_rl, txt_upload_doc_rl, txt_add_employement_rl;
     private LinearLayout rl_org_deatil, emploeyment_mainll, repoting_person_rl, txt_upload_ll;
 
@@ -94,6 +94,8 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
     private ArrayAdapter ctcInLacAdapter, ctcInthousAdapter;
     private String picUrl = "";
     private String temp = "";
+    private String savepicurl="";
+    private boolean flag_api = true;
 
 
     @Override
@@ -140,6 +142,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
         mainll = mview.findViewById(R.id.mainll);
         next_btn = mview.findViewById(R.id.next_btn);
         employee_Detail_rl = mview.findViewById(R.id.employee_Detail_rl);
+        employee_status_rl = mview.findViewById(R.id.employee_status_rl);
 
 
     }
@@ -166,6 +169,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
         txt_add_employement_rl.setOnClickListener(this);
         next_btn.setOnClickListener(this);
         employee_Detail_rl.setOnClickListener(this);
+        employee_status_rl.setOnClickListener(this);
 
         emploeyment_mainll.setOnTouchListener(this);
         mainll.setOnTouchListener(this);
@@ -185,6 +189,13 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
                 ((MainActivity) getActivity()).replaceFragment(new EmployeeDetailsFragment(), true, KeyClass.FRAGMENT_EMPLOYEE_DETAIL,
                         KeyClass.FRAGMENT_EMPLOYEE_DETAIL);
+
+                break;
+
+            case R.id.employee_status_rl:
+
+                ((MainActivity) getActivity()).replaceFragment(new EmployeeStatusFragment(), true, KeyClass.FRAGMENT_EMPLOYEE_STATUS,
+                        KeyClass.FRAGMENT_EMPLOYEE_STATUS);
 
                 break;
 
@@ -470,12 +481,12 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                     txt_reporting_person_designataion_et.setText(experienceData.getString(Constant.Employer_Reporting_person_designantion));
 
 
-//                    experienceData.add(Constant.UploadDocument, document);
-
                     JSONArray doc = experienceData.getJSONArray("document");
                     for (int j = 0; j < doc.length(); j++) {
 
                         JSONObject document = doc.getJSONObject(j);
+
+                        savepicurl=document.getString(Constant.Document_URL);
 
                         Glide.with(getContext())
                                 .load(document.getString(Constant.Document_URL))
@@ -1128,110 +1139,138 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
             }
 
+            flag_api = true;
+
 
             if (doj.getText().toString().isEmpty()) {
 
 
-                if (dor.getText().toString().isEmpty()) {
-
-
-                    if (designataion.getText().toString().isEmpty()) {
-
-
-                        if (jobRole.getText().toString().isEmpty()) {
-
-
-                            if (orgName.getText().toString().isEmpty()) {
-
-
-                                if (reasonOfLeaving.getText().toString().isEmpty()) {
-
-
-                                    if ((ctcLac.getSelectedItem().toString().equalsIgnoreCase("0 Lac")) && (ctcthos.getSelectedItem().toString().equalsIgnoreCase("0 thousand"))) {
-
-
-                                        if (reportingPersonName.getText().toString().isEmpty()) {
-
-
-                                            if (reportingPersonDesignation.getText().toString().isEmpty()) {
-
-
-                                                if (path_of_pic == null || path_of_pic.equals("")) {
-
-                                                    txt_upload_tv_error.setVisibility(View.VISIBLE);
-
-                                                } else {
-
-                                                    txt_upload_tv_error.setVisibility(View.GONE);
-
-                                                }
-
-                                                txt_reporting_person_designataion_tv_error.setVisibility(View.VISIBLE);
-                                                txt_reporting_person_designataion_et.requestFocus();
-
-
-                                            } else {
-
-                                                reportingPersonDesignation.clearFocus();
-                                            }
-
-                                            txt_reporting_person_tv_error.setVisibility(View.VISIBLE);
-                                            txt_reporting_person_et.requestFocus();
-
-
-                                        } else {
-
-                                            txt_reporting_person_et.clearFocus();
-                                        }
-
-                                        txt_ctc_tv_error.setVisibility(View.VISIBLE);
-
-                                    } else {
-
-                                        txt_ctc_tv_error.setVisibility(View.GONE);
-                                    }
-
-
-                                    txt_reason_of_leaving_tv_error.setVisibility(View.VISIBLE);
-                                    txt_reason_of_leaving_et.requestFocus();
-
-
-                                } else {
-
-                                    txt_reason_of_leaving_et.clearFocus();
-
-                                }
-
-                                txt_org_name_tv_error.setVisibility(View.VISIBLE);
-
-                            }
-
-                            txt_jobRole_tv_error.setVisibility(View.VISIBLE);
-                            txt_job_role_et.requestFocus();
-
-
-                        } else {
-
-                            txt_job_role_et.clearFocus();
-
-                        }
-
-                        txt_designataion_tv_error.setVisibility(View.VISIBLE);
-                        txt_designation_et.requestFocus();
-
-                    } else {
-
-                        txt_designation_et.clearFocus();
-
-                    }
-
-                    txt_dor_tv_error.setVisibility(View.VISIBLE);
-
-                }
-
                 txt_doj_tv_error.setVisibility(View.VISIBLE);
 
+                flag_api = false;
+
+
+            }
+            if (dor.getText().toString().isEmpty()) {
+
+
+                txt_dor_tv_error.setVisibility(View.VISIBLE);
+
+                flag_api = false;
+
+
+            }
+
+            if (designataion.getText().toString().isEmpty()) {
+
+
+                txt_designataion_tv_error.setVisibility(View.VISIBLE);
+                txt_designation_et.requestFocus();
+
+                flag_api = false;
+
+
             } else {
+
+                txt_designation_et.clearFocus();
+
+            }
+
+            if (jobRole.getText().toString().isEmpty()) {
+
+
+                txt_jobRole_tv_error.setVisibility(View.VISIBLE);
+                txt_job_role_et.requestFocus();
+
+                flag_api = false;
+
+
+            } else {
+
+                txt_job_role_et.clearFocus();
+
+            }
+
+            if (orgName.getText().toString().isEmpty()) {
+
+
+                txt_org_name_tv_error.setVisibility(View.VISIBLE);
+
+                flag_api = false;
+
+
+            }
+            if (reasonOfLeaving.getText().toString().isEmpty()) {
+
+
+                txt_reason_of_leaving_tv_error.setVisibility(View.VISIBLE);
+                txt_reason_of_leaving_et.requestFocus();
+
+                flag_api = false;
+
+
+            } else {
+
+                txt_reason_of_leaving_et.clearFocus();
+
+            }
+
+
+            if ((ctcLac.getSelectedItem().toString().equalsIgnoreCase("0 Lac")) && (ctcthos.getSelectedItem().toString().equalsIgnoreCase("0 thousand"))) {
+
+
+                txt_ctc_tv_error.setVisibility(View.VISIBLE);
+
+                flag_api = false;
+
+
+            } else {
+
+                txt_ctc_tv_error.setVisibility(View.GONE);
+            }
+
+
+            if (reportingPersonName.getText().toString().isEmpty()) {
+
+
+                txt_reporting_person_tv_error.setVisibility(View.VISIBLE);
+                txt_reporting_person_et.requestFocus();
+
+                flag_api = false;
+
+
+            } else {
+
+                txt_reporting_person_et.clearFocus();
+            }
+
+            if (reportingPersonDesignation.getText().toString().isEmpty()) {
+
+
+                txt_reporting_person_designataion_tv_error.setVisibility(View.VISIBLE);
+                txt_reporting_person_designataion_et.requestFocus();
+
+                flag_api = false;
+
+
+            } else {
+
+                reportingPersonDesignation.clearFocus();
+            }
+
+            if (path_of_pic.equals("")) {
+
+                txt_upload_tv_error.setVisibility(View.VISIBLE);
+                
+                flag_api = false;
+
+            } else {
+
+                txt_upload_tv_error.setVisibility(View.GONE);
+
+            }
+
+            if (flag_api) {
 
                 String childCount = String.valueOf(j);
                 PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmpChildCount, childCount);

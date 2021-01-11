@@ -74,7 +74,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
     private View mview;
     private Context mctx;
-    private RelativeLayout txt_add_education_rl, employer_Detail_rl, employment_Detail_rl, txt_university_rl;
+    private RelativeLayout txt_add_education_rl, employer_Detail_rl, employment_Detail_rl, txt_university_rl, education_status_rl;
     private LinearLayout education_dynamic_view, univercity_detail_ll, upload_doc_ll, addEducationTile, mainll, education_detail_ll,
             marks_ll;
     private CardView next_btn;
@@ -104,6 +104,9 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
     private ArrayAdapter<String> Yearadapter;
     private ProgressBar progressLoading;
     private String picUrl = "";
+    private String temp = "";
+
+    private boolean flag_api = true;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -146,6 +149,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
         employer_Detail_rl = mview.findViewById(R.id.employer_Detail_rl);
         employment_Detail_rl = mview.findViewById(R.id.employment_Detail_rl);
+        education_status_rl = mview.findViewById(R.id.education_status_rl);
         txt_add_education_rl = mview.findViewById(R.id.txt_add_education_rl);
         education_dynamic_view = mview.findViewById(R.id.education_dynamic_view);
         addEducationTile = mview.findViewById(R.id.addEducationTile);
@@ -178,6 +182,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
 
         employer_Detail_rl.setOnClickListener(this);
+        education_status_rl.setOnClickListener(this);
         employment_Detail_rl.setOnClickListener(this);
         next_btn.setOnClickListener(this);
         addEducationTile.setOnClickListener(this);
@@ -210,6 +215,13 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
                 break;
 
+            case R.id.education_status_rl:
+
+                ((MainActivity) getActivity()).replaceFragment(new EducationStatusFragment(), true, KeyClass.FRAGMENT_EDUCATION_STATUS,
+                        KeyClass.FRAGMENT_EDUCATION_STATUS);
+
+                break;
+
             case R.id.txt_add_education_rl:
 
                 addTileValidataion();
@@ -237,9 +249,6 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
                 break;
 
-            case R.id.addEducationTile:
-
-                break;
 
             case R.id.next_btn:
 
@@ -327,7 +336,9 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
         AutoCompleteTextView txt_university_et = view.findViewById(R.id.txt_university_et);
 
-        final InstitutionNameModel[] model = new InstitutionNameModel[1];
+
+
+        final String[] model = new String[1];
         txt_university_et.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -337,6 +348,8 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+
+                temp = charSequence.toString().trim();
                 txt_university_tv_error.setVisibility(View.GONE);
 
 
@@ -345,10 +358,15 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
             @Override
             public void afterTextChanged(Editable editable) {
 
+                if (txt_university_et.isPerformingCompletion()) {
+                    // An item has been selected from the list. Ignore.
+                    return;
+                }
+
                 final ArrayAdapter<InstitutionNameModel>[] adapter = new ArrayAdapter[]{new ArrayAdapter<>(MainActivity.context, R.layout.autocomplte_textview_layout, new ArrayList<InstitutionNameModel>())};
                 txt_university_et.setAdapter(adapter[0]);
                 model[0] = null;
-                if (model[0] == null) {
+                if (model[0] == null ||!model[0].equalsIgnoreCase(temp)) {
                     setTimer(txt_university_et);
                 } else {
                     txt_university_et.setAdapter(adapter[0]);
@@ -357,7 +375,35 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
             }
         });
 
-        modelSetup(txt_university_et);
+
+        institutionNameViewModel = new ViewModelProvider(this).get(InstitutionNameViewModel.class);
+        institutionNameViewModel.instituteName.observe(getViewLifecycleOwner(), new Observer<InstitutionNameModel>() {
+            @Override
+            public void onChanged(InstitutionNameModel institutionNameModel) {
+
+                institutearrayAdapter = new ArrayAdapter<>(MainActivity.context, R.layout.autocomplte_textview_layout, institutionNameModel.getData());
+                txt_university_et.setAdapter(institutearrayAdapter);
+                txt_university_et.showDropDown();
+
+            }
+        });
+
+        txt_university_et.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                InstitutionNameModel.data data = institutearrayAdapter.getItem(i);
+
+                model[0] = data.getUniversityName();
+
+
+                instituteName = data.getUniversityName();
+
+                txt_university_tv.setText(instituteName);
+
+
+            }
+        });
 
 
     }
@@ -436,34 +482,6 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
     }
 
-    public void modelSetup(AutoCompleteTextView autoCompleteTextView) {
-
-        institutionNameViewModel = new ViewModelProvider(this).get(InstitutionNameViewModel.class);
-        institutionNameViewModel.instituteName.observe(getViewLifecycleOwner(), new Observer<InstitutionNameModel>() {
-            @Override
-            public void onChanged(InstitutionNameModel institutionNameModel) {
-
-                institutearrayAdapter = new ArrayAdapter<>(MainActivity.context, R.layout.autocomplte_textview_layout, institutionNameModel.getData());
-                autoCompleteTextView.setAdapter(institutearrayAdapter);
-                autoCompleteTextView.showDropDown();
-
-            }
-        });
-
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                InstitutionNameModel.data data = institutearrayAdapter.getItem(i);
-
-                instituteName = data.getUniversityName();
-
-                txt_university_tv.setText(instituteName);
-
-
-            }
-        });
-    }
 
     public void setTimer(final AutoCompleteTextView autoCompleteTextView) {
         handler.removeMessages(0);
@@ -920,69 +938,80 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
             }
 
+            flag_api = true;
+
             if (educationStr.equalsIgnoreCase("--Select--")) {
 
-                if (strCourse.equalsIgnoreCase("--select--")) {
-
-
-                    if (txt_specialization_et.getText().toString().isEmpty()) {
-
-
-                        if (txt_university_tv.getText().toString().isEmpty()) {
-
-                            if (strPassoutYear.equalsIgnoreCase("--select--")) {
-
-                                if (strGrade.equalsIgnoreCase("--select--")) {
-
-                                    if (path_of_pic == null && path_of_pic != "") {
-
-
-                                        txt_upload_doc_tv_error.setVisibility(View.VISIBLE);
-                                    }
-
-
-                                    txt_grade_tv_error.setVisibility(View.VISIBLE);
-                                } else {
-
-                                    if (txt_Marks_et.getText().toString().isEmpty()) {
-
-
-                                        txt_Marks_tv_error.setVisibility(View.VISIBLE);
-                                        txt_Marks_et.requestFocus();
-
-
-                                    } else {
-
-                                        txt_Marks_et.clearFocus();
-                                    }
-
-                                }
-
-                                txt_passoutyear_tv_error.setVisibility(View.VISIBLE);
-
-                            }
-
-
-                            txt_university_tv_error.setVisibility(View.VISIBLE);
-                        }
-
-
-                        txt_specilizataion_tv_error.setVisibility(View.VISIBLE);
-                        txt_specialization_et.requestFocus();
-                    } else {
-
-                        txt_specialization_et.clearFocus();
-                    }
-
-
-                    txt_course_tv_error.setVisibility(View.VISIBLE);
-                }
-
-
                 txt_education_tv_error.setVisibility(View.VISIBLE);
+                flag_api = false;
+
+            }
+
+            if (strCourse.equalsIgnoreCase("--select--")) {
+
+                txt_course_tv_error.setVisibility(View.VISIBLE);
+                flag_api = false;
+            }
+
+            if (txt_specialization_et.getText().toString().isEmpty()) {
+
+
+                txt_specilizataion_tv_error.setVisibility(View.VISIBLE);
+                txt_specialization_et.requestFocus();
+                flag_api = false;
+
+            } else {
+
+                txt_specialization_et.clearFocus();
+            }
+            if (txt_university_tv.getText().toString().isEmpty()) {
+
+                txt_university_tv_error.setVisibility(View.VISIBLE);
+                flag_api = false;
+            }
+
+            if (strPassoutYear.equalsIgnoreCase("--select--")) {
+
+
+                txt_passoutyear_tv_error.setVisibility(View.VISIBLE);
+                flag_api = false;
+
+            }
+
+            if (strGrade.equalsIgnoreCase("--select--")) {
+
+
+                txt_grade_tv_error.setVisibility(View.VISIBLE);
+                flag_api = false;
 
 
             } else {
+
+                if (txt_Marks_et.getText().toString().isEmpty()) {
+
+
+                    txt_Marks_tv_error.setVisibility(View.VISIBLE);
+                    txt_Marks_et.requestFocus();
+                    flag_api = false;
+
+
+                } else {
+
+                    txt_Marks_et.clearFocus();
+                }
+
+            }
+
+            if (path_of_pic != "") {
+
+
+                txt_upload_doc_tv_error.setVisibility(View.VISIBLE);
+
+                flag_api = false;
+            }
+
+
+            if (flag_api) {
 
                 String getChildCount = String.valueOf(i);
 

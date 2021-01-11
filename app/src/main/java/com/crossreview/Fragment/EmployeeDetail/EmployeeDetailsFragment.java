@@ -76,8 +76,8 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     int mDay = calendar.get(Calendar.DAY_OF_MONTH);
     private View mview;
     private Context mctx;
-    private RelativeLayout  txt_contact_deatil_rl, txt_other_detail_rl;
-    private TextView txt_heading,  tv_txt_doj, tv_txt_interview_date, tv_txt_dob, document_title;
+    private RelativeLayout txt_contact_deatil_rl, txt_other_detail_rl;
+    private TextView txt_heading, tv_txt_doj, tv_txt_interview_date, tv_txt_dob, document_title;
     private String heading;
     private LinearLayout emp_contact_detail, mainll, emp_other_detail, txt_doj_ll, txt_interview_date_ll, txt_employee_id_ll,
             emp_detail_mainll, txt_dob_ll;
@@ -85,7 +85,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     private EditText txt_name_et, txt_fathers_name_et, txt_gender_et, txt_address1_et, txt_address2_et, txt_state_et, txt_city_et,
             txt_zipcode_et, txt_employee_id_et;
     private EmployeeDetailsViewModel employeeDetailsViewModel;
-    private String name, fathers_name,  dob, address1, address2,  state, city, zipcode, doj, doi, emp_id, data, profileUrl;
+    private String name, fathers_name, dob, address1, address2, state, city, zipcode, doj, doi, emp_id, data, profileUrl;
     private Date dates, date;
     private ImageView profile_iv;
     private Boolean selectdate = false, Dob = false;
@@ -99,10 +99,9 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
             txt_state_tv_error, txt_city_tv_error, txt_zipcode_tv_error, txt_doj_tv_error, txt_doi_tv_error, txt_empId_tv_error,
             txt_profile_tv_error;
     private ArrayAdapter adapter;
+    private boolean flag_api = true;
+    private String savepicUrl = "";
 
-    public EmployeeDetailsFragment() {
-
-    }
 
     public static EmployeeDetailsFragment newInstance() {
         return new EmployeeDetailsFragment();
@@ -132,7 +131,6 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
             mctx = getActivity();
             // Inflate the layout for this fragment
             mview = inflater.inflate(R.layout.fragment_employee_details, container, false);
-
 
 
         }
@@ -373,6 +371,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
                 JSONObject object = new JSONObject(jsonData);
                 JSONObject data = object.getJSONObject("data");
 
+                savepicUrl = data.getString(Constant.EmployeeProfilePic);
                 String compareValue = data.getString(Constant.EmployeeGender);
 
                 if (compareValue != null) {
@@ -405,7 +404,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
                 Log.e("Profile pic errror", e.getMessage());
             }
 
-            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployeeDetails,"");
+            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployeeDetails, "");
 
         }
 
@@ -474,7 +473,6 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
     public void onClick(View view) {
 
         switch (view.getId()) {
-
 
 
             case R.id.txt_contact_deatil_rl:
@@ -587,152 +585,173 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
         doi = tv_txt_interview_date.getText().toString();
         emp_id = txt_employee_id_et.getText().toString();
 
+        flag_api = true;
 
         if (name.isEmpty()) {
 
-            if (fathers_name.isEmpty()) {
-
-                if (Strgen.equalsIgnoreCase("Select Gender")) {
-
-                    if (dob.isEmpty()) {
-
-                        if (address1.isEmpty()) {
-
-                            if (state.isEmpty()) {
-
-                                if (city.isEmpty()) {
-
-                                    if (zipcode.isEmpty()) {
-
-                                        if (doj.isEmpty()) {
-
-                                            if (doi.isEmpty()) {
-
-                                                if (emp_id.isEmpty()) {
-
-                                                    if (path_of_pic == null || (path_of_pic == "")) {
-
-                                                        txt_profile_tv_error.setVisibility(View.VISIBLE);
-                                                    } else {
-
-                                                        txt_profile_tv_error.setVisibility(View.GONE);
-
-                                                    }
-
-                                                    txt_empId_tv_error.setVisibility(View.VISIBLE);
-                                                    txt_employee_id_et.requestFocus();
-                                                } else {
-
-                                                    txt_employee_id_et.clearFocus();
-                                                }
-
-                                                txt_doi_tv_error.setVisibility(View.VISIBLE);
-
-                                            } else {
-
-                                                txt_doi_tv_error.setVisibility(View.GONE);
-
-                                            }
-
-                                            txt_doj_tv_error.setVisibility(View.VISIBLE);
-
-                                        } else {
-
-                                            txt_doj_tv_error.setVisibility(View.GONE);
-
-                                        }
-
-                                        txt_zipcode_tv_error.setVisibility(View.VISIBLE);
-                                        txt_zipcode_et.requestFocus();
-
-                                    } else {
-
-                                        txt_zipcode_et.clearFocus();
-                                    }
-
-                                    txt_city_tv_error.setVisibility(View.VISIBLE);
-                                    txt_city_et.requestFocus();
-
-                                } else {
-
-                                    txt_city_et.clearFocus();
-                                }
-
-                                txt_state_tv_error.setVisibility(View.VISIBLE);
-                                txt_state_et.requestFocus();
-
-                            } else {
-
-                                txt_state_et.clearFocus();
-                            }
-
-                            txt_address_tv_error.setVisibility(View.VISIBLE);
-                            txt_address1_et.requestFocus();
-
-                        } else {
-
-                            txt_address1_et.clearFocus();
-                        }
-
-                        txt_dob_tv_error.setVisibility(View.VISIBLE);
-
-                    } else {
-
-                        txt_dob_tv_error.setVisibility(View.GONE);
-
-                    }
-
-                    txt_gender_tv_error.setVisibility(View.VISIBLE);
-
-                } else {
-
-                    txt_gender_tv_error.setVisibility(View.GONE);
-                }
-
-                txt_fathers_name_tv_error.setVisibility(View.VISIBLE);
-                txt_fathers_name_et.requestFocus();
-
-            } else {
-
-                txt_fathers_name_et.clearFocus();
-            }
-
             txt_name_tv_error.setVisibility(View.VISIBLE);
             txt_name_et.requestFocus();
+            flag_api = false;
 
         } else {
 
             txt_name_et.clearFocus();
         }
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(Constant.EmployeeName, name);
-        jsonObject.addProperty(Constant.EmployeeFathersName, fathers_name);
-        jsonObject.addProperty(Constant.EmployeeGender, Strgen);
-        jsonObject.addProperty(Constant.EmployeeDob, dob);
-        jsonObject.addProperty(Constant.EmployeeAddress, address1);
-        jsonObject.addProperty(Constant.Employeecity, city);
-        jsonObject.addProperty(Constant.EmployeeState, state);
-        jsonObject.addProperty(Constant.EmployeeZip, zipcode);
-        jsonObject.addProperty(Constant.EmployeeDoj, doj);
-        jsonObject.addProperty(Constant.EmployeeDoi, doi);
-        jsonObject.addProperty(Constant.EmployeeId, emp_id);
-        jsonObject.addProperty(EmployeeProfilePic, profileUrl);
+        if (fathers_name.isEmpty()) {
 
-//        experience.add(jsonObject);
-
-//        JsonObject object = new JsonObject();
-//        object.add(Constant.experience, experience);
-
-        JsonObject data = new JsonObject();
-        data.add(Constant.data, jsonObject);
+            txt_fathers_name_tv_error.setVisibility(View.VISIBLE);
+            txt_fathers_name_et.requestFocus();
+            flag_api = false;
 
 
-        employeeDetailsViewModel.saveEmployeeDetail(data);
+        } else {
 
-        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployeeDetails, data.toString());
+            txt_fathers_name_et.clearFocus();
+        }
+        if (Strgen.equalsIgnoreCase("Select Gender")) {
+
+            txt_gender_tv_error.setVisibility(View.VISIBLE);
+            flag_api = false;
 
 
+        } else {
+
+            txt_gender_tv_error.setVisibility(View.GONE);
+        }
+        if (dob.isEmpty()) {
+
+            txt_dob_tv_error.setVisibility(View.VISIBLE);
+            flag_api = false;
+
+
+        } else {
+
+            txt_dob_tv_error.setVisibility(View.GONE);
+
+        }
+        if (address1.isEmpty()) {
+
+            txt_address_tv_error.setVisibility(View.VISIBLE);
+            txt_address1_et.requestFocus();
+            flag_api = false;
+
+
+        } else {
+
+            txt_address1_et.clearFocus();
+        }
+        if (zipcode.isEmpty() || zipcode.length() < 5) {
+
+            txt_zipcode_tv_error.setVisibility(View.VISIBLE);
+            txt_zipcode_et.requestFocus();
+            flag_api = false;
+
+
+        } else {
+
+            txt_zipcode_et.clearFocus();
+        }
+
+        if (state.isEmpty()) {
+
+            txt_state_tv_error.setVisibility(View.VISIBLE);
+            txt_state_et.requestFocus();
+            flag_api = false;
+
+
+        } else {
+
+            txt_state_et.clearFocus();
+        }
+
+        if (city.isEmpty()) {
+
+            txt_city_tv_error.setVisibility(View.VISIBLE);
+            txt_city_et.requestFocus();
+            flag_api = false;
+
+
+        } else {
+
+            txt_city_et.clearFocus();
+        }
+
+        if (doj.isEmpty()) {
+
+            txt_doj_tv_error.setVisibility(View.VISIBLE);
+            flag_api = false;
+
+
+        } else {
+
+            txt_doj_tv_error.setVisibility(View.GONE);
+
+        }
+        if (doi.isEmpty()) {
+
+            txt_doi_tv_error.setVisibility(View.VISIBLE);
+            flag_api = false;
+
+
+        } else {
+
+            txt_doi_tv_error.setVisibility(View.GONE);
+
+        }
+
+        if (emp_id.isEmpty()) {
+
+            txt_empId_tv_error.setVisibility(View.VISIBLE);
+            txt_employee_id_et.requestFocus();
+            flag_api = false;
+
+        } else {
+
+            txt_employee_id_et.clearFocus();
+        }
+        if ((path_of_pic.equals("")) && savepicUrl.equals("")) {
+
+
+            txt_profile_tv_error.setVisibility(View.VISIBLE);
+            flag_api = false;
+
+            return;
+
+        } else {
+
+            txt_profile_tv_error.setVisibility(View.GONE);
+
+        }
+
+        if (flag_api) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty(Constant.EmployeeName, name);
+            jsonObject.addProperty(Constant.EmployeeFathersName, fathers_name);
+            jsonObject.addProperty(Constant.EmployeeGender, Strgen);
+            jsonObject.addProperty(Constant.EmployeeDob, dob);
+            jsonObject.addProperty(Constant.EmployeeAddress, address1);
+            jsonObject.addProperty(Constant.Employeecity, city);
+            jsonObject.addProperty(Constant.EmployeeState, state);
+            jsonObject.addProperty(Constant.EmployeeZip, zipcode);
+            jsonObject.addProperty(Constant.EmployeeDoj, doj);
+            jsonObject.addProperty(Constant.EmployeeDoi, doi);
+            jsonObject.addProperty(Constant.EmployeeId, emp_id);
+            jsonObject.addProperty(EmployeeProfilePic, profileUrl);
+
+
+            JsonObject data = new JsonObject();
+            data.add(Constant.data, jsonObject);
+
+
+            employeeDetailsViewModel.saveEmployeeDetail(data);
+
+            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployeeDetails, data.toString());
+
+            flag_api = true;
+        }
+
+        
     }
 
     @Override

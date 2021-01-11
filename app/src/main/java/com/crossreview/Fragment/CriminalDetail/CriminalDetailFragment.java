@@ -32,7 +32,9 @@ import android.widget.Toast;
 
 import com.crossreview.Activity.MainActivity;
 import com.crossreview.Fragment.EducationDetail.EducationDetailFragment;
+import com.crossreview.Fragment.EducationDetail.EducationStatusFragment;
 import com.crossreview.Fragment.EmployeeDetail.EmployeeDetailsFragment;
+import com.crossreview.Fragment.EmployeeDetail.EmployeeStatusFragment;
 import com.crossreview.Fragment.EmployeeDetail.EmployementDetailsFragment;
 import com.crossreview.Fragment.PreviewFragment;
 import com.crossreview.Model.PoliceVarificataionDetailsModel;
@@ -66,7 +68,8 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
 
     private View mview;
     private Context mctx;
-    private RelativeLayout employee_Detail_rl, employment_Detail_rl, education_detail_rl, txt_address_varification_rl, txt_identity_proof_rl, txt_personal_details_rl;
+    private RelativeLayout employee_Detail_rl, employment_Detail_rl, education_detail_rl, txt_address_varification_rl, txt_identity_proof_rl,
+            txt_personal_details_rl, employee_status_rl, educataion_status_rl;
     private EditText txt_mothers_name_et, txt_birth_place_et, txt_language_et;
     private LinearLayout expand_address_ll, expand_id_prood_ll, expand_personal_details_ll;
     private EditText txt_aadhar_num_et, txt_Dl_num_et, txt_voter_id_et, txt_passport_num_et, txt_name_of_local_F_R_et, txt_address_et, txt_height_et,
@@ -90,6 +93,7 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
     private int count = 0;
     String str = "";
     int strOldlen = 0;
+    private boolean flag_api = true;
     private ArrayAdapter<String> pobAdapter, languageAdapter, heightAdapter, weightAdapter;
 
     @Override
@@ -128,6 +132,8 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
         txt_address_varification_rl = mview.findViewById(R.id.txt_address_varification_rl);
         txt_identity_proof_rl = mview.findViewById(R.id.txt_identity_proof_rl);
         txt_personal_details_rl = mview.findViewById(R.id.txt_personal_details_rl);
+        employee_status_rl = mview.findViewById(R.id.employee_status_rl);
+        educataion_status_rl = mview.findViewById(R.id.educataion_status_rl);
         mainll = mview.findViewById(R.id.mainll);
         data_ll = mview.findViewById(R.id.data_ll);
 
@@ -252,6 +258,8 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
         txt_address_varification_rl.setOnClickListener(this);
         txt_identity_proof_rl.setOnClickListener(this);
         txt_personal_details_rl.setOnClickListener(this);
+        employee_status_rl.setOnClickListener(this);
+        educataion_status_rl.setOnClickListener(this);
         next_btn.setOnClickListener(this);
         mainll.setOnTouchListener(this);
         data_ll.setOnTouchListener(this);
@@ -397,7 +405,7 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
 
         }
 
-        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.CriminalDetails,"");
+        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.CriminalDetails, "");
 
 
     }
@@ -677,6 +685,20 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
                 }
                 break;
 
+            case R.id.employee_status_rl:
+
+                ((MainActivity) getActivity()).replaceFragment(new EmployeeStatusFragment(), true, KeyClass.FRAGMENT_EMPLOYEE_STATUS,
+                        KeyClass.FRAGMENT_EMPLOYEE_STATUS);
+
+                break;
+
+            case R.id.educataion_status_rl:
+
+                ((MainActivity) getActivity()).replaceFragment(new EducationStatusFragment(), true, KeyClass.FRAGMENT_EDUCATION_STATUS,
+                        KeyClass.FRAGMENT_EDUCATION_STATUS);
+
+                break;
+
             case R.id.next_btn:
 
                 saveCriminalBgDetails();
@@ -690,6 +712,8 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
 
     public void saveCriminalBgDetails() {
 
+
+        flag_api = true;
 
         if (txt_mothers_name_et.getText().toString().isEmpty()) {
 
@@ -705,41 +729,76 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
 
                                 if (txt_police_station_et.getText().toString().isEmpty()) {
 
+                                    flag_api = false;
+
                                     if (txt_district_et.getText().toString().isEmpty()) {
+
+                                        flag_api = false;
 
                                         if (txt_state_et.getText().toString().isEmpty()) {
 
+                                            flag_api = false;
+
                                             if (txt_city_et.getText().toString().isEmpty()) {
+
+                                                flag_api = false;
 
                                                 if (txt_Local_address_et.getText().toString().isEmpty()) {
 
+                                                    flag_api = false;
+
                                                     if (txt_local_pincode_et.getText().toString().isEmpty()) {
+
+                                                        flag_api = false;
 
                                                         if (txt_local_post_office_et.getText().toString().isEmpty()) {
 
+                                                            flag_api = false;
+
                                                             if (txt_local_police_station_et.getText().toString().isEmpty()) {
+
+                                                                flag_api = false;
 
                                                                 if (txt_local_district_et.getText().toString().isEmpty()) {
 
+                                                                    flag_api = false;
+
                                                                     if (txt_local_state_et.getText().toString().isEmpty()) {
+
+                                                                        flag_api = false;
 
                                                                         if (txt_local_city_et.getText().toString().isEmpty()) {
 
+                                                                            flag_api = false;
+
                                                                             if (txt_aadhar_num_et.getText().toString().isEmpty()) {
+
+                                                                                flag_api = false;
 
                                                                                 if (txt_name_of_local_F_R_et.getText().toString().isEmpty()) {
 
+                                                                                    flag_api = false;
+
                                                                                     if (txt_address_et.getText().toString().isEmpty()) {
+
+                                                                                        flag_api = false;
 
                                                                                         if (txt_height_spinner.getSelectedItem().toString().equalsIgnoreCase("0 cm")) {
 
+                                                                                            flag_api = false;
+
                                                                                             if (txt_weight_spinner.getSelectedItem().toString().equalsIgnoreCase("0 kg")) {
 
+                                                                                                flag_api = false;
+
                                                                                                 if (txt_Complexion_et.getText().toString().isEmpty()) {
+
+                                                                                                    flag_api = false;
 
                                                                                                     if (txt_identification_mark_et.getText().toString().isEmpty()) {
 
                                                                                                         txt_identification_mark_tv_error.setVisibility(View.VISIBLE);
+                                                                                                        flag_api = false;
                                                                                                     }
 
                                                                                                     txt_complexion_tv_error.setVisibility(View.VISIBLE);
@@ -852,6 +911,7 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
                                 }
 
                                 Utility.setError(txt_post_office_tv, txt_post_office_et, mctx);
+                                flag_api = false;
 
                             } else {
 
@@ -861,6 +921,7 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
                             }
 
                             Utility.setError(txt_pincode_tv, txt_pincode_et, mctx);
+                            flag_api = false;
 
                         } else {
 
@@ -870,20 +931,25 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
 
                         txt_address_tv_error.setVisibility(View.VISIBLE);
                         txt_permanent_address_et.requestFocus();
+                        flag_api = false;
                     } else {
 
                         txt_address_tv_error.clearFocus();
                     }
 
                     txt_language_tv_error.setVisibility(View.VISIBLE);
+                    flag_api = false;
                 }
 
                 txt_PoB_tv_error.setVisibility(View.VISIBLE);
+                flag_api = false;
 
             }
 
             txt_mothers_name_tv_error.setVisibility(View.VISIBLE);
             txt_mothers_name_et.requestFocus();
+
+            flag_api = false;
 
         } else {
 

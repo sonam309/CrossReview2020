@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import com.crossreview.Activity.MainActivity;
 import com.crossreview.Fragment.CriminalDetail.CriminalBackgroundStatusFragment;
 import com.crossreview.Fragment.EmployeeDetail.EmployeeDetailsFragment;
+import com.crossreview.Fragment.EmployeeDetail.EmployeeStatusFragment;
 import com.crossreview.Fragment.EmployeeDetail.EmployementDetailsFragment;
 import com.crossreview.Model.ClsSaveEmployeeDetailModel;
 import com.crossreview.R;
@@ -33,7 +34,7 @@ public class EducationStatusFragment extends Fragment implements View.OnClickLis
 
     private View mview;
     private Context mctx;
-    private RelativeLayout employer_Detail_rl, employment_Detail_rl;
+    private RelativeLayout employer_Detail_rl, employment_Detail_rl,employee_status_rl;
     private RadioGroup edu_status_Rg;
     private RadioButton radioButton;
     private CardView next_btn;
@@ -72,6 +73,8 @@ public class EducationStatusFragment extends Fragment implements View.OnClickLis
 
         employer_Detail_rl = mview.findViewById(R.id.employer_Detail_rl);
         employment_Detail_rl = mview.findViewById(R.id.employment_Detail_rl);
+        employee_status_rl = mview.findViewById(R.id.employee_status_rl);
+
 
 
         edu_status_Rg = mview.findViewById(R.id.edu_status_Rg);
@@ -90,21 +93,25 @@ public class EducationStatusFragment extends Fragment implements View.OnClickLis
 
     private void viewSetup() {
 
+
+
+
+        employer_Detail_rl.setOnClickListener(this);
+        employment_Detail_rl.setOnClickListener(this);
+        employee_status_rl.setOnClickListener(this);
+        next_btn.setOnClickListener(this);
+        edu_status_Rg.setOnCheckedChangeListener(this);
+
         if (PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeStatus).equalsIgnoreCase("true")) {
 
             employment_Detail_rl.setVisibility(View.VISIBLE);
+//            radioButton.setChecked(true);
 
         } else {
 
             employment_Detail_rl.setVisibility(View.GONE);
 
         }
-
-
-        employer_Detail_rl.setOnClickListener(this);
-        employment_Detail_rl.setOnClickListener(this);
-        next_btn.setOnClickListener(this);
-        edu_status_Rg.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -123,6 +130,13 @@ public class EducationStatusFragment extends Fragment implements View.OnClickLis
 
                 ((MainActivity) getActivity()).replaceFragment(new EmployementDetailsFragment(), true, KeyClass.FRAGMENT_EMPLOYEMENT_DETAILS,
                         KeyClass.FRAGMENT_EMPLOYEMENT_DETAILS);
+
+                break;
+
+            case R.id.employee_status_rl:
+
+                ((MainActivity) getActivity()).replaceFragment(new EmployeeStatusFragment(), true, KeyClass.FRAGMENT_EMPLOYEE_STATUS,
+                        KeyClass.FRAGMENT_EMPLOYEE_STATUS);
 
                 break;
 
