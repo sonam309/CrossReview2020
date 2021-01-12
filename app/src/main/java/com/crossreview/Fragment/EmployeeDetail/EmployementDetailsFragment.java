@@ -98,6 +98,8 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
     private boolean flag_api = true;
 
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -1258,7 +1260,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                 reportingPersonDesignation.clearFocus();
             }
 
-            if (path_of_pic.equals("")) {
+            if (path_of_pic.equals("")&& savepicurl.equals("")) {
 
                 txt_upload_tv_error.setVisibility(View.VISIBLE);
                 

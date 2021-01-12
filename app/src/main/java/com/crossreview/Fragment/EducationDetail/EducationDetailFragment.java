@@ -851,7 +851,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
         } else if (requestCode == START_ACTIVITY_GALLERY_CODE && resultCode == -1) {
             //String pathOfPic = "";
-//            path_of_pic = Utility.getPathOfSelectedImage(data.getData());
+            path_of_pic = Utility.getPathOfSelectedImage(data.getData());
             Uri selectedImage = data.getData();
             path_of_pic = FilePath.getPath(getActivity(), selectedImage);
 
