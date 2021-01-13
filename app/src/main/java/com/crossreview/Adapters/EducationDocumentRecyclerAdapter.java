@@ -13,8 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.crossreview.Model.PreviewInfoModel;
 import com.crossreview.R;
+import com.crossreview.Utilites.Utility;
 
 import java.util.List;
+
+import okhttp3.internal.Util;
 
 public class EducationDocumentRecyclerAdapter extends RecyclerView.Adapter<EducationDocumentRecyclerAdapter.EducationDocumentRecyclerViewHolder>{
 
@@ -40,6 +43,7 @@ public class EducationDocumentRecyclerAdapter extends RecyclerView.Adapter<Educa
 
         Glide.with(context)
                 .load(previewInfoModelList.get(position).getDocumentURL())
+                .placeholder(Utility.getCircleProgress())
                 .into(holder.doc_file);
 
         holder.doc_name.setText(previewInfoModelList.get(position).getDocumentName());

@@ -133,6 +133,38 @@
                     android:src="@drawable/ic_edit" />
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/education_status_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp25"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginRight="@dimen/dp25"
+                android:background="@drawable/square_white_bg"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp20"
+                android:paddingTop="@dimen/dp10"
+                android:paddingRight="@dimen/dp20"
+                android:paddingBottom="@dimen/dp10"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/educataion_status"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_16" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp15"
+                    android:layout_height="@dimen/dp15"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:src="@drawable/ic_edit" />
+            </RelativeLayout>
+
 
             <RelativeLayout
                 android:id="@+id/education_detail_rl"

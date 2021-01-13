@@ -94,10 +94,8 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
     private ArrayAdapter ctcInLacAdapter, ctcInthousAdapter;
     private String picUrl = "";
     private String temp = "";
-    private String savepicurl="";
+    private String savepicurl = "";
     private boolean flag_api = true;
-
-
 
 
     @Override
@@ -486,13 +484,16 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                     JSONArray doc = experienceData.getJSONArray("document");
                     for (int j = 0; j < doc.length(); j++) {
 
+//                        doc_file = uploadDoc.findViewById(R.id.doc_file);
+
                         JSONObject document = doc.getJSONObject(j);
 
-                        savepicurl=document.getString(Constant.Document_URL);
+                        savepicurl = document.getString(Constant.Document_URL);
 
-                        Glide.with(getContext())
-                                .load(document.getString(Constant.Document_URL))
-                                .into(doc_file);
+//                        Glide.with(getContext())
+//                                .load(document.getString(Constant.Document_URL))
+//                                .placeholder(Utility.getCircleProgress())
+//                                .into(doc_file);
 
 
                     }
@@ -504,7 +505,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                 e.printStackTrace();
             }
 
-            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployementDetails, "");
+//            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployementDetails, "");
 
         }
 
@@ -794,111 +795,122 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
         EditText txt_reporting_person_et = view.findViewById(R.id.txt_reporting_person_et);
         EditText txt_reporting_person_designataion_et = view.findViewById(R.id.txt_reporting_person_designataion_et);
 
+        flag_api = true;
 
         if (joining_date.getText().toString().isEmpty()) {
 
-
-            if (relieving_date.getText().toString().isEmpty()) {
-
-
-                if (txt_designation_et.getText().toString().isEmpty()) {
-
-
-                    if (txt_job_role_et.getText().toString().isEmpty()) {
-
-
-                        if (orgNameId == null) {
-
-
-                            if (reason_of_leaving_et.getText().toString().isEmpty()) {
-
-
-                                if ((stringCtcLac.equalsIgnoreCase("0 Lac")) && (stringCtcThousand.equalsIgnoreCase("0 thousand"))) {
-
-
-                                    if (txt_reporting_person_et.getText().toString().isEmpty()) {
-
-
-                                        if (txt_reporting_person_designataion_et.getText().toString().isEmpty()) {
-
-
-                                            if (path_of_pic == null || path_of_pic.equals("")) {
-
-                                                txt_upload_tv_error.setVisibility(View.VISIBLE);
-
-                                            } else {
-
-                                                txt_upload_tv_error.setVisibility(View.GONE);
-
-                                            }
-
-                                            txt_reporting_person_designataion_tv_error.setVisibility(View.VISIBLE);
-                                            txt_reporting_person_designataion_et.requestFocus();
-
-
-                                        } else {
-
-                                            txt_reporting_person_designataion_et.clearFocus();
-                                        }
-
-                                        txt_reporting_person_tv_error.setVisibility(View.VISIBLE);
-                                        txt_reporting_person_et.requestFocus();
-
-
-                                    } else {
-
-                                        txt_reporting_person_et.clearFocus();
-                                    }
-
-                                    txt_ctc_tv_error.setVisibility(View.VISIBLE);
-
-                                } else {
-
-                                    txt_ctc_tv_error.setVisibility(View.GONE);
-                                }
-
-
-                                txt_reason_of_leaving_tv_error.setVisibility(View.VISIBLE);
-                                txt_reason_of_leaving_et.requestFocus();
-
-
-                            } else {
-
-                                txt_reason_of_leaving_et.clearFocus();
-
-                            }
-
-                            txt_org_name_tv_error.setVisibility(View.VISIBLE);
-
-                        }
-
-                        txt_jobRole_tv_error.setVisibility(View.VISIBLE);
-                        txt_job_role_et.requestFocus();
-
-
-                    } else {
-
-                        txt_job_role_et.clearFocus();
-
-                    }
-
-                    txt_designataion_tv_error.setVisibility(View.VISIBLE);
-                    txt_designation_et.requestFocus();
-
-                } else {
-
-                    txt_designation_et.clearFocus();
-
-                }
-
-                txt_dor_tv_error.setVisibility(View.VISIBLE);
-
-            }
-
             txt_doj_tv_error.setVisibility(View.VISIBLE);
+            flag_api = false;
+
+        }
+
+        if (relieving_date.getText().toString().isEmpty()) {
+
+
+            flag_api = false;
+
+            txt_dor_tv_error.setVisibility(View.VISIBLE);
+
+        }
+
+        if (txt_designation_et.getText().toString().isEmpty()) {
+
+
+            flag_api = false;
+
+            txt_designataion_tv_error.setVisibility(View.VISIBLE);
+            txt_designation_et.requestFocus();
 
         } else {
 
+            txt_designation_et.clearFocus();
+
+        }
+        if (txt_job_role_et.getText().toString().isEmpty()) {
+
+
+            flag_api = false;
+
+            txt_jobRole_tv_error.setVisibility(View.VISIBLE);
+            txt_job_role_et.requestFocus();
+
+
+        } else {
+
+            txt_job_role_et.clearFocus();
+
+        }
+        if (orgNameId == null) {
+
+
+            flag_api = false;
+
+            txt_org_name_tv_error.setVisibility(View.VISIBLE);
+
+        }
+        if (reason_of_leaving_et.getText().toString().isEmpty()) {
+
+            flag_api = false;
+
+            txt_reason_of_leaving_tv_error.setVisibility(View.VISIBLE);
+            txt_reason_of_leaving_et.requestFocus();
+
+
+        } else {
+
+            txt_reason_of_leaving_et.clearFocus();
+
+        }
+        if ((stringCtcLac.equalsIgnoreCase("0 Lac")) && (stringCtcThousand.equalsIgnoreCase("0 thousand"))) {
+
+
+            flag_api = false;
+            txt_ctc_tv_error.setVisibility(View.VISIBLE);
+
+        } else {
+
+            txt_ctc_tv_error.setVisibility(View.GONE);
+        }
+
+        if (txt_reporting_person_et.getText().toString().isEmpty()) {
+
+
+            flag_api = false;
+
+            txt_reporting_person_tv_error.setVisibility(View.VISIBLE);
+            txt_reporting_person_et.requestFocus();
+
+
+        } else {
+
+            txt_reporting_person_et.clearFocus();
+        }
+        if (txt_reporting_person_designataion_et.getText().toString().isEmpty()) {
+
+
+            flag_api = false;
+
+            txt_reporting_person_designataion_tv_error.setVisibility(View.VISIBLE);
+            txt_reporting_person_designataion_et.requestFocus();
+
+
+        } else {
+
+            txt_reporting_person_designataion_et.clearFocus();
+        }
+
+        if (path_of_pic == null || path_of_pic.equals("")) {
+
+            flag_api = false;
+            txt_upload_tv_error.setVisibility(View.VISIBLE);
+
+        } else {
+
+            txt_upload_tv_error.setVisibility(View.GONE);
+
+        }
+
+        if (flag_api) {
 
             view.setVisibility(View.GONE);
             addEmployementView();
@@ -1012,20 +1024,20 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
 
         } else if (requestCode == START_ACTIVITY_GALLERY_CODE && resultCode == -1) {
-            String pathOfPic = "";
-            pathOfPic = Utility.getPathOfSelectedImage(data.getData());
+
             Uri selectedImage = data.getData();
-            pathOfPic = FilePath.getPath(getActivity(), selectedImage);
+            path_of_pic = FilePath.getPath(getActivity(), selectedImage);
 
-            Utility.uploadImageAwsToServer(pathOfPic, this);
-            if (pathOfPic.contains("pdf")) {
+            Utility.uploadImageAwsToServer(path_of_pic, this);
+            if (path_of_pic.contains("pdf")) {
 
 
-                new DownloadPdfAndShowInImageView(getActivity(), "document", doc_file).execute(pathOfPic, "document");
+                new DownloadPdfAndShowInImageView(getActivity(), "document", doc_file).execute(path_of_pic, "document");
+
             } else {
 
 //            try {f hyvnn inh  h
-                doc_file.setImageURI(Uri.parse(pathOfPic));
+                doc_file.setImageURI(Uri.parse(path_of_pic));
             }
 
 
@@ -1260,10 +1272,10 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                 reportingPersonDesignation.clearFocus();
             }
 
-            if (path_of_pic.equals("")&& savepicurl.equals("")) {
+            if (path_of_pic.equals("") && savepicurl.equals("")) {
 
                 txt_upload_tv_error.setVisibility(View.VISIBLE);
-                
+
                 flag_api = false;
 
             } else {

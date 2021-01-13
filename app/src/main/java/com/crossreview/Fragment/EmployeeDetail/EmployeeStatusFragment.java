@@ -38,8 +38,8 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
     private RelativeLayout employer_Detail_rl;
     private CardView next_btn;
     private RadioGroup emp_status_Rg;
-    private RadioButton radioButton;
-    private String emp_experience="";
+    private RadioButton radioButton,txt_fresher_rb,txt_experience_rb;
+    private String emp_experience = "";
     private Boolean empStatus = true;
     private EmployeeDetailsViewModel employeeDetailsViewModel;
     private int radioId;
@@ -87,6 +87,8 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
         next_btn = mview.findViewById(R.id.next_btn);
 
         emp_status_Rg = mview.findViewById(R.id.emp_status_Rg);
+        txt_fresher_rb = mview.findViewById(R.id.txt_fresher_rb);
+        txt_experience_rb = mview.findViewById(R.id.txt_experience_rb);
 
 
     }
@@ -105,34 +107,27 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
         emp_status_Rg.setOnCheckedChangeListener(this);
 
 
-//        boolean rb = PrefrenceShared.getInstance().getPreferenceData().getValueBooleanFromKey(Constant.EmployeeStatus);
-//
-//        radioId = emp_status_Rg.getCheckedRadioButtonId();
-//        RadioButton b=(RadioButton)mview.findViewById(radioId);
-//
-//
-//            if (rb) {
-//
-//                b.setChecked(true);
-//
-//            }
 
-        if (PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeStatus).equalsIgnoreCase("false")) {
+        String btnR = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeStatus);
+        if (btnR != null) {
 
-            if(radioButton!=null) {
-                radioId = emp_status_Rg.getCheckedRadioButtonId();
-        RadioButton b=(RadioButton)mview.findViewById(radioId);
+            if (btnR.equalsIgnoreCase("fresher")) {
 
-        b.setChecked(true);
+                txt_fresher_rb.setChecked(true);
+                txt_experience_rb.setChecked(false);
 
+                }else {
+
+                txt_fresher_rb.setChecked(false);
+                txt_experience_rb.setChecked(true);
 
             }
-        }
+            }
 
 
 
 
-        }
+    }
 
     @Override
     public void onClick(View view) {
@@ -214,7 +209,7 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
 
         }
 
-        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployeeStatus, (String.valueOf(empStatus)));
+        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployeeStatus, (String.valueOf(emp_experience)));
 
 
     }

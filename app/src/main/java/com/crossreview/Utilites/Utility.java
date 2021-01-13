@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -28,6 +29,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentialsProvider;
@@ -278,6 +281,17 @@ public class Utility {
                 imageView.setImageBitmap(myBitmap);
             }
         }
+    }
+
+
+    public static CircularProgressDrawable getCircleProgress(){
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(MainActivity.context);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(20f);
+        circularProgressDrawable.setColorFilter(ContextCompat.getColor(MainActivity.context, R.color.appcolor), PorterDuff.Mode.SRC_IN);
+        circularProgressDrawable.start();
+        return circularProgressDrawable;
+
     }
 
     public static void showKeyboard(Activity context) {

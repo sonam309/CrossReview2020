@@ -232,24 +232,32 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
 
     private void viewSetup() {
 
+        String empStatus = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeStatus);
 
-        if (PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeStatus).equalsIgnoreCase("true")) {
+        if (empStatus != null) {
 
-            employment_Detail_rl.setVisibility(View.VISIBLE);
+            if (empStatus.equalsIgnoreCase("true")) {
 
-        } else {
+                employment_Detail_rl.setVisibility(View.GONE);
 
-            employment_Detail_rl.setVisibility(View.GONE);
+            } else {
+
+                employment_Detail_rl.setVisibility(View.VISIBLE);
+
+            }
 
         }
+        String edustatus = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EducationStatus);
+        if (edustatus != null) {
 
-        if (PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EducationStatus).equalsIgnoreCase("Yes")) {
+            if (edustatus.equalsIgnoreCase("Yes")) {
 
-            education_detail_rl.setVisibility(View.VISIBLE);
+                education_detail_rl.setVisibility(View.GONE);
 
-        } else {
+            } else {
 
-            education_detail_rl.setVisibility(View.GONE);
+                education_detail_rl.setVisibility(View.VISIBLE);
+            }
         }
 
         employee_Detail_rl.setOnClickListener(this);
@@ -405,7 +413,7 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
 
         }
 
-        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.CriminalDetails, "");
+//        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.CriminalDetails, "");
 
 
     }
@@ -951,7 +959,9 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
 
             flag_api = false;
 
-        } else {
+        }
+
+        if(flag_api){
 
 
             txt_mothers_name_et.clearFocus();

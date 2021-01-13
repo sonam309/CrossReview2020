@@ -44,6 +44,7 @@ public final class KeyClass {
     public static final String Email = "Email";
     public static final String FatherName = "FatherName";
     public static final String SaveData = "save data";
+    public static final String CourseType="coursetype";
 
 
     //save Json Data
@@ -55,6 +56,7 @@ public final class KeyClass {
     public static final String CriminalDetails = "CriminalDetails";
     public static final String EmployeeStatus = "EmployeeStatus";
     public static final String EducationStatus = "EducationStatus";
+    public static final String CriminalBgStatus="CriminalBgStatus";
 
 
 

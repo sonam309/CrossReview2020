@@ -14,6 +14,7 @@ import com.crossreview.Fragment.SwipeFragment;
 import com.crossreview.Fragment.Welcome.SplashFragment;
 import com.crossreview.R;
 import com.crossreview.Utilites.KeyClass;
+import com.crossreview.Utilites.PrefrenceShared;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -47,6 +48,12 @@ public class SplashScreen extends AppCompatActivity {
 
            }
        },2000);
+
+
+//        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployeeDetails, "");
+//        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployementDetails, "");
+//        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EducationDetail, "");
+//        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.CriminalDetails, "");
 
 
     }

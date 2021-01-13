@@ -249,6 +249,7 @@
     <string name="complexion_error">Please Enter Complexion.</string>
     <string name="identification_mark_error">Please Enter Identity Mark.</string>
     <string name="educataion_status">Education Status</string>
+    <string name="Submit">Submit</string>
 
 
     <string-array name="height_arr">

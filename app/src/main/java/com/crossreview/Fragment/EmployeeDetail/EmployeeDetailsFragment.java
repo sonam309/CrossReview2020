@@ -167,15 +167,13 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
 
         } else if (requestCode == START_ACTIVITY_GALLERY_CODE && resultCode == -1) {
-            String pathOfPic = "";
-            pathOfPic = Utility.getPathOfSelectedImage(data.getData());
             Uri selectedImage = data.getData();
-            pathOfPic = FilePath.getPath(getActivity(), selectedImage);
+            path_of_pic = FilePath.getPath(getActivity(), selectedImage);
 
-            Utility.uploadImageAwsToServer(pathOfPic, this);
+            Utility.uploadImageAwsToServer(path_of_pic, this);
 
             try {
-                profile_iv.setImageURI(Uri.parse(pathOfPic));
+                profile_iv.setImageURI(Uri.parse(path_of_pic));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -392,6 +390,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
 
                 Glide.with(mctx)
                         .load(data.getString(Constant.EmployeeProfilePic))
+                        .placeholder(Utility.getCircleProgress())
                         .into(profile_iv);
 
 
@@ -404,7 +403,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
                 Log.e("Profile pic errror", e.getMessage());
             }
 
-            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployeeDetails, "");
+//            PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployeeDetails, "");
 
         }
 

@@ -29,14 +29,16 @@ import com.crossreview.Utilites.PrefrenceShared;
 import com.crossreview.ViewModel.EmployeeDetailsViewModel;
 import com.google.gson.JsonObject;
 
+import java.security.Key;
+
 
 public class EducationStatusFragment extends Fragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener, Observer<ClsSaveEmployeeDetailModel> {
 
     private View mview;
     private Context mctx;
-    private RelativeLayout employer_Detail_rl, employment_Detail_rl,employee_status_rl;
+    private RelativeLayout employer_Detail_rl, employment_Detail_rl, employee_status_rl;
     private RadioGroup edu_status_Rg;
-    private RadioButton radioButton;
+    private RadioButton radioButton, txt_edu_yes_rb, txt_edu_no_rb;
     private CardView next_btn;
     private String edu_varification;
     private Boolean edu_status = true;
@@ -74,7 +76,8 @@ public class EducationStatusFragment extends Fragment implements View.OnClickLis
         employer_Detail_rl = mview.findViewById(R.id.employer_Detail_rl);
         employment_Detail_rl = mview.findViewById(R.id.employment_Detail_rl);
         employee_status_rl = mview.findViewById(R.id.employee_status_rl);
-
+        txt_edu_yes_rb = mview.findViewById(R.id.txt_edu_yes_rb);
+        txt_edu_no_rb = mview.findViewById(R.id.txt_edu_no_rb);
 
 
         edu_status_Rg = mview.findViewById(R.id.edu_status_Rg);
@@ -93,24 +96,45 @@ public class EducationStatusFragment extends Fragment implements View.OnClickLis
 
     private void viewSetup() {
 
-
-
-
         employer_Detail_rl.setOnClickListener(this);
         employment_Detail_rl.setOnClickListener(this);
         employee_status_rl.setOnClickListener(this);
         next_btn.setOnClickListener(this);
         edu_status_Rg.setOnCheckedChangeListener(this);
 
-        if (PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeStatus).equalsIgnoreCase("true")) {
+        String eduStatus = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EducationStatus);
+        String empStatus=PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeStatus);
 
-            employment_Detail_rl.setVisibility(View.VISIBLE);
+        if (eduStatus != null) {
+            if (eduStatus.equalsIgnoreCase("NO")) {
+
 //            radioButton.setChecked(true);
+                txt_edu_no_rb.setChecked(true);
+                txt_edu_yes_rb.setChecked(false);
 
-        } else {
 
-            employment_Detail_rl.setVisibility(View.GONE);
+            } else {
 
+                txt_edu_no_rb.setChecked(false);
+                txt_edu_yes_rb.setChecked(true);
+
+
+            }
+        }
+
+        if(empStatus!=null){
+
+            if(empStatus.equalsIgnoreCase("Fresher")){
+
+                employment_Detail_rl.setVisibility(View.GONE);
+
+
+            }else {
+
+                employment_Detail_rl.setVisibility(View.VISIBLE);
+
+
+            }
         }
     }
 
@@ -196,14 +220,13 @@ public class EducationStatusFragment extends Fragment implements View.OnClickLis
                     KeyClass.FRAGMENT_EDUCATION_DETAIL);
 
 
-
         } else if (!edu_status) {
 
             ((MainActivity) getActivity()).replaceFragment(new CriminalBackgroundStatusFragment(), true, KeyClass.FRAGMENT_CRIMINAL_STATUS,
                     KeyClass.FRAGMENT_CRIMINAL_STATUS);
         }
 
-        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EducationStatus,edu_varification);
+        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EducationStatus, edu_varification);
 
     }
 }

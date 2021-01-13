@@ -14,9 +14,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ import com.crossreview.Model.PreviewInfoModel;
 import com.crossreview.R;
 import com.crossreview.Utilites.KeyClass;
 import com.crossreview.Utilites.PrefrenceShared;
+import com.crossreview.Utilites.Utility;
 import com.crossreview.ViewModel.EmployeeDetailsViewModel;
 import com.crossreview.ViewModel.PreviewInfoViewModel;
 
@@ -45,7 +48,7 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
     private Context mctx;
     private TextView txt_back_btn, txt_emp_name, txt_emp_contact, txt_emp_email, txt_emp_dob, txt_emp_gender, txt_emp_address;
     private TextView txt_company_name, txt_company_address, txt_company_state, company_hr_name, company_hr_email, company_hr_contact;
-    private CardView makePayment_btn;
+    private CardView makePayment_btn, submit_btn;
     private PreviewInfoViewModel previewInfoViewModel;
     private RecyclerView employedetaill_recyclerview, education_details_recyclerview, personalDetails_recyclerview, address_RecyclerView;
     private ImageView profile_image;
@@ -54,7 +57,7 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
     private EducationDetailsRecyclerAdapter educationDetailsRecyclerAdapter;
     private PoliceVarificationRecyclerAdapter policeVarificationRecyclerAdapter;
     private AddressRecyclerAdapter addressRecyclerAdapter;
-    private LinearLayout employmentDetail_ll,education_detail_ll,txt_police_varification_ll;
+    private LinearLayout employmentDetail_ll, education_detail_ll, txt_police_varification_ll;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,6 +101,7 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
 
         txt_back_btn = mview.findViewById(R.id.txt_back_btn);
         makePayment_btn = mview.findViewById(R.id.makePayment_btn);
+        submit_btn = mview.findViewById(R.id.submit_btn);
 
         employedetaill_recyclerview = mview.findViewById(R.id.employedetaill_recyclerview);
         education_details_recyclerview = mview.findViewById(R.id.education_details_recyclerview);
@@ -134,16 +138,38 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
         previewInfoViewModel = new ViewModelProvider(this).get(PreviewInfoViewModel.class);
         previewInfoViewModel.previewInfo.observe(this, this);
 
+
+
+
+
+
     }
 
     private void viewSetup() {
 
         txt_back_btn.setOnClickListener(this);
         makePayment_btn.setOnClickListener(this);
+        submit_btn.setOnClickListener(this);
 
         employedetaill_recyclerview.setLayoutManager(new LinearLayoutManager(mctx));
         education_details_recyclerview.setLayoutManager(new LinearLayoutManager(mctx));
         personalDetails_recyclerview.setLayoutManager(new LinearLayoutManager(mctx));
+
+        String eduChildCount = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EduChildCount);
+        String empChildCount = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmpChildCount);
+
+        if (eduChildCount.equalsIgnoreCase("0") && empChildCount.equalsIgnoreCase("0")) {
+
+            submit_btn.setVisibility(View.VISIBLE);
+            makePayment_btn.setVisibility(View.GONE);
+
+        } else {
+
+            makePayment_btn.setVisibility(View.VISIBLE);
+            submit_btn.setVisibility(View.GONE);
+
+        }
+
 
 
     }
@@ -174,6 +200,13 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
                             KeyClass.FRAGMENT_LOGIN);
                 }
 
+
+                break;
+
+            case R.id.submit_btn:
+
+                ((MainActivity) getActivity()).replaceFragment(new ThankYouFragment(), true, KeyClass.FRAGMENT_THANK_YOU, KeyClass.FRAGMENT_THANK_YOU);
+
                 break;
         }
 
@@ -194,7 +227,9 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
             String fathersName = previewInfoModel.getData().getEmployeeFatherName();
             PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.FatherName, fathersName);
 
-            Glide.with(getContext()).load(Uri.parse(previewInfoModel.getData().getEmployeProfilePic())).into(profile_image);
+            Glide.with(getContext()).load(Uri.parse(previewInfoModel.getData().getEmployeProfilePic()))
+                    .placeholder(Utility.getCircleProgress())
+                    .into(profile_image);
 
 
             //employer details
@@ -212,17 +247,17 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
             } else {
                 employmentDetail_ll.setVisibility(View.GONE);
             }
-            if(previewInfoModel.getData().getEducation().size()!=0 && previewInfoModel.getData().getEducation()!=null) {
+            if (previewInfoModel.getData().getEducation().size() != 0 && previewInfoModel.getData().getEducation() != null) {
                 educationDetailsRecyclerAdapter = new EducationDetailsRecyclerAdapter(mctx, previewInfoModel.getData().getEducation());
                 education_detail_ll.setVisibility(View.VISIBLE);
-            }else {
+            } else {
 
                 education_detail_ll.setVisibility(View.GONE);
             }
-            if (previewInfoModel.getData().getPoliceVerifications() != null && previewInfoModel.getData().getPoliceVerifications().size()!=0) {
+            if (previewInfoModel.getData().getPoliceVerifications() != null && previewInfoModel.getData().getPoliceVerifications().size() != 0) {
                 policeVarificationRecyclerAdapter = new PoliceVarificationRecyclerAdapter(previewInfoModel.getData().getPoliceVerifications(), mctx);
                 txt_police_varification_ll.setVisibility(View.VISIBLE);
-            }else {
+            } else {
 
                 txt_police_varification_ll.setVisibility(View.GONE);
             }
@@ -234,12 +269,10 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
             personalDetails_recyclerview.setAdapter(policeVarificationRecyclerAdapter);
 
 
+
         }
 
     }
 
-//    public void onBackPressed() {
-//
-//
-//    }
+
 }

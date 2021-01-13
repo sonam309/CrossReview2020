@@ -80,7 +80,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
     private CardView next_btn;
     private EditText txt_education_et, txt_course_et, txt_specialization_et, txt_passout_year_et, txt_grade_et, txt_Marks_et;
     private RadioGroup course_type_rg;
-    private RadioButton radioButton;
+    private RadioButton radioButton, txt_course_fullTime_rb, txt_course_part_time_rb, txt_course_coresspondence_rb;
     private String courseType = "Full Time";
     private ImageView doc_file, iv_delete, delete_iv;
     private TextView uploadBtn, doc_name, txt_university_tv, marks_tv;
@@ -170,15 +170,21 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
     private void viewSetup() {
 
-        if (PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeStatus).equalsIgnoreCase("true")) {
+        String empStatus = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeStatus);
+        String eduStatus = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EducationStatus);
 
-            employment_Detail_rl.setVisibility(View.VISIBLE);
 
-        } else {
+        if (empStatus != null)
 
-            employment_Detail_rl.setVisibility(View.GONE);
+            if (empStatus.equalsIgnoreCase("fresher")) {
 
-        }
+                employment_Detail_rl.setVisibility(View.GONE);
+
+            } else {
+
+                employment_Detail_rl.setVisibility(View.VISIBLE);
+
+            }
 
 
         employer_Detail_rl.setOnClickListener(this);
@@ -274,6 +280,29 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         uploadDocument();
         getDataFromPrefrence();
 
+        String courseType = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.CourseType);
+        if (courseType != null) {
+
+            if (courseType.equalsIgnoreCase("full time")) {
+
+                txt_course_fullTime_rb.setChecked(true);
+                txt_course_coresspondence_rb.setChecked(false);
+                txt_course_part_time_rb.setChecked(false);
+
+            } else if (courseType.equalsIgnoreCase("part time")) {
+
+                txt_course_fullTime_rb.setChecked(false);
+                txt_course_coresspondence_rb.setChecked(false);
+                txt_course_part_time_rb.setChecked(true);
+
+            } else {
+
+                txt_course_fullTime_rb.setChecked(false);
+                txt_course_coresspondence_rb.setChecked(true);
+                txt_course_part_time_rb.setChecked(false);
+            }
+        }
+
 
         education_dynamic_view.addView(view);
 
@@ -306,6 +335,9 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
         //Radio Group
         course_type_rg = view.findViewById(R.id.course_type_rg);
+        txt_course_fullTime_rb = view.findViewById(R.id.txt_course_fullTime_rb);
+        txt_course_part_time_rb = view.findViewById(R.id.txt_course_part_time_rb);
+        txt_course_coresspondence_rb = view.findViewById(R.id.txt_course_coresspondence_rb);
 
         //TextView
         uploadBtn = view.findViewById(R.id.uploadBtn);
@@ -337,7 +369,6 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         AutoCompleteTextView txt_university_et = view.findViewById(R.id.txt_university_et);
 
 
-
         final String[] model = new String[1];
         txt_university_et.addTextChangedListener(new TextWatcher() {
             @Override
@@ -366,7 +397,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
                 final ArrayAdapter<InstitutionNameModel>[] adapter = new ArrayAdapter[]{new ArrayAdapter<>(MainActivity.context, R.layout.autocomplte_textview_layout, new ArrayList<InstitutionNameModel>())};
                 txt_university_et.setAdapter(adapter[0]);
                 model[0] = null;
-                if (model[0] == null ||!model[0].equalsIgnoreCase(temp)) {
+                if (model[0] == null || !model[0].equalsIgnoreCase(temp)) {
                     setTimer(txt_university_et);
                 } else {
                     txt_university_et.setAdapter(adapter[0]);
@@ -430,6 +461,8 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
                     if (compareValue_education != null) {
                         int educationSpinner = adapter.getPosition(compareValue_education);
                         txt_education_spinner.setSelection(educationSpinner);
+
+
                     }
 
 //                jsonObject.addProperty(Constant.Course, strCourse);
@@ -477,7 +510,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
         }
 
-        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EducationDetail, "");
+//        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EducationDetail, "");
 
 
     }
@@ -530,6 +563,8 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
                 courseType = radioButton.getText().toString();
 
                 txt_course_type_tv_error.setVisibility(View.GONE);
+
+                PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.CourseType, courseType);
 
             }
         });
@@ -725,72 +760,86 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
         EditText specialization = view2.findViewById(R.id.txt_specialization_et);
         AutoCompleteTextView university = view2.findViewById(R.id.txt_university_et);
 
+        flag_api = true;
 
         if (educationStr.equalsIgnoreCase("--Select--")) {
 
 
-            if (strCourse.equalsIgnoreCase("--Select--")) {
-
-
-                if (specialization.getText().toString().isEmpty()) {
-
-
-                    if (university.getText().toString() != null) {
-
-                        if (strPassoutYear.equalsIgnoreCase("--Select--")) {
-
-                            if (strGrade.equalsIgnoreCase("--Select--")) {
-
-                                if (photoFile == null) {
-
-                                    txt_upload_doc_tv_error.setVisibility(View.VISIBLE);
-                                }
-
-                                txt_grade_tv_error.setVisibility(View.VISIBLE);
-
-                            } else {
-
-                                if (txt_Marks_et.getText().toString().isEmpty()) {
-
-
-                                    txt_Marks_tv_error.setVisibility(View.VISIBLE);
-                                    txt_Marks_et.requestFocus();
-
-
-                                } else {
-
-                                    txt_Marks_et.clearFocus();
-                                }
-
-
-                            }
-
-                            txt_passoutyear_tv_error.setVisibility(View.VISIBLE);
-
-                        }
-
-                        txt_university_tv_error.setVisibility(View.VISIBLE);
-                        university.requestFocus();
-
-                    } else {
-                        txt_university_tv_error.setVisibility(View.GONE);
-                        university.clearFocus();
-                    }
-
-                    txt_specilizataion_tv_error.setVisibility(View.VISIBLE);
-                    txt_specialization_et.requestFocus();
-
-                } else {
-
-                    txt_specialization_et.clearFocus();
-                }
-
-                txt_course_tv_error.setVisibility(View.VISIBLE);
-            }
+            flag_api = false;
 
             txt_education_tv_error.setVisibility(View.VISIBLE);
 
+        }
+        if (strCourse.equalsIgnoreCase("--Select--")) {
+
+
+            flag_api = false;
+            txt_course_tv_error.setVisibility(View.VISIBLE);
+        }
+
+        if (specialization.getText().toString().isEmpty()) {
+
+
+            flag_api = false;
+
+            txt_specilizataion_tv_error.setVisibility(View.VISIBLE);
+            txt_specialization_et.requestFocus();
+
         } else {
+
+            txt_specialization_et.clearFocus();
+        }
+
+        if (university.getText().toString() != null) {
+
+            flag_api = false;
+
+            txt_university_tv_error.setVisibility(View.VISIBLE);
+            university.requestFocus();
+
+        } else {
+            txt_university_tv_error.setVisibility(View.GONE);
+            university.clearFocus();
+        }
+
+        if (strPassoutYear.equalsIgnoreCase("--Select--")) {
+
+            flag_api = false;
+
+            txt_passoutyear_tv_error.setVisibility(View.VISIBLE);
+
+        }
+
+        if (strGrade.equalsIgnoreCase("--Select--")) {
+
+            flag_api = false;
+
+            txt_grade_tv_error.setVisibility(View.VISIBLE);
+
+        } else {
+
+            if (txt_Marks_et.getText().toString().isEmpty()) {
+
+
+                txt_Marks_tv_error.setVisibility(View.VISIBLE);
+                txt_Marks_et.requestFocus();
+
+
+            } else {
+
+                txt_Marks_et.clearFocus();
+            }
+
+        }
+
+        if (photoFile.equals("") && photoFile == null) {
+
+            txt_upload_doc_tv_error.setVisibility(View.VISIBLE);
+        }
+
+
+        if (flag_api) {
+
             view2.setVisibility(View.GONE);
             addDynamicEducataionLayour();
             addEducationTileView();
@@ -850,12 +899,12 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
 
         } else if (requestCode == START_ACTIVITY_GALLERY_CODE && resultCode == -1) {
-            //String pathOfPic = "";
-            path_of_pic = Utility.getPathOfSelectedImage(data.getData());
+
             Uri selectedImage = data.getData();
             path_of_pic = FilePath.getPath(getActivity(), selectedImage);
 
             Utility.uploadImageAwsToServer(path_of_pic, this);
+
             if (path_of_pic.contains("pdf")) {
 
 
@@ -1002,7 +1051,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
             }
 
-            if (path_of_pic != "") {
+            if (path_of_pic.equals("")) {
 
 
                 txt_upload_doc_tv_error.setVisibility(View.VISIBLE);

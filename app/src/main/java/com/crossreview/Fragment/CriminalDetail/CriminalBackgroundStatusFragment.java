@@ -21,7 +21,9 @@ import android.widget.RelativeLayout;
 
 import com.crossreview.Activity.MainActivity;
 import com.crossreview.Fragment.EducationDetail.EducationDetailFragment;
+import com.crossreview.Fragment.EducationDetail.EducationStatusFragment;
 import com.crossreview.Fragment.EmployeeDetail.EmployeeDetailsFragment;
+import com.crossreview.Fragment.EmployeeDetail.EmployeeStatusFragment;
 import com.crossreview.Fragment.EmployeeDetail.EmployementDetailsFragment;
 import com.crossreview.Fragment.PreviewFragment;
 import com.crossreview.Model.ClsSaveEmployeeDetailModel;
@@ -37,9 +39,9 @@ import com.google.gson.JsonObject;
 public class CriminalBackgroundStatusFragment extends Fragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener, Observer<ClsSaveEmployeeDetailModel>, View.OnTouchListener {
 
     private Context mctx;
-    private RelativeLayout employer_Detail_rl, employment_Detail_rl, education_detail_rl;
+    private RelativeLayout employer_Detail_rl, employment_Detail_rl, education_detail_rl, education_status_rl,employee_status_rl;
     private RadioGroup criminal_bg_Rg;
-    private RadioButton radioButton;
+    private RadioButton radioButton, txt_yes_criminal_bg_rb, txt_no_criminal_bg_rb;
     private String policeVarification = "no";
     private Boolean criminal_status = false;
     private CardView next_btn;
@@ -82,6 +84,10 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
         criminal_bg_Rg = mview.findViewById(R.id.criminal_bg_Rg);
         next_btn = mview.findViewById(R.id.next_btn);
         mainll = mview.findViewById(R.id.mainll);
+        education_status_rl = mview.findViewById(R.id.education_status_rl);
+        employee_status_rl = mview.findViewById(R.id.employee_status_rl);
+        txt_yes_criminal_bg_rb = mview.findViewById(R.id.txt_yes_criminal_bg_rb);
+        txt_no_criminal_bg_rb = mview.findViewById(R.id.txt_no_criminal_bg_rb);
 
 
     }
@@ -91,27 +97,62 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
         employeeDetailsViewModel = new ViewModelProvider(this).get(EmployeeDetailsViewModel.class);
         employeeDetailsViewModel.EmployeeDetails.observe(this, this);
 
+
     }
 
     private void viewSetup() {
 
-        if (PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeStatus).equalsIgnoreCase("true")) {
+        String criStatus = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.CriminalBgStatus);
+        String empStatus = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployeeStatus);
+        String eduStatus = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EducationStatus);
+        if (criStatus != null) {
+            if (criStatus.equalsIgnoreCase("true")) {
 
-            employment_Detail_rl.setVisibility(View.VISIBLE);
 
-        } else {
+                txt_yes_criminal_bg_rb.setChecked(true);
+                txt_no_criminal_bg_rb.setChecked(false);
 
-            employment_Detail_rl.setVisibility(View.GONE);
+            } else {
+
+                txt_yes_criminal_bg_rb.setChecked(false);
+                txt_no_criminal_bg_rb.setChecked(true);
+
+            }
+        }
+
+        if (empStatus != null) {
+
+            if (empStatus.equalsIgnoreCase("Fresher")) {
+
+                employment_Detail_rl.setVisibility(View.GONE);
+            } else {
+
+                employment_Detail_rl.setVisibility(View.VISIBLE);
+            }
 
         }
 
+        if (eduStatus != null) {
+
+            if (eduStatus.equalsIgnoreCase("No")) {
+
+                education_detail_rl.setVisibility(View.GONE);
+
+            } else {
+
+                education_detail_rl.setVisibility(View.VISIBLE);
+            }
+
+        }
 
         employer_Detail_rl.setOnClickListener(this);
         employment_Detail_rl.setOnClickListener(this);
         education_detail_rl.setOnClickListener(this);
         next_btn.setOnClickListener(this);
+        education_status_rl.setOnClickListener(this);
         criminal_bg_Rg.setOnCheckedChangeListener(this);
         mainll.setOnTouchListener(this);
+        employee_status_rl.setOnTouchListener(this);
 
 
     }
@@ -135,8 +176,8 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
                 break;
             case R.id.education_detail_rl:
 
-                ((MainActivity) getActivity()).replaceFragment(new EducationDetailFragment(), true, KeyClass.FRAGMENT_EDUCATION_STATUS,
-                        KeyClass.FRAGMENT_EDUCATION_STATUS);
+                ((MainActivity) getActivity()).replaceFragment(new EducationDetailFragment(), true, KeyClass.FRAGMENT_EDUCATION_DETAIL,
+                        KeyClass.FRAGMENT_EDUCATION_DETAIL);
 
                 break;
 
@@ -145,6 +186,21 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
                 savepolicevarification();
 
                 break;
+
+            case R.id.education_status_rl:
+
+                ((MainActivity) getActivity()).replaceFragment(new EducationStatusFragment(), true, KeyClass.FRAGMENT_EDUCATION_STATUS,
+                        KeyClass.FRAGMENT_EDUCATION_STATUS);
+
+                break;
+
+            case R.id.employee_status_rl:
+
+                ((MainActivity) getActivity()).replaceFragment(new EmployeeStatusFragment(), true, KeyClass.FRAGMENT_EMPLOYEE_STATUS,
+                        KeyClass.FRAGMENT_EMPLOYEE_STATUS);
+
+                break;
+
         }
 
     }
@@ -199,8 +255,9 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
             ((MainActivity) getActivity()).replaceFragment(new PreviewFragment(), true, KeyClass.FRAGMENT_PREVIEW,
                     KeyClass.FRAGMENT_PREVIEW);
 
-
         }
+
+        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.CriminalBgStatus, String.valueOf(criminal_status));
 
     }
 
