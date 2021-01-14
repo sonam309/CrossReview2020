@@ -1,6 +1,8 @@
 package com.crossreview.ViewModel;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -24,7 +26,7 @@ public class GetAvailablePointsViewModel extends ViewModel {
     public MutableLiveData<GetSelfDetailsModel> getPoints = new MutableLiveData<>();
 
 
-    public void getAvailPoints() {
+    public void getAvailPoints(Context context) {
 
         String token = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.AUTH_TOKEN);
 
@@ -41,6 +43,10 @@ public class GetAvailablePointsViewModel extends ViewModel {
 
                         getPoints.postValue(model);
                     }
+                }else {
+
+                    Toast.makeText(context, response.message(), Toast.LENGTH_LONG).show();
+
                 }
 
             }
@@ -51,6 +57,7 @@ public class GetAvailablePointsViewModel extends ViewModel {
                 Log.e("kkkkkkkkkkkkkkkkkkkkkk", t.getMessage());
                 Utility.hideLoader();
 
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 

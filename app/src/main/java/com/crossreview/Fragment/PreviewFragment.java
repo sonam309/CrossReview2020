@@ -92,7 +92,7 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        previewInfoViewModel.PreviewDetail();
+        previewInfoViewModel.PreviewDetail(getActivity());
 
 
     }
@@ -139,10 +139,6 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
         previewInfoViewModel.previewInfo.observe(this, this);
 
 
-
-
-
-
     }
 
     private void viewSetup() {
@@ -158,18 +154,17 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
         String eduChildCount = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EduChildCount);
         String empChildCount = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmpChildCount);
 
-        if (eduChildCount.equalsIgnoreCase("0") && empChildCount.equalsIgnoreCase("0")) {
-
-            submit_btn.setVisibility(View.VISIBLE);
-            makePayment_btn.setVisibility(View.GONE);
-
-        } else {
-
-            makePayment_btn.setVisibility(View.VISIBLE);
-            submit_btn.setVisibility(View.GONE);
-
-        }
-
+//        if (eduChildCount.equalsIgnoreCase("0") && empChildCount.equalsIgnoreCase("0")) {
+//
+//            submit_btn.setVisibility(View.VISIBLE);
+//            makePayment_btn.setVisibility(View.GONE);
+//
+//        } else {
+//
+//            makePayment_btn.setVisibility(View.VISIBLE);
+//            submit_btn.setVisibility(View.GONE);
+//
+//        }
 
 
     }
@@ -268,6 +263,18 @@ public class PreviewFragment extends Fragment implements View.OnClickListener, O
             education_details_recyclerview.setAdapter(educationDetailsRecyclerAdapter);
             personalDetails_recyclerview.setAdapter(policeVarificationRecyclerAdapter);
 
+
+            if ((previewInfoModel.getData().getExperiences().size() == 0) && (previewInfoModel.getData().getEducation().size() == 0) && (previewInfoModel.getData().getPoliceVerifications().size() == 0)) {
+
+                submit_btn.setVisibility(View.VISIBLE);
+                makePayment_btn.setVisibility(View.GONE);
+
+
+            } else {
+
+                submit_btn.setVisibility(View.GONE);
+                makePayment_btn.setVisibility(View.VISIBLE);
+            }
 
 
         }

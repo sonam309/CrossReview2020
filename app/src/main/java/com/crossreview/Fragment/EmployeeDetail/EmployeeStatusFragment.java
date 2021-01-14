@@ -187,7 +187,7 @@ public class EmployeeStatusFragment extends Fragment implements View.OnClickList
         JsonObject data = new JsonObject();
         data.add(Constant.data, object);
 
-        employeeDetailsViewModel.saveEmployeeDetail(data);
+        employeeDetailsViewModel.saveEmployeeDetail(data,getActivity());
 
 
     }

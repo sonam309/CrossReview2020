@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.crossreview.Activity.MainActivity;
+import com.crossreview.Fragment.CriminalDetail.CriminalDetailFragment;
 import com.crossreview.Fragment.EducationDetail.EducationDetailFragment;
 import com.crossreview.Fragment.EducationDetail.EducationStatusFragment;
 import com.crossreview.Fragment.EmployeeDetail.EmployeeDetailsFragment;

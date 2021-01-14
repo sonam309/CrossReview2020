@@ -413,7 +413,6 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
 
         }
 
-//        PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.CriminalDetails, "");
 
 
     }
@@ -437,6 +436,15 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
                     txt_local_city_et.setText(txt_city_et.getText().toString());
 
 
+                    txt_Local_address_et.setEnabled(false);
+                    txt_local_pincode_et.setEnabled(false);
+                    txt_local_post_office_et.setEnabled(false);
+                    txt_local_police_station_et.setEnabled(false);
+                    txt_local_district_et.setEnabled(false);
+                    txt_local_state_et.setEnabled(false);
+                    txt_local_city_et.setEnabled(false);
+
+
                 } else {
 
                     txt_Local_address_et.setText("");
@@ -447,10 +455,41 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
                     txt_local_state_et.setText("");
                     txt_local_city_et.setText("");
 
+                    txt_Local_address_et.setEnabled(true);
+                    txt_local_pincode_et.setEnabled(true);
+                    txt_local_post_office_et.setEnabled(true);
+                    txt_local_police_station_et.setEnabled(true);
+                    txt_local_district_et.setEnabled(true);
+                    txt_local_state_et.setEnabled(true);
+                    txt_local_city_et.setEnabled(true);
+
                 }
             }
         });
 
+        txt_permanent_address_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (checkbox_address.isChecked()) {
+
+                    txt_Local_address_et.setText(txt_permanent_address_et.getText().toString());
+
+                }
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         txt_pincode_et.addTextChangedListener(new TextWatcher() {
             @Override
@@ -464,10 +503,129 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
                     AddressfromZipcoded(charSequence.toString());
                 }
 
+                if (checkbox_address.isChecked()) {
+
+                    txt_local_pincode_et.setText(txt_pincode_et.getText().toString());
+
+                }
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        txt_post_office_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (checkbox_address.isChecked()) {
+
+                    txt_local_post_office_et.setText(txt_post_office_et.getText().toString());
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        txt_police_station_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (checkbox_address.isChecked()) {
+
+                    txt_local_police_station_et.setText(txt_police_station_et.getText().toString());
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        txt_district_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (checkbox_address.isChecked()) {
+
+                    txt_local_district_et.setText(txt_district_et.getText().toString());
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        txt_state_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (checkbox_address.isChecked()) {
+
+                    txt_local_state_et.setText(txt_state_et.getText().toString());
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        txt_city_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (checkbox_address.isChecked()) {
+
+                    txt_local_city_et.setText(txt_city_et.getText().toString());
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
 
             }
         });
@@ -961,7 +1119,7 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
 
         }
 
-        if(flag_api){
+        if (flag_api) {
 
 
             txt_mothers_name_et.clearFocus();
@@ -1048,7 +1206,7 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
 
             PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.SaveData, data.toString());
 
-            policeVarificataionsViewModel.saveCriminalBgDetails(data);
+            policeVarificataionsViewModel.saveCriminalBgDetails(data, getActivity());
 
             PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.CriminalDetails, data.toString());
 
@@ -1215,6 +1373,7 @@ public class CriminalDetailFragment extends Fragment implements View.OnClickList
         if (txt_permanent_address_et.getText().toString().length() > 0) {
 
             txt_address_tv_error.setVisibility(View.GONE);
+
 
         }
         if (txt_pincode_et.getText().toString().length() > 0) {

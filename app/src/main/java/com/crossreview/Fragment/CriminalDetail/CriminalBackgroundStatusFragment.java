@@ -237,7 +237,7 @@ public class CriminalBackgroundStatusFragment extends Fragment implements View.O
         data.add(Constant.data, object);
 
 
-        employeeDetailsViewModel.saveEmployeeDetail(data);
+        employeeDetailsViewModel.saveEmployeeDetail(data,getActivity());
 
 
     }

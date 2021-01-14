@@ -1,7 +1,9 @@
 package com.crossreview.ViewModel;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -19,7 +21,7 @@ public class CompanyNameViewModel extends ViewModel {
     public MutableLiveData<CompanyNameModel>companyName= new MutableLiveData<>();
 
 
-    public void ComNamefun(String CompanyName, ProgressBar progressBar){
+    public void ComNamefun(String CompanyName, ProgressBar progressBar, Context context){
 
 //        Utility.showLoader();
         progressBar.setVisibility(View.VISIBLE);
@@ -36,6 +38,11 @@ public class CompanyNameViewModel extends ViewModel {
                         }
 
                     }
+
+                    else {
+
+                        Toast.makeText(context, response.message(), Toast.LENGTH_LONG).show();
+                    }
                 }
 
                 @Override
@@ -43,6 +50,8 @@ public class CompanyNameViewModel extends ViewModel {
 
 //                    Utility.hideLoader();
                     progressBar.setVisibility(View.GONE);
+
+                    Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
     }

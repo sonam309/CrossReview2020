@@ -456,6 +456,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                     txt_relieving_date.setText(experienceData.getString(Constant.Employer_D_O_Relieving));
                     txt_designation_et.setText(experienceData.getString(Constant.Employer_Designataion));
                     txt_job_role_et.setText(experienceData.getString(Constant.Employer_Job_role));
+
                     autotextcomplte.setText(experienceData.getString(Constant.Emp_org_name));
 
                     txt_reason_of_leaving_et.setText(experienceData.getString(Constant.Employer_Reason_Of_Leaving));
@@ -991,7 +992,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                         }
                     });
 
-                    companyNameViewModel.ComNamefun(autoCompleteTextView.getText().toString(), progressLoading);
+                    companyNameViewModel.ComNamefun(autoCompleteTextView.getText().toString(), progressLoading,mctx);
 
 
                 }
@@ -1311,7 +1312,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                 JsonObject data = new JsonObject();
                 data.add(Constant.data, experience);
 
-                employeeDetailsViewModel.saveEmployeeDetail(data);
+                employeeDetailsViewModel.saveEmployeeDetail(data,getActivity());
 
 
                 PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployementDetails, data.toString());

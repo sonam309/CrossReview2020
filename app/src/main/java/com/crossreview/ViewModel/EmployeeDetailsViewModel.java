@@ -1,6 +1,8 @@
 package com.crossreview.ViewModel;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -29,7 +31,7 @@ public class EmployeeDetailsViewModel extends ViewModel {
     public MutableLiveData<ClsSaveEmployeeDetailModel> EmployeeDetails = new MutableLiveData<>();
 
 
-    public void saveEmployeeDetail(JsonObject jsonObject) {
+    public void saveEmployeeDetail(JsonObject jsonObject, Context context) {
 
 
         String token = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.TOKEN);
@@ -47,6 +49,9 @@ public class EmployeeDetailsViewModel extends ViewModel {
                         EmployeeDetails.postValue(model);
                     }
 
+                }else {
+
+                    Toast.makeText(context, response.message(), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -56,6 +61,8 @@ public class EmployeeDetailsViewModel extends ViewModel {
                 Utility.hideLoader();
 
                 Log.e("kkkkkkkkkkkkkkkkkk", t.getMessage());
+
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
 
             }
         });

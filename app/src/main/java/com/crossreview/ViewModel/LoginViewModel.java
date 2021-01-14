@@ -40,6 +40,9 @@ public class LoginViewModel extends ViewModel {
                         login.postValue(model);
 
                     }
+                }else {
+
+                    Toast.makeText(context, response.message(), Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -49,7 +52,7 @@ public class LoginViewModel extends ViewModel {
 
                 Utility.hideLoader();
 
-//                Toast.makeText(context, "Please enter a valid Otp", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
 
             }
         });

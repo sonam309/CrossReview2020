@@ -1,5 +1,8 @@
 package com.crossreview.ViewModel;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -22,9 +25,8 @@ public class PreviewInfoViewModel extends ViewModel {
     public MutableLiveData<PreviewInfoModel> previewInfo = new MutableLiveData<>();
 
 
-    public void PreviewDetail() {
+    public void PreviewDetail(Context context) {
 
-//        String token= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbXBsb3llcl9JZCI6IkVNUC02ODMwNy0yMzM2NyIsIkVtcGxveWVyX0VtYWlsIjoic29uYS5tYWdpY3NAZ21haWwuY28iLCJPcmdhbml6YXRpb25fSWQiOiJvcmc0MzA1IiwiRW1wbG95ZWVfQmFzaWNfSWQiOiIwMTc4MDY1NzM5IiwiaWF0IjoxNjA0NDkwMzc2LCJleHAiOjE2MDQ1NzY3NzZ9.yDrbZTTqSEjiL0XmpXxk5BKnitPPJ7axQB1uTK_wgak";
         String token = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.TOKEN);
 
         Utility.showLoader();
@@ -40,6 +42,9 @@ public class PreviewInfoViewModel extends ViewModel {
                         previewInfo.postValue(model);
                     }
 
+                } else {
+
+                    Toast.makeText(context, response.message(), Toast.LENGTH_LONG).show();
                 }
 
 
@@ -49,6 +54,7 @@ public class PreviewInfoViewModel extends ViewModel {
             public void onFailure(Call<PreviewInfoModel> call, Throwable t) {
 
                 Utility.hideLoader();
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });

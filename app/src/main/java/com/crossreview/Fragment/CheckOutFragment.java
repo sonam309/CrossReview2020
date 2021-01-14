@@ -78,7 +78,7 @@ public class CheckOutFragment extends Fragment implements View.OnClickListener, 
         bindView();
         viewSetup();
 
-        getAvailablePointsViewModel.getAvailPoints();
+        getAvailablePointsViewModel.getAvailPoints(getActivity());
 
 
     }

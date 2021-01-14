@@ -44,7 +44,7 @@ public class MakePaymentViewModel extends ViewModel {
                     makePayment.postValue(model);
                 } else {
 
-//                    Toast.makeText(context, "filed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, response.message(), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -52,7 +52,7 @@ public class MakePaymentViewModel extends ViewModel {
             public void onFailure(Call<ClsResultStateResponseModel> call, Throwable t) {
 
                 Utility.hideLoader();
-//                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
 
             }
         });

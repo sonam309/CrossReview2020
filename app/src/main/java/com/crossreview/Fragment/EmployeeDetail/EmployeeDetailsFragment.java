@@ -388,6 +388,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
                 txt_employee_id_et.setText(data.getString(Constant.EmployeeId));
 
 
+
                 Glide.with(mctx)
                         .load(data.getString(Constant.EmployeeProfilePic))
                         .placeholder(Utility.getCircleProgress())
@@ -743,7 +744,7 @@ public class EmployeeDetailsFragment extends BasicClass implements View.OnClickL
             data.add(Constant.data, jsonObject);
 
 
-            employeeDetailsViewModel.saveEmployeeDetail(data);
+            employeeDetailsViewModel.saveEmployeeDetail(data,getActivity());
 
             PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EmployeeDetails, data.toString());
 

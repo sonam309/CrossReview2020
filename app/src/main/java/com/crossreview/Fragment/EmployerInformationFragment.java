@@ -333,7 +333,7 @@ public class EmployerInformationFragment extends Fragment implements View.OnClic
                         }
                     });
 
-                    companyNameViewModel.ComNamefun(autoCompleteTextView.getText().toString(), progressLoading);
+                    companyNameViewModel.ComNamefun(autoCompleteTextView.getText().toString(), progressLoading,mctx);
                 }
 
             }, 1000);

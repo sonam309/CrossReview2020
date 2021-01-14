@@ -40,6 +40,10 @@ public class GetOtpViewModel extends ViewModel {
                     }
 
                 }
+                else {
+
+                    Toast.makeText(context, response.message(), Toast.LENGTH_LONG).show();
+                }
 
             }
 
@@ -49,6 +53,7 @@ public class GetOtpViewModel extends ViewModel {
 //                Toast.makeText(context, "Please enter valid emial", Toast.LENGTH_SHORT).show();
                 Utility.hideLoader();
 
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
 
             }
         });

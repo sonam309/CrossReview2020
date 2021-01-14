@@ -532,7 +532,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
                         }
                     });
 
-                    institutionNameViewModel.InstituteNamefun(autoCompleteTextView.getText().toString(), progressLoading);
+                    institutionNameViewModel.InstituteNamefun(autoCompleteTextView.getText().toString(), progressLoading,getActivity());
                 }
 
             }, 1000);
@@ -1088,7 +1088,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
                 JsonObject data = new JsonObject();
                 data.add(Constant.data, experience);
 
-                employeeDetailsViewModel.saveEmployeeDetail(data);
+                employeeDetailsViewModel.saveEmployeeDetail(data,getActivity());
 
                 PrefrenceShared.getInstance().getPreferenceData().setValue(KeyClass.EducationDetail, data.toString());
             }

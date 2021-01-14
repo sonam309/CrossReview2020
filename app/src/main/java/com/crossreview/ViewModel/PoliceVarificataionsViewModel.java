@@ -1,6 +1,8 @@
 package com.crossreview.ViewModel;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -23,7 +25,7 @@ public class PoliceVarificataionsViewModel extends ViewModel {
     public MutableLiveData<PoliceVarificataionDetailsModel> policevarificataion= new MutableLiveData<>();
 
 
-    public void saveCriminalBgDetails(JsonObject jsonObject){
+    public void saveCriminalBgDetails(JsonObject jsonObject, Context context){
 
 
         String token = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.TOKEN);
@@ -43,6 +45,9 @@ public class PoliceVarificataionsViewModel extends ViewModel {
                         policevarificataion.postValue(model);
 
                     }
+                }else {
+
+                    Toast.makeText(context, response.message(), Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -51,6 +56,8 @@ public class PoliceVarificataionsViewModel extends ViewModel {
             public void onFailure(Call<PoliceVarificataionDetailsModel> call, Throwable t) {
                 Utility.hideLoader();
                 Log.e("pppppppppp",t.getMessage());
+
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
