@@ -350,7 +350,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
         viewOnclick();
         setSpinnerAdapter();
-        getDataFromPrefrence();
+        getDataFromPrefrence(txt_orgName_Autocomplete);
 
 
         final String[] model = new String[1];
@@ -436,7 +436,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
     }
 
 
-    private void getDataFromPrefrence() {
+    private void getDataFromPrefrence(AutoCompleteTextView txt_orgName_Autocomplete) {
 
         String jsonData = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EmployementDetails);
 
@@ -457,7 +457,7 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
                     txt_designation_et.setText(experienceData.getString(Constant.Employer_Designataion));
                     txt_job_role_et.setText(experienceData.getString(Constant.Employer_Job_role));
 
-                    autotextcomplte.setText(experienceData.getString(Constant.Emp_org_name));
+                    txt_orgName_Autocomplete.setText(experienceData.getString(Constant.Emp_org_name));
 
                     txt_reason_of_leaving_et.setText(experienceData.getString(Constant.Employer_Reason_Of_Leaving));
 
@@ -491,10 +491,10 @@ public class EmployementDetailsFragment extends BasicClass implements View.OnCli
 
                         savepicurl = document.getString(Constant.Document_URL);
 
-//                        Glide.with(getContext())
-//                                .load(document.getString(Constant.Document_URL))
-//                                .placeholder(Utility.getCircleProgress())
-//                                .into(doc_file);
+                        Glide.with(getContext())
+                                .load(document.getString(Constant.Document_URL))
+                                .placeholder(Utility.getCircleProgress())
+                                .into(doc_file);
 
 
                     }

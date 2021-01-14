@@ -274,11 +274,14 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
                 Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.education_detail_layout, null);
 
-        getIds(view);
+        AutoCompleteTextView txt_university_et = view.findViewById(R.id.txt_university_et);
+
+
+        getIds(view,txt_university_et);
         onClicks(view);
         spinnerAdapterSetup();
         uploadDocument();
-        getDataFromPrefrence();
+        getDataFromPrefrence(txt_university_et);
 
         String courseType = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.CourseType);
         if (courseType != null) {
@@ -309,7 +312,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
     }
 
 
-    public void getIds(View view) {
+    public void getIds(View view,AutoCompleteTextView txt_university_et) {
 
         //editText
         txt_education_et = view.findViewById(R.id.txt_education_et);
@@ -366,7 +369,6 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
         //AutoTextComplete
 
-        AutoCompleteTextView txt_university_et = view.findViewById(R.id.txt_university_et);
 
 
         final String[] model = new String[1];
@@ -439,7 +441,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
     }
 
-    public void getDataFromPrefrence() {
+    public void getDataFromPrefrence(AutoCompleteTextView txt_university_et) {
 
         String jsonData = PrefrenceShared.getInstance().getPreferenceData().getValueFromKey(KeyClass.EducationDetail);
 
@@ -479,7 +481,7 @@ public class EducationDetailFragment extends BasicClass implements View.OnClickL
 
                     //                jsonObject.addProperty(Constant.InstitutionName, instituteName);
 //                jsonObject.addProperty(Constant.CourseType, courseType);
-                    // univercity name
+                    txt_university_et.setText(education.getString(Constant.InstitutionName));
                     // Course type
 
                     String compareValue_passoutYear = (education.getString(Constant.PassOutYear));
